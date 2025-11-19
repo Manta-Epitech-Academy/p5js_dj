@@ -84,7 +84,7 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(800, 600);
+    createCanvas(windowWidth, windowHeight);
     
     track1.amp = new p5.Amplitude();
     track2.amp = new p5.Amplitude();

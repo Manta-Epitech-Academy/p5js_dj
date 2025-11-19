@@ -32,7 +32,35 @@ Pour faciliter le positionnement, nous choisissons de diviser le canvas en une g
 
 **Pourquoi ?** Cela rend le positionnement beaucoup plus facile ! Au lieu d'écrire `width / 6` à chaque fois, vous pouvez simplement écrire `gridX(1)` pour la colonne 1, ou `gridY(2)` pour la ligne 2.
 
-### Étape 1A : Créer des fonctions utilitaires pour la grille
+### Étape 1A : Utiliser la taille complète de la fenêtre pour le canvas
+
+**Ce que vous devez faire** : Mettez à jour votre appel `createCanvas()` dans `setup()` pour utiliser la taille complète de la fenêtre du navigateur au lieu d'une taille fixe.
+
+Changez :
+```javascript
+createCanvas(800, 600);
+```
+
+En :
+```javascript
+createCanvas(windowWidth, windowHeight);
+```
+
+**Pourquoi utiliser `windowWidth` et `windowHeight` ?**
+
+Utiliser `windowWidth` et `windowHeight` fait que votre table de mixage remplit automatiquement toute la fenêtre du navigateur, s'adaptant à n'importe quelle taille d'écran. Cela signifie :
+- Votre table de mixage fonctionnera bien sur différentes tailles d'écran (ordinateur, tablette, mobile)
+- Elle utilise automatiquement tout l'espace disponible
+- Les utilisateurs n'ont pas besoin de redimensionner leur navigateur ou de voir de l'espace vide autour du canvas
+- Cela offre une meilleure expérience utilisateur, plus professionnelle
+
+**Documentation** :
+- [`windowWidth`](https://p5js.org/reference/p5/windowWidth/) - stocke la largeur de la fenêtre d'affichage du navigateur
+- [`windowHeight`](https://p5js.org/reference/p5/windowHeight/) - stocke la hauteur de la fenêtre d'affichage du navigateur
+
+**Important** : Puisque votre canvas s'adaptera maintenant à la taille de la fenêtre, tous vos éléments UI s'adapteront automatiquement avec le système de grille que vous allez créer !
+
+### Étape 1B : Créer des fonctions utilitaires pour la grille
 
 **Ce que vous devez faire** : Créez deux fonctions utilitaires qui convertissent les coordonnées de la grille en positions pixels :
 
@@ -53,7 +81,7 @@ Pour faciliter le positionnement, nous choisissons de diviser le canvas en une g
 
 **Indice** : Utilisez la multiplication ! `gridX(cellX)` devrait retourner `cellX * width / 6`.
 
-### Étape 1B : Ajouter une visualisation de la grille (Optionnel)
+### Étape 1C : Ajouter une visualisation de la grille (Optionnel)
 
 **Ce que vous devez faire** : Créez une fonction `drawGrid()` qui dessine les lignes de la grille sur le canvas. Cela vous aide à voir où se trouvent les cellules de la grille pendant que vous positionnez les éléments.
 
@@ -66,7 +94,7 @@ Pour faciliter le positionnement, nous choisissons de diviser le canvas en une g
 
 Appelez `drawGrid()` dans votre fonction `draw()` pour voir la grille.
 
-### Étape 1C : Repositionner les éléments UI existants en utilisant la grille
+### Étape 1D : Repositionner les éléments UI existants en utilisant la grille
 
 **Ce que vous devez faire** : Mettez à jour vos éléments UI existants de la Partie 1 pour utiliser le système de grille.
 

@@ -64,7 +64,7 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(800, 600);
+    createCanvas(windowWidth, windowHeight);
     
     // Calculate positions using grid helper functions
     // Row 2: buttons
@@ -261,7 +261,11 @@ function handleSoundUpload(file, track) {
         track.sound.setVolume(track.volume);
     }
 }
-
+/*
+* Draw the grid
+This function draws the grid of 6x6 cells.
+This is optional: just a visual aid to help you see where the grid cells are while you're positioning elements.
+*/
 function drawGrid() {
     stroke(200); // Light gray color for grid lines
     strokeWeight(1);

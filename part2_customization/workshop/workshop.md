@@ -31,7 +31,35 @@ To make positioning easier, we'll choose to split the canvas into a 6x6 grid. Th
 
 **Why?** This makes positioning much easier! Instead of writing `width / 6` every time, you can just write `gridX(1)` for column 1, or `gridY(2)` for row 2.
 
-### Step 1A: Create Grid Helper Functions
+### Step 1A: Use Full Window Size for Canvas
+
+**What you need to do**: Update your `createCanvas()` call in `setup()` to use the full browser window size instead of a fixed size.
+
+Change:
+```javascript
+createCanvas(800, 600);
+```
+
+To:
+```javascript
+createCanvas(windowWidth, windowHeight);
+```
+
+**Why use `windowWidth` and `windowHeight`?** 
+
+Using `windowWidth` and `windowHeight` makes your DJ deck automatically fill the entire browser window, adapting to any screen size. This means:
+- Your DJ deck will work well on different screen sizes (desktop, tablet, mobile)
+- It automatically uses the full available space
+- Users don't have to resize their browser or see empty space around your canvas
+- It provides a better, more professional user experience
+
+**Documentation**:
+- [`windowWidth`](https://p5js.org/reference/p5/windowWidth/) - stores the width of the browser's viewport
+- [`windowHeight`](https://p5js.org/reference/p5/windowHeight/) - stores the height of the browser's viewport
+
+**Important**: Since your canvas will now adapt to the window size, all your UI elements will automatically scale with the grid system you're about to create!
+
+### Step 1B: Create Grid Helper Functions
 
 **What you need to do**: Create two helper functions that convert grid cell coordinates to pixel positions:
 
@@ -52,7 +80,7 @@ To make positioning easier, we'll choose to split the canvas into a 6x6 grid. Th
 
 **Hint**: Use multiplication! `gridX(cellX)` should return `cellX * width / 6`.
 
-### Step 1B: Add a Grid Visual (Optional)
+### Step 1C: Add a Grid Visual (Optional)
 
 **What you need to do**: Create a `drawGrid()` function that draws the grid lines on the canvas. This helps you see where the grid cells are while you're positioning elements.
 
@@ -65,7 +93,7 @@ To make positioning easier, we'll choose to split the canvas into a 6x6 grid. Th
 
 Call `drawGrid()` in your `draw()` function to see the grid.
 
-### Step 1C: Reposition Existing UI Elements Using the Grid
+### Step 1D: Reposition Existing UI Elements Using the Grid
 
 **What you need to do**: Update your existing UI elements from Part 1 to use the grid system. 
 

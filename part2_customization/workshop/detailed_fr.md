@@ -24,44 +24,39 @@ Nous allons ajouter des fonctionnalités de personnalisation qui permettent aux 
 
 ---
 
-## Étape 1 : Comprendre les uploads de fichiers
-
-### Qu'est-ce qu'un upload de fichier ?
-
-Un upload (de "envoyer" un fichier) est un moyen pour les utilisateurs de sélectionner des fichiers depuis leur ordinateur et de les utiliser dans votre application web. Dans p5.js, vous utilisez `createFileInput()` pour que cela se produise.
-
-**Comment ça fonctionne** :
-1. Vous créez un bouton de saisie de fichier
-2. L'utilisateur clique sur le bouton
-3. Un navigateur de fichiers s'ouvre
-4. L'utilisateur sélectionne un fichier
-5. Votre programme reçoit des informations sur le fichier
-6. Vous pouvez ensuite charger et utiliser ce fichier
-
-
-### Types de fichiers
-
-Différents fichiers ont différents types :
-- **Images** : JPG, PNG, GIF, etc.
-- **Audio** : MP3, WAV, OGG, etc.
-
-Vous pouvez restreindre les file inputs pour n'accepter que certains types en utilisant l'attribut `accept`.
-
----
-
-## Étape 1.5 : Créer des fonctions helper pour la grille
+## Étape 1 : Configurer le système de grille
 
 ### Comprendre le système de grille
 
 Pour faciliter le positionnement, nous choisissons de diviser le canvas en une grille 6x6. Cela signifie que nous divisons l'écran en 6 colonnes et 6 lignes, ce qui facilite le positionnement précis des éléments d'interface.
 
-**Le concept** : Au lieu de calculer manuellement les positions en pixels comme `width / 6` ou `2 * height / 6`, vous pouvez créer des fonctions helper qui convertissent les coordonnées de la grille (comme colonne 1, ligne 2) directement en coordonnées pixels.
+**Le concept** : Au lieu de calculer manuellement les positions en pixels comme `width / 6` ou `2 * height / 6`, vous pouvez créer des fonctions utilitaires qui convertissent les coordonnées de la grille (comme colonne 1, ligne 2) directement en coordonnées pixels.
 
 **Pourquoi ?** Cela rend le positionnement beaucoup plus facile ! Au lieu d'écrire `width / 6` à chaque fois, vous pouvez simplement écrire `gridX(1)` pour la colonne 1, ou `gridY(2)` pour la ligne 2.
 
-### Votre tâche : Créer des fonctions helper pour la grille
+### Étape 1A : Utiliser la taille complète de la fenêtre pour le canvas
 
-**Ce que vous devez faire** : Créez deux fonctions helper qui convertissent les coordonnées de la grille en positions pixels :
+**Ce que vous devez faire** : Mettez à jour votre appel `createCanvas()` dans `setup()` pour utiliser la taille complète de la fenêtre du navigateur au lieu d'une taille fixe.
+
+Trouvez où vous avez `createCanvas(800, 600)` et changez-le pour utiliser `windowWidth` et `windowHeight` à la place. Remplacez les nombres fixes `800` et `600` par `windowWidth` et `windowHeight`.
+
+**Pourquoi utiliser `windowWidth` et `windowHeight` ?**
+
+Utiliser `windowWidth` et `windowHeight` fait que votre table de mixage remplit automatiquement toute la fenêtre du navigateur, s'adaptant à n'importe quelle taille d'écran. Cela signifie :
+- Votre table de mixage fonctionnera bien sur différentes tailles d'écran (ordinateur, tablette, mobile)
+- Elle utilise automatiquement tout l'espace disponible
+- Les utilisateurs n'ont pas besoin de redimensionner leur navigateur ou de voir de l'espace vide autour du canvas
+- Cela offre une meilleure expérience utilisateur, plus professionnelle
+
+**Documentation** :
+- [`windowWidth`](https://p5js.org/reference/p5/windowWidth/) - stocke la largeur de la fenêtre d'affichage du navigateur
+- [`windowHeight`](https://p5js.org/reference/p5/windowHeight/) - stocke la hauteur de la fenêtre d'affichage du navigateur
+
+**Important** : Puisque votre canvas s'adaptera maintenant à la taille de la fenêtre, tous vos éléments UI s'adapteront automatiquement avec le système de grille que vous allez créer !
+
+### Étape 1B : Créer des fonctions utilitaires pour la grille
+
+**Ce que vous devez faire** : Créez deux fonctions utilitaires qui convertissent les coordonnées de la grille en positions pixels :
 
 1. `gridX(cellX)` - Prend un numéro de colonne (0-5) et retourne la position X en pixels
 2. `gridY(cellY)` - Prend un numéro de ligne (0-5) et retourne la position Y en pixels
@@ -80,210 +75,187 @@ Pour faciliter le positionnement, nous choisissons de diviser le canvas en une g
 
 **Indice** : Utilisez la multiplication ! `gridX(cellX)` devrait retourner `cellX * width / 6`.
 
-**Exemple de code** :
-```javascript
-function gridX(cellX) {
-    return cellX * width / 6;
-}
-
-function gridY(cellY) {
-    return cellY * height / 6;
-}
-```
+**Comment l'implémenter** :
+- Créez une fonction appelée `gridX` qui prend un paramètre (le numéro de colonne) et retourne la position X en pixels en multipliant le numéro de colonne par `width / 6`
+- Créez une fonction appelée `gridY` qui prend un paramètre (le numéro de ligne) et retourne la position Y en pixels en multipliant le numéro de ligne par `height / 6`
 
 **Utilisez cela tout au long de l'atelier !** Chaque fois que vous devez positionner des éléments d'interface, utilisez `gridX()` et `gridY()` au lieu de calculer manuellement les positions. Par exemple :
-- Au lieu de `bgFileInput.position(width / 6 - 60, height / 12)`, vous pouvez utiliser `bgFileInput.position(gridX(1) - 60, gridY(0) + gridY(0)/2)`
-- Ou plus simplement, positionnez au centre de la cellule de la grille : `bgFileInput.position(gridX(1), gridY(0))`
+- Au lieu de calculer manuellement `width / 6`, appelez `gridX(1)`
+- Au lieu de calculer manuellement `2 * height / 6`, appelez `gridY(2)`
+
+### Étape 1C : Ajouter une visualisation de la grille (Optionnel)
+
+**Ce que vous devez faire** : Créez une fonction `drawGrid()` qui dessine les lignes de la grille sur le canvas. Cela vous aide à voir où se trouvent les cellules de la grille pendant que vous positionnez les éléments.
+
+**La logique** :
+- Dessinez des lignes verticales à `width / 6`, `2 * width / 6`, `3 * width / 6`, `4 * width / 6`, `5 * width / 6`
+- Dessinez des lignes horizontales à `height / 6`, `2 * height / 6`, `3 * height / 6`, `4 * height / 6`, `5 * height / 6`
+- Utilisez une couleur gris clair pour qu'elle soit visible mais pas distrayante
+
+**Astuce** : Vous pouvez utiliser vos fonctions `gridX()` et `gridY()` ici ! Faites une boucle de 1 à 5 et dessinez des lignes à `gridX(i)` et `gridY(i)`.
+
+Appelez `drawGrid()` dans votre fonction `draw()` pour voir la grille.
+
+### Étape 1D : Repositionner les éléments UI existants en utilisant la grille
+
+**Ce que vous devez faire** : Mettez à jour vos éléments UI existants de la Partie 1 pour utiliser le système de grille.
+
+De la Partie 1, vous avez :
+- Bouton et slider de la piste 1
+- Bouton et slider de la piste 2
+
+**Repositionnez-les en utilisant vos fonctions utilitaires de grille** :
+- Bouton piste 1 : Colonne 1, Ligne 2 (utilisez `gridX(1)`, `gridY(2)`)
+- Slider piste 1 : Colonne 1, Ligne 3 (utilisez `gridX(1)`, `gridY(3)`)
+- Bouton piste 2 : Colonne 4, Ligne 2 (utilisez `gridX(4)`, `gridY(2)`)
+- Slider piste 2 : Colonne 4, Ligne 3 (utilisez `gridX(4)`, `gridY(3)`)
+- Titre : Centre (utilisez `width / 2`, `gridY(0)`)
+- Labels de volume : Au-dessus des sliders (utilisez `gridX(1)`, `gridY(3) - 20` et `gridX(4)`, `gridY(3) - 20`)
+
+**Mettez à jour vos calculs de position** (ou l'endroit où vous définissez les positions) pour utiliser `gridX()` et `gridY()` au lieu de calculer manuellement `width / 6` ou `height / 6`.
+
+**Important** : Utilisez le système de grille pour tout le positionnement UI à partir de maintenant ! Cela rendra beaucoup plus facile d'ajouter de nouveaux éléments plus tard.
+
+**Testez !** Assurez-vous que tous vos boutons et sliders existants fonctionnent toujours et sont correctement positionnés sur la grille.
 
 ---
 
-## Étape 2 : Ajouter l'upload d'image de fond
+## Étape 2 : Comprendre les uploads de fichiers
 
-### Étape 2 (A) : Créer une variable pour l'image de fond
+### Qu'est-ce qu'un upload de fichier ?
 
-D'abord, vous avez besoin d'un endroit pour stocker l'image uploadée. En haut de votre code (avant les objets track), ajoutez :
+Un upload (de "envoyer" un fichier) est un moyen pour les utilisateurs de sélectionner des fichiers depuis leur ordinateur et de les utiliser dans votre application web. Dans p5.js, vous utilisez `createFileInput()` pour que cela se produise.
 
-```javascript
-let bgImage = null;
-```
+**Comment ça fonctionne** :
+1. Vous créez un bouton de saisie de fichier
+2. L'utilisateur clique sur le bouton
+3. Un navigateur de fichiers s'ouvre
+4. L'utilisateur sélectionne un fichier
+5. Votre programme reçoit des informations sur le fichier
+6. Vous pouvez ensuite charger et utiliser ce fichier
 
-**Comprendre le code** :
-- `let bgImage` crée une variable pour stocker l'image
-- `= null` signifie "pas d'image encore" - nous la définirons quand un utilisateur télécharge une image
+### Types de fichiers
+
+Différents fichiers ont différents types :
+- **Images** : JPG, PNG, GIF, etc.
+- **Audio** : MP3, WAV, OGG, etc.
+
+Vous pouvez restreindre les file inputs pour n'accepter que certains types en utilisant l'attribut `accept`.
+
+**Documentation** : [`createFileInput()`](https://p5js.org/reference/p5/createFileInput) crée un bouton d'upload de fichier.
+
+---
+
+## Étape 3 : Ajouter l'upload d'image de fond
+
+### Étape 3 (A) : Créer une variable pour l'image de fond
+
+D'abord, vous avez besoin d'un endroit pour stocker l'image uploadée. En haut de votre code (avant les objets track), créez une variable pour stocker l'image de fond.
+
+Réfléchissez à la valeur qu'elle devrait avoir au début - nous n'avons pas encore d'image, donc quelle devrait être la valeur initiale ? Utilisez `null` pour représenter "pas d'image encore".
+
+**Comprendre** :
+- Vous créez une variable pour stocker l'image
+- `null` signifie "pas d'image encore" - nous la définirons quand un utilisateur uploade une image
 - `null` est une valeur spéciale qui signifie "rien" ou "vide"
 
 **Pourquoi `null` ?** C'est une façon de dire "nous n'avons pas encore d'image, mais nous en aurons plus tard." C'est utile pour vérifier si une image a été téléchargée.
 
-### Étape 2 (B) : Créer le bouton de saisie de fichier
+### Étape 3 (B) : Créer le bouton de saisie de fichier
 
-Dans votre fonction `setup()`, après avoir créé le canvas, ajoutez :
+Dans votre fonction `setup()`, après avoir créé le canvas, créez un bouton de saisie de fichier pour les images.
 
-```javascript
-// Create file input for background image
-let bgFileInput = createFileInput(handleBackgroundImage);
-bgFileInput.position(10, 10);
-bgFileInput.attribute('accept', 'image/*');
-```
+Réfléchissez à :
+1. Quelle fonction devrait s'exécuter quand un fichier est sélectionné ? (C'est la fonction de gestion)
+2. Où le bouton devrait-il être positionné à l'écran ? (Utilisez vos fonctions `gridX()` et `gridY()` !)
+3. Comment pouvez-vous restreindre la sélection de fichiers aux images uniquement ?
 
-**Comprendre le code** :
-- [`createFileInput(handleBackgroundImage)`](https://p5js.org/reference/p5/createFileInput) crée un bouton d'upload de fichier
-  - `handleBackgroundImage` est le nom de la fonction qui s'exécutera quand un fichier est sélectionné
-- [`position(10, 10)`](https://p5js.org/reference/p5.Element/position) place le bouton aux coordonnées (10, 10) - en haut à gauche
-- [`attribute('accept', 'image/*')`](https://p5js.org/reference/p5.Element/attribute) restreint la sélection de fichiers aux images uniquement
-  - `'image/*'` signifie "n'importe quel type d'image" (JPG, PNG, GIF, etc.)
+Créez le bouton de saisie de fichier en utilisant `createFileInput()` et passez-lui le nom d'une fonction de gestion qui sera appelée quand un fichier est sélectionné. Positionnez-le à l'écran en utilisant la méthode `position()` avec vos fonctions utilitaires de grille. Utilisez la méthode `attribute()` pour restreindre la sélection de fichiers aux images uniquement en définissant `'accept'` à `'image/*'`.
+
+**Documentation** :
+- [`createFileInput()`](https://p5js.org/reference/p5/createFileInput) crée un bouton d'upload de fichier
+- [`.position()`](https://p5js.org/reference/p5.Element/position) place les éléments à l'écran
+- [`.attribute()`](https://p5js.org/reference/p5.Element/attribute) définit les attributs HTML
 
 
 **Testez !** Vous devriez voir un bouton "Choisir un fichier" en haut à gauche. Essayez de cliquer dessus - un navigateur de fichiers devrait s'ouvrir, mais il ne fera rien encore car nous n'avons pas créé la fonction de gestion.
 
-### Étape 2 (C) : Créer la fonction de gestion
+### Étape 3 (C) : Créer la fonction de gestion
 
-Quand un utilisateur sélectionne un fichier image, vous avez besoin d'une fonction pour le gérer. Créez cette fonction :
+Quand un utilisateur sélectionne un fichier image, vous avez besoin d'une fonction pour le gérer. Créez une fonction qui gère quand un utilisateur sélectionne un fichier image.
 
-```javascript
-function handleBackgroundImage(file) {
-    if (file.type === 'image') {
-        bgImage = loadImage(file.data);
-    }
-}
-```
+Réfléchissez à :
+1. Quelles informations cette fonction recevra-t-elle sur le fichier sélectionné ?
+2. Comment pouvez-vous vérifier si le fichier est réellement une image (et non un autre type) ?
+3. Si c'est une image, comment la chargez-vous et la stockez-vous dans votre variable ?
 
-**Comprendre le code** :
-- `function handleBackgroundImage(file)` - cette fonction s'exécute quand un fichier est sélectionné
-  - `file` est un objet contenant des informations sur le fichier sélectionné
-- `if (file.type === 'image')` - vérifiez si le fichier est une image
-  - `file.type` vous indique quel type de fichier c'est
-- `bgImage = loadImage(file.data)` - chargez l'image depuis le fichier
-  - [`loadImage()`](https://p5js.org/reference/p5/loadImage) charge un fichier image
-  - `file.data` contient les données du fichier que p5.js peut utiliser
+La fonction sera appelée automatiquement par p5.js quand un fichier est sélectionné. Elle reçoit un objet fichier qui contient des informations sur le fichier sélectionné, y compris les données du fichier que vous pouvez utiliser pour charger l'image. Vérifiez `file.type` pour voir si c'est une image, et si c'est le cas, utilisez `loadImage()` pour charger l'image à partir de `file.data` et stockez-la dans votre variable `bgImage`.
+
+**Documentation** : [`loadImage()`](https://p5js.org/reference/p5/loadImage) charge les fichiers image.
 
 **Pourquoi vérifier le type de fichier ?** Les utilisateurs pourraient accidentellement sélectionner le mauvais type de fichier. Cette vérification empêche les erreurs.
 
 
 **Testez !** Essayez d'uploader une image - le fichier devrait être sélectionné, mais vous ne le verrez pas encore (nous l'ajouterons ensuite).
 
-### Étape 2 (D) : Afficher l'image de fond
+### Étape 3 (D) : Afficher l'image de fond
 
-Maintenant, vous devez afficher l'image uploadée comme fond. Dans votre fonction `draw()`, au tout début, remplacez `background(255);` par :
+Maintenant, vous devez afficher l'image uploadée comme fond. Dans votre fonction `draw()`, au tout début, vous devez décider quoi dessiner comme fond.
 
-```javascript
-// Draw background image if loaded, otherwise white background
-if (bgImage) {
-    image(bgImage, 0, 0, width, height);
-} else {
-    background(255);
-}
-```
+Réfléchissez à :
+1. Comment pouvez-vous vérifier si une image a été uploadée ?
+2. Si une image existe, comment la dessinez-vous pour remplir tout le canvas ?
+3. Si aucune image n'existe encore, quel devrait être le fond ?
 
-**Comprendre le code** :
-- `if (bgImage)` - vérifiez si une image a été uploadée
-  - Si `bgImage` n'est pas `null`, cette condition est vraie
-- `image(bgImage, 0, 0, width, height)` - dessinez l'image
-  - [`image()`](https://p5js.org/reference/p5/image) dessine une image
-  - `bgImage` est l'image à dessiner
-  - `0, 0` est la position (coin supérieur gauche)
-  - `width, height` la fait remplir tout le canvas
-- `else { background(255); }` - si pas d'image, utilisez le fond blanc
-  - C'est le fond par défaut
+C'est une vérification conditionnelle - si nous avons une image, utilisez-la ; sinon, utilisez le fond blanc par défaut. Cela se produit à chaque frame dans `draw()`, donc le fond se mettra à jour immédiatement quand une image est uploadée. Utilisez la fonction `image()` pour dessiner l'image, et positionnez-la à `(0, 0)` avec la taille `width` et `height` pour remplir tout le canvas.
+
+**Documentation** : [`image()`](https://p5js.org/reference/p5/image) dessine des images.
 
 
 **Testez !** Uploadez une image - elle devrait maintenant apparaître comme fond, remplissant tout le canvas !
 
 ---
 
-## Étape 3 : Ajouter l'upload de son pour la piste 1
+## Étape 4 : Ajouter l'upload de son pour la piste 1
 
-### Étape 3 (A) : Ajouter la propriété File Input aux objets Track
+### Étape 4 (A) : Ajouter la propriété File Input aux objets Track
 
-Chaque piste doit stocker son bouton de saisie de fichier. Dans les objets `track1` et `track2`, ajoutez :
+Chaque piste doit stocker son bouton de saisie de fichier. Dans les objets `track1` et `track2`, ajoutez une propriété pour stocker le bouton de saisie de fichier.
 
-```javascript
-fileInput: null
-```
+Réfléchissez à la valeur qu'elle devrait avoir au début - nous n'avons pas encore créé le bouton, donc quelle devrait être la valeur initiale ? Utilisez `null` pour représenter que le file input n'existe pas encore.
 
-Donc vos objets track devraient ressembler à :
-
-```javascript
-let track1 = {
-    sound: null,
-    volume: 0.5,
-    isPlaying: false,
-    slider: null,
-    sliderPosition: {
-        x: 150,
-        y: 350
-    },
-    button: null,
-    buttonPosition: {
-        x: 150,
-        y: 200
-    },
-    buttonLabel: "Track 1",
-    fileInput: null  // Add this
-};
-```
-
-**Comprendre le code** :
-- `fileInput: null` - nous stockerons le bouton de saisie de fichier ici plus tard
+**Comprendre** :
+- Vous ajoutez une propriété pour stocker le bouton de saisie de fichier
 - Tout comme `slider: null` et `button: null`, cela stocke un élément UI
+- Nous le définirons quand nous créerons le bouton plus tard
 
-### Étape 3 (B) : Créer le bouton de saisie de fichier pour la piste 1
+### Étape 4 (B) : Créer le bouton de saisie de fichier pour la piste 1
 
-Dans votre fonction `setup()`, après avoir créé le file input de l'image de fond, ajoutez :
+Dans votre fonction `setup()`, après avoir créé le file input de l'image de fond, créez un bouton de saisie de fichier pour la piste 1.
 
-```javascript
-// Create file input for track 1 sound
-track1.fileInput = createFileInput(function(file) {
-    handleSoundUpload(file, track1);
-});
-track1.fileInput.position(10, 50);
-track1.fileInput.attribute('accept', 'audio/*');
-```
+Réfléchissez à :
+1. Quelle fonction devrait s'exécuter quand un fichier est sélectionné ? (Vous devrez passer à la fois le fichier et pour quelle piste c'est)
+2. Où ce bouton devrait-il être positionné ? (Sous le bouton d'upload de fond, en utilisant vos fonctions utilitaires de grille)
+3. Comment pouvez-vous restreindre la sélection de fichiers aux fichiers audio uniquement ?
 
-**Comprendre le code** :
-- `track1.fileInput = createFileInput(...)` - créez le file input et stockez-le dans l'objet track
-- `function(file) { handleSoundUpload(file, track1); }` - quand un fichier est sélectionné :
-  - Cette fonction anonyme s'exécute
-  - Elle appelle `handleSoundUpload()` avec le fichier et l'objet track
-  - Nous passons `track1` pour que la fonction sache quelle piste mettre à jour
-- `position(10, 50)` - placez-le sous le bouton d'upload de fond (50 pixels vers le bas)
-- `attribute('accept', 'audio/*')` - restreignez aux fichiers audio uniquement
+C'est similaire à l'upload d'image de fond, mais cette fois vous devez dire à la fonction de gestion pour quelle piste est le son. Vous pouvez faire cela en passant l'objet track à la fonction de gestion. Créez le file input en utilisant `createFileInput()` avec une fonction qui appelle votre gestionnaire d'upload de son, en passant à la fois le fichier et l'objet track. Positionnez-le sous le bouton d'upload de fond en utilisant vos fonctions utilitaires de grille, et restreignez la sélection de fichiers aux fichiers audio uniquement.
 
 **Pourquoi passer l'objet track ?** Pour que la fonction de gestion sache quelle piste mettre à jour. Cela nous permet d'utiliser le même gestionnaire pour les deux pistes !
 
 
 **Testez !** Vous devriez voir un deuxième bouton "Choisir un fichier" sous le premier. Il ne fonctionnera pas encore car nous n'avons pas créé la fonction de gestion.
 
-### Étape 3 (C) : Créer le gestionnaire d'upload de son
+### Étape 4 (C) : Créer le gestionnaire d'upload de son
 
-Créez une fonction pour gérer les uploads de sons :
+Créez une fonction qui gère quand un utilisateur sélectionne un fichier audio. Réfléchissez à :
+1. Quelles informations cette fonction a-t-elle besoin ? (Le fichier, et pour quelle piste c'est)
+2. Comment pouvez-vous vérifier si le fichier est réellement un fichier audio ?
+3. S'il y a déjà un son en cours de lecture, que devrait-il lui arriver ?
+4. Comment chargez-vous le nouveau son et le préparez-vous à jouer ?
 
-```javascript
-function handleSoundUpload(file, track) {
-    if (file.type === 'audio') {
-        // Stop current sound if playing
-        if (track.sound && track.sound.isPlaying()) {
-            track.sound.stop();
-            track.isPlaying = false;
-        }
-        
-        // Load new sound
-        track.sound = loadSound(file.data);
-        track.sound.setVolume(track.volume);
-    }
-}
-```
+Cette fonction doit gérer le remplacement d'un son existant. Si un son est actuellement en cours de lecture, vous devriez d'abord l'arrêter. Ensuite, chargez le nouveau son et configurez-le avec le volume correct pour qu'il soit prêt à jouer. Vérifiez `file.type` pour voir si c'est un fichier audio, et si c'est le cas, arrêtez tout son actuellement en cours de lecture sur cette piste, chargez le nouveau son à partir de `file.data` en utilisant `loadSound()`, et définissez son volume en utilisant `setVolume()`.
 
-**Comprendre le code** :
-- `function handleSoundUpload(file, track)` - prend le fichier et l'objet track
-- `if (file.type === 'audio')` - vérifiez si c'est un fichier audio
-- `if (track.sound && track.sound.isPlaying())` - s'il y a un son actuel et qu'il est en lecture :
-  - `track.sound.stop()` - arrêtez le son actuel
-  - `track.isPlaying = false` - mettez à jour l'état de lecture
-  - Note: Le label du bouton n'a pas besoin d'être mis à jour (il affiche toujours "▶⏸")
-- `track.sound = loadSound(file.data)` - chargez le nouveau son
-  - [`loadSound()`](https://p5js.org/reference/p5.sound/p5.SoundFile) charge les fichiers son
-  - `file.data` contient les données du fichier
-- `track.sound.setVolume(track.volume)` - définissez le volume pour qu'il soit prêt à jouer
+**Documentation** : [`loadSound()`](https://p5js.org/reference/p5.sound/p5.SoundFile) charge les fichiers son.
 
 **Pourquoi arrêter le son actuel ?** Si un son est en lecture quand un nouveau est uploadé, nous devrions l'arrêter d'abord. Sinon, les deux sons pourraient jouer en même temps, ou l'ancien son pourrait continuer à jouer.
 
@@ -297,21 +269,14 @@ function handleSoundUpload(file, track) {
 
 ### Répéter le processus
 
-La piste 2 a besoin de la même fonctionnalité. Dans votre fonction `setup()`, après avoir créé le file input de la piste 1, ajoutez :
+La piste 2 a besoin de la même fonctionnalité. Dans votre fonction `setup()`, après avoir créé le file input de la piste 1, créez un file input similaire pour la piste 2.
 
-```javascript
-// Create file input for track 2 sound
-track2.fileInput = createFileInput(function(file) {
-    handleSoundUpload(file, track2);
-});
-track2.fileInput.position(10, 90);
-track2.fileInput.attribute('accept', 'audio/*');
-```
+Réfléchissez à :
+1. Comment pouvez-vous réutiliser la même fonction de gestion pour la piste 2 ?
+2. Où ce bouton devrait-il être positionné ? (Sous le bouton d'upload de la piste 1, en utilisant vos fonctions utilitaires de grille)
+3. Qu'est-ce qui est différent de la configuration de la piste 1 ? (Juste l'objet track et la position)
 
-**Comprendre le code** :
-- Même chose que la piste 1, mais pour `track2`
-- Position à `(10, 90)` - sous le file input de la piste 1
-- Utilise la même fonction `handleSoundUpload()` - c'est la réutilisation de code !
+Créez un file input pour la piste 2 en utilisant la même approche que la piste 1. Passez `track2` à la fonction de gestion au lieu de `track1`, et positionnez-le sous le file input de la piste 1 en utilisant vos fonctions utilitaires de grille. Utilisez la même fonction `handleSoundUpload()` - c'est la réutilisation de code !
 
 **Pourquoi le même gestionnaire ?** Parce que nous passons l'objet track comme paramètre, la même fonction fonctionne pour les deux pistes. C'est plus efficace que d'écrire le même code deux fois.
 
@@ -324,61 +289,32 @@ track2.fileInput.attribute('accept', 'audio/*');
 
 ### Ajouter des labels
 
-Les utilisateurs doivent savoir ce que fait chaque bouton de saisie de fichier. Dans votre fonction `draw()`, ajoutez des labels :
+Les utilisateurs doivent savoir ce que fait chaque bouton de saisie de fichier. Dans votre fonction `draw()`, ajoutez des labels de texte au-dessus de chaque bouton de saisie de fichier.
 
-```javascript
-// Draw upload labels
-fill(0);
-textAlign(LEFT);
-text("Upload Background:", 10, 35);
-text("Upload Track 1:", 10, 75);
-text("Upload Track 2:", 10, 115);
-```
+Réfléchissez à :
+1. Quel texte chaque label devrait-il dire ?
+2. Où chaque label devrait-il être positionné ? (Juste au-dessus de son bouton correspondant, en utilisant vos fonctions utilitaires de grille)
+3. Comment le texte devrait-il être aligné ?
 
-**Comprendre le code** :
-- `fill(0)` - couleur de texte noire
-- `textAlign(LEFT)` - alignez le texte à gauche
-- `text("Upload Background:", 10, 35)` - dessinez le label à la position (10, 35)
-  - Positionné juste au-dessus du bouton de saisie de fichier de fond
-- Même chose pour les labels de la piste 1 et de la piste 2
+Les labels aident les utilisateurs à comprendre ce que fait chaque bouton. Positionnez-les juste au-dessus de chaque bouton de saisie de fichier pour qu'il soit clair quel label va avec quel bouton. Utilisez `fill()` pour définir la couleur du texte, `textAlign()` pour aligner le texte, et `text()` pour dessiner chaque label à la position appropriée en utilisant vos fonctions utilitaires de grille.
 
 
 **Testez !** Les labels devraient rendre clair ce que fait chaque bouton !
 
 ### Gérer les cas limites
 
-Assurez-vous que votre code gère les situations où les choses pourraient mal tourner. Mettez à jour votre fonction `toggleTrack()` :
+Assurez-vous que votre code gère les situations où les choses pourraient mal tourner. Mettez à jour votre fonction `toggleTrack()` pour vérifier si le son existe avant d'essayer de le jouer.
 
-```javascript
-function toggleTrack(track) {
-    // Check if sound is loaded
-    if (!track.sound) {
-        return;
-    }
-    
-    // ... rest of the function
-}
-```
+Réfléchissez à :
+1. Que se passe-t-il si un utilisateur clique sur play avant d'uploader un son ?
+2. Comment pouvez-vous vérifier si un son existe avant d'essayer de l'utiliser ?
 
-**Comprendre le code** :
-- `if (!track.sound)` - s'il n'y a pas de son chargé
-- `return;` - quittez la fonction tôt (n'essayez pas de jouer)
-- Cela empêche les erreurs si un utilisateur clique sur play avant d'uploader un son
+Avant d'utiliser quelque chose (comme un son), vérifiez d'abord s'il existe. Cela empêche les erreurs et rend votre programme plus robuste. C'est ce qu'on appelle la "programmation défensive" - vérifier les problèmes potentiels avant qu'ils ne causent des plantages.
 
-Mettez aussi à jour votre fonction `draw()` pour vérifier si les sons existent :
+Mettez aussi à jour votre fonction `draw()` pour vérifier si les sons existent avant d'essayer de les utiliser. Quand vous appliquez des changements de volume, vérifiez d'abord si le son existe et s'il est en cours de lecture, puis appliquez le volume. Cela empêche les erreurs si un son n'a pas encore été uploadé.
 
-```javascript
-// Apply volume to playing sounds
-if (track1.sound && track1.sound.isPlaying()) {
-    track1.sound.setVolume(track1.volume);
-}
-if (track2.sound && track2.sound.isPlaying()) {
-    track2.sound.setVolume(track2.volume);
-}
-```
-
-**Comprendre le code** :
-- `if (track1.sound && ...)` - vérifiez si le son existe ET est en lecture
+**Comprendre** :
+- Vérifiez si le son existe ET est en cours de lecture avant d'essayer de l'utiliser
 - L'opérateur `&&` signifie "les deux conditions doivent être vraies"
 - Cela empêche les erreurs si un son n'a pas encore été uploadé
 
