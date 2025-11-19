@@ -216,7 +216,7 @@ BPM (Beats Per Minute) visualization shows the rhythm of the music through pulsa
 **Understanding `setTimeout()`**: 
 - `setTimeout(function, delay)` runs a function after a specified delay (in milliseconds)
 - You'll need to use `setTimeout()` to delay connecting the analyzer to a newly uploaded sound
-- For example: `setTimeout(function() { track.amp.setInput(track.sound); }, 100);` waits 100 milliseconds before connecting
+- For example: `setTimeout(function() { /* your code here */ }, 100);` waits 100 milliseconds before running the code inside
 
 **Why the delay?** The sound file needs a moment to process and initialize after being loaded. Connecting the analyzer immediately might fail because the sound isn't ready yet. A small delay (100ms) ensures the sound is ready before connecting the analyzer.
 

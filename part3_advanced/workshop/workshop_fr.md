@@ -216,7 +216,7 @@ La visualisation BPM (Beats Per Minute) montre le rythme de la musique à traver
 **Comprendre `setTimeout()`** :
 - `setTimeout(function, delay)` exécute une fonction après un délai spécifié (en millisecondes)
 - Vous devrez utiliser `setTimeout()` pour retarder la connexion de l'analyseur à un son nouvellement uploadé
-- Par exemple : `setTimeout(function() { track.amp.setInput(track.sound); }, 100);` attend 100 millisecondes avant de connecter
+- Par exemple : `setTimeout(function() { /* votre code ici */ }, 100);` attend 100 millisecondes avant d'exécuter le code à l'intérieur
 
 **Pourquoi le délai ?** Le fichier son a besoin d'un moment pour être traité et s'initialiser après le chargement. Connecter l'analyseur immédiatement pourrait échouer parce que le son n'est pas encore prêt. Un petit délai (100ms) assure que le son est prêt avant de connecter l'analyseur.
 
