@@ -78,7 +78,12 @@ p5js_dj/
 
 **Before the workshop starts**, assistants should:
 
-1. **Create a p5.js template**:
+1. **Ensure participants have p5.js accounts**:
+   - Ask participants to create a free p5.js account at [editor.p5js.org](https://editor.p5js.org/) before the workshop begins
+   - Participants need to be logged in to save their work and use the File > Duplicate feature
+   - This should be done during the introduction phase or communicated beforehand
+
+2. **Create a p5.js template**:
    - Open [p5.js web editor](https://editor.p5js.org/)
    - Include the p5.sound library (version 1.11.11)
    - Upload the default sound files from `part1_starter/assets/` to the p5.js editor (or use your own favorite songs)
@@ -99,6 +104,11 @@ p5js_dj/
        background(255);
    }
    ```
+
+
+![How to upload a sound file](img/uploadsound.gif)
+
+
 
 3. **Share the template link**:
    - Share the p5.js editor link with participants
