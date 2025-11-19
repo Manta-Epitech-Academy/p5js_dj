@@ -14,16 +14,82 @@ By the end of this workshop, you'll have:
 - ✅ File upload buttons for each track
 - ✅ The ability to replace sounds with your own audio files
 - ✅ A fully customizable DJ mixing experience
-- ✅ **Mobile-friendly design** that works on phones and tablets
-- ✅ **Touch support** for mobile devices
-- ✅ **Responsive layout** that adapts to any screen size
+- ✅ A grid-based positioning system for easy UI layout
 
 
 ![Preview of the final result](img/canvas_final_2.svg)
 
 ---
 
-## Step 1: Understanding File Uploads
+## Step 1: Setting Up the Grid System
+
+### Understanding the Grid System
+
+To make positioning easier, we'll choose to split the canvas into a 6x6 grid. This means we'll divide the screen into 6 columns and 6 rows, making it easy to position UI elements precisely.
+
+**The Concept**: Instead of manually calculating pixel positions like `width / 6` or `2 * height / 6`, you can create helper functions that convert grid cell coordinates (like column 1, row 2) directly into pixel coordinates.
+
+**Why?** This makes positioning much easier! Instead of writing `width / 6` every time, you can just write `gridX(1)` for column 1, or `gridY(2)` for row 2.
+
+### Step 1A: Create Grid Helper Functions
+
+**What you need to do**: Create two helper functions that convert grid cell coordinates to pixel positions:
+
+1. `gridX(cellX)` - Takes a column number (0-5) and returns the X pixel position
+2. `gridY(cellY)` - Takes a row number (0-5) and returns the Y pixel position
+
+**The Logic**:
+- For a 6-column grid, column 0 starts at X position 0, column 1 is at `width / 6`, column 2 is at `2 * width / 6`, etc.
+- For a 6-row grid, row 0 starts at Y position 0, row 1 is at `height / 6`, row 2 is at `2 * height / 6`, etc.
+
+**Example**:
+- `gridX(0)` returns `0` (left edge)
+- `gridX(1)` returns `width / 6` (column 1)
+- `gridX(3)` returns `3 * width / 6` (column 3)
+- `gridY(0)` returns `0` (top edge)
+- `gridY(1)` returns `height / 6` (row 1)
+- `gridY(2)` returns `2 * height / 6` (row 2)
+
+**Hint**: Use multiplication! `gridX(cellX)` should return `cellX * width / 6`.
+
+### Step 1B: Add a Grid Visual (Optional)
+
+**What you need to do**: Create a `drawGrid()` function that draws the grid lines on the canvas. This helps you see where the grid cells are while you're positioning elements.
+
+**The Logic**:
+- Draw vertical lines at `width / 6`, `2 * width / 6`, `3 * width / 6`, `4 * width / 6`, `5 * width / 6`
+- Draw horizontal lines at `height / 6`, `2 * height / 6`, `3 * height / 6`, `4 * height / 6`, `5 * height / 6`
+- Use a light gray color so it's visible but not distracting
+
+**Tip**: You can use your `gridX()` and `gridY()` functions here! Loop from 1 to 5 and draw lines at `gridX(i)` and `gridY(i)`.
+
+Call `drawGrid()` in your `draw()` function to see the grid.
+
+### Step 1C: Reposition Existing UI Elements Using the Grid
+
+**What you need to do**: Update your existing UI elements from Part 1 to use the grid system. 
+
+From Part 1, you have:
+- Track 1 button and slider
+- Track 2 button and slider
+
+**Reposition them using your grid helper functions**:
+- Track 1 button: Column 1, Row 2 (use `gridX(1)`, `gridY(2)`)
+- Track 1 slider: Column 1, Row 3 (use `gridX(1)`, `gridY(3)`)
+- Track 2 button: Column 4, Row 2 (use `gridX(4)`, `gridY(2)`)
+- Track 2 slider: Column 4, Row 3 (use `gridX(4)`, `gridY(3)`)
+- Title: Center (use `width / 2`, `gridY(0)`)
+- Volume labels: Above sliders (use `gridX(1)`, `gridY(3) - 20` and `gridX(4)`, `gridY(3) - 20`)
+
+**Update your `updatePositions()` function** (or wherever you set positions) to use `gridX()` and `gridY()` instead of manually calculating `width / 6` or `height / 6`.
+
+**Important**: Use the grid system for all UI positioning from now on! This will make it much easier to add new elements later.
+
+**Test it!** Make sure all your existing buttons and sliders are still working and properly positioned on the grid.
+
+---
+
+## Step 2: Understanding File Uploads
 
 ### What Are File Uploads?
 
@@ -46,7 +112,7 @@ In p5.js, you use `createFileInput()` to make a file upload button. When a user 
 
 ---
 
-## Step 2: Adding Background Image Upload
+## Step 3: Adding Background Image Upload
 
 ### Understanding Image Uploads
 
@@ -73,8 +139,10 @@ You want users to be able to upload their own background image. This replaces th
 
 **What you need to do**: In `setup()`, after creating the canvas, create a file input button. Think about:
 1. What function should run when a file is selected? (This is the handler function)
-2. Where should the button be positioned on screen?
+2. Where should the button be positioned on screen? (Use your `gridX()` and `gridY()` functions!)
 3. How can you restrict file selection to only images?
+
+**Positioning tip**: Use your `gridX()` and `gridY()` functions! For example, to position at column 1, row 0, you'd use `gridX(1)` and `gridY(0)`. Remember to use the grid system for all positioning!
 
 **The process**: When you create a file input, you tell it what function to call when a file is selected. This function will receive information about the selected file, which you can then use to load the image.
 
@@ -133,7 +201,7 @@ You want users to be able to upload their own background image. This replaces th
 
 ---
 
-## Step 3: Adding Sound Upload for Track 1
+## Step 4: Adding Sound Upload for Track 1
 
 ### Understanding Sound Uploads
 
@@ -193,7 +261,6 @@ Now you want users to upload their own sounds for each track. This is similar to
 
 **Important**: If the sound is playing when a new one is uploaded, you should:
 - Stop it: `track.sound.stop()`
-- Reset the button: `track.button.html(track.buttonLabel + " ▶")`
 - Set `track.isPlaying = false`
 
 **Documentation**: [`loadSound()`](https://p5js.org/reference/p5.sound/p5.SoundFile) loads sound files.
@@ -202,7 +269,7 @@ Now you want users to upload their own sounds for each track. This is similar to
 
 ---
 
-## Step 4: Adding Sound Upload for Track 2
+## Step 5: Adding Sound Upload for Track 2
 
 ### Repeating the Process
 
@@ -220,7 +287,7 @@ Now you want users to upload their own sounds for each track. This is similar to
 
 ---
 
-## Step 5: Improving User Experience
+## Step 6: Improving User Experience
 
 ### Adding Labels
 
@@ -255,7 +322,7 @@ Now you want users to upload their own sounds for each track. This is similar to
 
 ---
 
-## Step 6: Putting It All Together
+## Step 7: Putting It All Together
 
 ### Final Testing
 
@@ -279,92 +346,6 @@ Now that you have file uploads working, try:
 
 ---
 
-## Step 7: Making It Mobile-Friendly
-
-### Understanding Mobile Support
-
-Your DJ deck should work on mobile devices! This means:
-- **Touch support**: Buttons and sliders work with touch, not just mouse clicks
-- **Responsive design**: The layout adapts to different screen sizes
-- **Full screen**: Uses the entire screen on mobile devices
-
-### Step 7A: Making the Canvas Responsive
-
-**The Logic**: Instead of a fixed canvas size, use the full window size so it works on any device.
-
-**What you need to do**: In `setup()`, change how you create the canvas. Instead of a fixed size, use variables that give you the size of the browser window. Think about:
-1. What p5.js variables give you the window dimensions?
-2. How does this make your sketch work on different screen sizes?
-
-**The process**: Using `windowWidth` and `windowHeight` makes your canvas fill the entire browser window, regardless of the device size. This is the first step to making your sketch responsive.
-
-**Understanding the code**:
-- `windowWidth` and `windowHeight` are p5.js variables that give you the browser window size
-- This makes your canvas fill the entire screen on any device
-
-**Documentation**: [`windowWidth`](https://p5js.org/reference/p5/windowWidth) and [`windowHeight`](https://p5js.org/reference/p5/windowHeight) give you the window dimensions.
-
-### Step 7B: Making Positions Responsive
-
-**The Logic**: Instead of hardcoded positions, calculate them based on screen size.
-
-**What you need to do**: Create a function that calculates positions based on the screen size. Think about:
-1. How can you use percentages instead of fixed pixel values?
-2. How do you calculate positions relative to the center of the screen?
-3. What positions need to be updated? (Buttons, sliders, etc.)
-
-**The process**: Instead of saying "put this at x=150", you say "put this at 30% from the left edge". This way, the layout adapts to any screen size. Calculate positions using percentages of `width` and `height`.
-
-**Example logic**:
-- Center X: `width / 2`
-- Button Y: `height * 0.3` (30% down the screen)
-- Slider Y: `height * 0.6` (60% down the screen)
-- Track 1: `centerX - width * 0.2` (left of center)
-- Track 2: `centerX + width * 0.2` (right of center)
-
-**Visual Concept**: ![Diagram showing responsive positioning based on screen size](img/responsiveness.svg)
-
-**Test it!** Resize your browser window - the buttons and sliders should move to stay in the right positions!
-
-### Step 7C: Adding Touch Support
-
-**The Logic**: Mobile devices use touch, not mouse clicks. You need to support both.
-
-**What you need to do**: When creating buttons, add support for touch events in addition to mouse clicks. Think about:
-1. What method handles touch events on buttons?
-2. Should it do the same thing as mouse clicks?
-
-**The process**: Mobile devices use touch events instead of mouse events. By adding both `.mousePressed()` and `.touchStarted()`, your buttons will work on both desktop (mouse) and mobile (touch) devices.
-
-**Understanding the code**:
-- `.touchStarted()` is like `.mousePressed()` but for touch screens
-- This makes buttons work on mobile devices
-
-**Documentation**: [`.touchStarted()`](https://p5js.org/reference/p5.Element/touchStarted) handles touch events.
-
-**Test it!** On a mobile device, you should be able to tap the buttons to play/pause!
-
-### Step 7D: Handling Window Resize
-
-**The Logic**: When the window size changes (like rotating a phone), you need to update positions.
-
-**What you need to do**: Create a function that automatically runs when the window is resized. Think about:
-1. What needs to happen when the window size changes?
-2. How do you resize the canvas?
-3. What positions need to be recalculated?
-
-**The process**: When a user rotates their phone or resizes the browser window, everything needs to reposition itself. The `windowResized()` function runs automatically when this happens, so you can update the canvas size and recalculate all positions.
-
-**Understanding the code**:
-- `windowResized()` runs automatically when the window size changes
-- This keeps everything positioned correctly after rotation or resize
-
-**Documentation**: [`windowResized()`](https://p5js.org/reference/p5/windowResized) handles window resize events.
-
-**Test it!** Rotate your phone or resize the browser - everything should stay in the right place!
-
----
-
 ## Step 8: Sharing Your DJ Deck
 
 ### Sharing on p5.js Web Editor
@@ -382,21 +363,6 @@ Your DJ deck should work on mobile devices! This means:
 - Friends can use your DJ deck
 - They can upload their own sounds and images
 - You can get feedback and see how others use it
-
-### Testing on Mobile
-
-**What you need to do**: Open your shared sketch on a mobile device and test everything. Think about:
-1. Do all the buttons work with touch?
-2. Can you interact with all the controls?
-3. Does the layout look good on a small screen?
-4. What happens when you rotate the device?
-
-**The process**: Testing on mobile is important because touch interactions are different from mouse clicks, and screen sizes are different. Make sure everything works well on a real device!
-
-**Why test on mobile?**
-- Mobile devices are how most people access the web
-- Touch interactions are different from mouse clicks
-- Screen sizes vary, so you need to make sure it works everywhere
 
 ### Sharing with Friends
 
@@ -428,15 +394,14 @@ You've successfully added customization features to your DJ deck! Users can now:
 - How to handle image and audio file uploads
 - How to replace existing assets with user-uploaded files
 - How to improve user experience with labels and error handling
-- How to make your sketch mobile-friendly with responsive design
-- How to add touch support for mobile devices
+- How to use a grid-based positioning system for UI layout
+- How to create helper functions for cleaner code
 - How to share your creation with others
 
 **Next Steps**:
 - Experiment with different file types
 - Add more customization options
 - **Share your p5.js sketch link with friends!**
-- **Test it on mobile devices**
 - **Encourage friends to create their own custom DJ decks!**
 
 ---
@@ -454,15 +419,6 @@ You've successfully added customization features to your DJ deck! Users can now:
 
 **Problem**: Wrong file types can be selected
 - **Solution**: Check that you're using `.attribute('accept', 'image/*')` or `'audio/*'`
-
-**Problem**: Buttons don't work on mobile
-- **Solution**: Make sure you added `.touchStarted()` handlers to your buttons
-
-**Problem**: Layout looks wrong on mobile
-- **Solution**: Check that you're using `windowWidth` and `windowHeight`, and that `updatePositions()` calculates positions based on screen size
-
-**Problem**: Elements don't move when screen rotates
-- **Solution**: Make sure you have a `windowResized()` function that updates positions
 
 **Remember**: If something doesn't work, check the browser console for error messages!
 

@@ -82,37 +82,22 @@ A quick guide for adding file upload functionality to your DJ deck.
 
 ---
 
-## Step 7: Mobile-Friendly
+## Step 1.5: Grid Helper Functions
 
-### Step 7 (A): Responsive Canvas
-- Use `createCanvas(windowWidth, windowHeight)` instead of fixed size
-
-### Step 7 (B): Responsive Positions
-- Create `updatePositions()` function
-- Use percentages: `width * 0.3` instead of fixed pixels
-- Calculate based on screen size
-
-### Step 7 (C): Touch Support
-- Add `.touchStarted()` handlers to buttons
-- Same as `.mousePressed()` but for touch
-
-### Step 7 (D): Window Resize
-- Create `windowResized()` function
-- Resize canvas and update positions
+### Create Grid Functions
+- `gridX(cellX)` - Returns X position for column (0-5)
+- `gridY(cellY)` - Returns Y position for row (0-5)
+- Formula: `cellX * width / 6` for X, `cellY * height / 6` for Y
+- Use these functions for all UI element positioning!
 
 ---
 
-## Step 8: Sharing
+## Step 7: Sharing
 
 ### Share on p5.js
 - Click "Share" button in editor
 - Copy the link
 - Send to friends
-
-### Test on Mobile
-- Open link on phone/tablet
-- Test all features
-- Test screen rotation
 
 ### Share with Friends
 - Send link to friend
@@ -128,9 +113,7 @@ A quick guide for adding file upload functionality to your DJ deck.
 - ✅ Upload Track 2 sound - does it work?
 - ✅ Play both tracks - do they mix?
 - ✅ Click play before upload - handled gracefully?
-- ✅ Works on mobile - buttons respond to touch?
-- ✅ Responsive - adapts to screen size?
-- ✅ Screen rotation - everything stays positioned?
+- ✅ Grid functions work correctly?
 
 ---
 

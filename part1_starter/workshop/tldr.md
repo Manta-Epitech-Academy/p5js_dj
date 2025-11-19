@@ -36,7 +36,7 @@ This guide outlines the step-by-step plan for building a DJ mixing deck with two
 ## Step 3: Create Buttons
 
 ### Step 3 (A): Create Buttons in setup()
-- Create `track1.button = createButton(track1.buttonLabel)`
+- Create `track1.button = createButton("▶⏸")`
 - Position it: `track1.button.position(track1.buttonPosition.x, track1.buttonPosition.y)`
 - Connect it: `track1.button.mousePressed(function() { toggleTrack(track1); })`
 - Do the same for track2

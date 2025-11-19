@@ -134,7 +134,7 @@ function updatePositions() {
 - This places them below the volume sliders (which are at 45%)
 - Uses the same `leftX` and `rightX` as other track elements
 
-**Test it!** Resize the window - the time sliders should stay in the right position!
+**Test it!** Play a track and watch the time slider update as it plays!
 
 ### Step 1 (D): Updating Time Sliders During Playback
 

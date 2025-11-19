@@ -7,13 +7,13 @@ let track1 = {
     isPlaying: false,
     slider: null,
     sliderPosition: {
-        x: 150,
-        y: 350
+        x: 0,
+        y: 0
     },
     button: null,
     buttonPosition: {
-        x: 150,
-        y: 200
+        x: 0,
+        y: 0
     },
     buttonLabel: "Track 1"
 };
@@ -25,13 +25,13 @@ let track2 = {
     isPlaying: false,
     slider: null,
     sliderPosition: {
-        x: 450,
-        y: 350
+        x: 0,
+        y: 0
     },
     button: null,
     buttonPosition: {
-        x: 450,
-        y: 200
+        x: 0,
+        y: 0
     },
     buttonLabel: "Track 2"
 };
@@ -44,6 +44,9 @@ function preload() {
 
 function setup() {
     createCanvas(800, 600);
+    
+    // Align positions to grid cells (6x6 grid)
+    updatePositions();
     
     // Create play button for track 1
     track1.button = createButton("▶⏸");
@@ -72,19 +75,40 @@ function setup() {
     track2.sound.setVolume(track2.volume);
 }
 
+function updatePositions() {
+    // Align to grid cells: columns are width/6, 2*width/6, 3*width/6, 4*width/6, 5*width/6
+    // Row 1 (1*height/6): buttons (shifted 1 cell up)
+    // Row 3 (3*height/6): sliders (shifted 2 cells up)
+    
+    // Track 1: column 1 (width/6)
+    track1.buttonPosition.x = width / 6;
+    track1.buttonPosition.y = 1 * height / 6;
+    track1.sliderPosition.x = width / 6;
+    track1.sliderPosition.y = 3 * height / 6;
+    
+    // Track 2: column 4 (4*width/6)
+    track2.buttonPosition.x = 4 * width / 6;
+    track2.buttonPosition.y = 1 * height / 6;
+    track2.sliderPosition.x = 4 * width / 6;
+    track2.sliderPosition.y = 3 * height / 6;
+}
+
 function draw() {
     background(255);
     
-    // Draw title
-    fill(0);
-    textAlign(CENTER);
-    text("DJ Mixing Deck", width/2, 50);
+    // Draw grid: 6x6 cells, each cell is 1/6 width x 1/6 height
+    drawGrid();
     
-    // Draw volume labels
+    // Draw title - center of top row (row 0)
     fill(0);
     textAlign(CENTER);
-    text("Volume", 210, 330);
-    text("Volume", 510, 330);
+    text("DJ Mixing Deck", width/2, height / 12);
+    
+    // Draw volume labels - above sliders in row 3
+    fill(0);
+    textAlign(CENTER);
+    text("Volume", width / 6, 3 * height / 6 - 20);
+    text("Volume", 4 * width / 6, 3 * height / 6 - 20);
     
     // Update volume from sliders
     track1.volume = track1.slider.value() / 100;
@@ -112,5 +136,22 @@ function toggleTrack(track) {
         track.sound.setLoop(true);
         track.sound.play();
         track.isPlaying = true;
+    }
+}
+
+function drawGrid() {
+    stroke(200); // Light gray color for grid lines
+    strokeWeight(1);
+    
+    // Draw vertical lines (6 columns)
+    for (let i = 1; i < 6; i++) {
+        let x = width * i / 6;
+        line(x, 0, x, height);
+    }
+    
+    // Draw horizontal lines (6 rows)
+    for (let i = 1; i < 6; i++) {
+        let y = height * i / 6;
+        line(0, y, width, y);
     }
 }

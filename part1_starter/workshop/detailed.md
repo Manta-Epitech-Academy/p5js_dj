@@ -392,14 +392,14 @@ function setup() {
     createCanvas(800, 600);
     
     // Create play button for track 1
-    track1.button = createButton(track1.buttonLabel);
+    track1.button = createButton("▶⏸");
     track1.button.position(track1.buttonPosition.x, track1.buttonPosition.y);
     track1.button.mousePressed(function() {
         toggleTrack(track1);
     });
     
     // Create play button for track 2
-    track2.button = createButton(track2.buttonLabel);
+    track2.button = createButton("▶⏸");
     track2.button.position(track2.buttonPosition.x, track2.buttonPosition.y);
     track2.button.mousePressed(function() {
         toggleTrack(track2);

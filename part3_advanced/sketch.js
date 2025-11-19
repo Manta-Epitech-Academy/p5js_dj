@@ -1,5 +1,14 @@
 // DJ Mixing Deck - Advanced DJ Interface with Customization
 
+// Grid helper functions - convert grid cell coordinates to pixel positions
+function gridX(cellX) {
+    return cellX * width / 6;
+}
+
+function gridY(cellY) {
+    return cellY * height / 6;
+}
+
 // Background image
 let bgImage = null;
 
@@ -10,10 +19,6 @@ let touchTimeout = null;
 // Crossfader (0 = only track 1, 100 = only track 2, 50 = both)
 let crossfader = null;
 let crossfaderValue = 50;
-
-// Amplitude analyzers for BPM visualization
-let amp1 = null;
-let amp2 = null;
 
 // Background file input
 let bgFileInput = null;
@@ -41,7 +46,8 @@ let track1 = {
     buttonLabel: "Track 1",
     fileInput: null,
     isDraggingTime: false,
-    pulseSize: 80
+    pulseSize: 80,
+    amp: null
 };
 
 // Track 2 - all properties together
@@ -67,7 +73,8 @@ let track2 = {
     buttonLabel: "Track 2",
     fileInput: null,
     isDraggingTime: false,
-    pulseSize: 80
+    pulseSize: 80,
+    amp: null
 };
 
 function preload() {
@@ -77,12 +84,32 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(800, 600);
     
-    amp1 = new p5.Amplitude();
-    amp2 = new p5.Amplitude();
+    track1.amp = new p5.Amplitude();
+    track2.amp = new p5.Amplitude();
     
-    updatePositions();
+    // Calculate positions using grid helper functions
+    // Row 2: buttons
+    // Row 3: volume sliders
+    // Row 4: time sliders
+    // Row 5: crossfader
+    
+    // Track 1: column 1
+    track1.buttonPosition.x = gridX(1);
+    track1.buttonPosition.y = gridY(2);
+    track1.sliderPosition.x = gridX(1);
+    track1.sliderPosition.y = gridY(3);
+    track1.timeSliderPosition.x = gridX(1);
+    track1.timeSliderPosition.y = gridY(4);
+    
+    // Track 2: column 4
+    track2.buttonPosition.x = gridX(4);
+    track2.buttonPosition.y = gridY(2);
+    track2.sliderPosition.x = gridX(4);
+    track2.sliderPosition.y = gridY(3);
+    track2.timeSliderPosition.x = gridX(4);
+    track2.timeSliderPosition.y = gridY(4);
     
     setupFileInputs();
     setupTrackButton(track1);
@@ -94,25 +121,27 @@ function setup() {
     track1.sound.setVolume(track1.volume);
     track2.sound.setVolume(track2.volume);
     
-    amp1.setInput(track1.sound);
-    amp2.setInput(track2.sound);
+    track1.amp.setInput(track1.sound);
+    track2.amp.setInput(track2.sound);
 }
 
 function setupFileInputs() {
+    // Row 0: background (column 1) - 6x6 grid (center of row 0)
+    bgFileInput = createFileInput(handleBackgroundImage);
+    bgFileInput.position(gridX(1) - 60, gridY(1) / 2);
+    bgFileInput.attribute('accept', 'image/*');
+    
+    // Row 1: track 1 (column 1) and track 2 (column 4) (center of row 1)
     track1.fileInput = createFileInput(function(file) {
         handleSoundUpload(file, track1);
     });
-    track1.fileInput.position(width * 0.15 - 60, height * 0.15);
+    track1.fileInput.position(gridX(1) - 60, gridY(1));
     track1.fileInput.attribute('accept', 'audio/*');
-    
-    bgFileInput = createFileInput(handleBackgroundImage);
-    bgFileInput.position(width/2 - 60, height * 0.15);
-    bgFileInput.attribute('accept', 'image/*');
     
     track2.fileInput = createFileInput(function(file) {
         handleSoundUpload(file, track2);
     });
-    track2.fileInput.position(width * 0.85 - 60, height * 0.15);
+    track2.fileInput.position(gridX(4) - 60, gridY(1));
     track2.fileInput.attribute('accept', 'audio/*');
 }
 
@@ -149,7 +178,6 @@ function setupTrackSliders(track) {
     
     track.timeSlider = createSlider(0, 100, 0);
     track.timeSlider.position(track.timeSliderPosition.x, track.timeSliderPosition.y);
-    track.timeSlider.style('width', '150px');
     track.timeSlider.input(function() {
         // Safety check: prevents errors if sound isn't loaded yet (not needed for basic workshop)
         // if (!track.sound) {
@@ -167,74 +195,10 @@ function setupTrackSliders(track) {
 
 function setupCrossfader() {
     crossfader = createSlider(0, 100, 50);
-    crossfader.position(width/2 - 100, height * 0.75);
+    crossfader.position(width / 2 - 100, gridY(5));
     crossfader.style('width', '200px');
 }
 
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-    updatePositions();
-    
-    updateTrackPositions(track1);
-    updateTrackPositions(track2);
-    
-    crossfader.position(width/2 - 100, height * 0.75);
-    
-    track1.fileInput.position(width * 0.15 - 60, height * 0.15);
-    bgFileInput.position(width/2 - 60, height * 0.15);
-    track2.fileInput.position(width * 0.85 - 60, height * 0.15);
-}
-
-function updateTrackPositions(track) {
-    track.button.position(track.buttonPosition.x, track.buttonPosition.y);
-    track.slider.position(track.sliderPosition.x, track.sliderPosition.y);
-    track.timeSlider.position(track.timeSliderPosition.x, track.timeSliderPosition.y);
-}
-
-function updatePositions() {
-    // Calculate responsive positions based on screen size
-    // Layout: 3 columns - Track 1 | Center (beat visuals) | Track 2
-    let leftX = width * 0.15;      // Left column (Track 1)
-    let centerX = width / 2;       // Center (beat visuals)
-    let rightX = width * 0.85;     // Right column (Track 2)
-    
-    let topY = height * 0.15;      // Top row (file inputs)
-    let buttonY = height * 0.3;   // Play/pause buttons
-    let volumeSliderY = height * 0.45;  // Volume sliders
-    let timeSliderY = height * 0.55;    // Duration sliders
-    let crossfaderY = height * 0.75;    // Crossfader position
-    
-    // Track 1 on left side
-    track1.buttonPosition.x = leftX;
-    track1.buttonPosition.y = buttonY;
-    track1.sliderPosition.x = leftX;
-    track1.sliderPosition.y = volumeSliderY;
-    track1.timeSliderPosition.x = leftX;
-    track1.timeSliderPosition.y = timeSliderY;
-    
-    // Track 2 on right side
-    track2.buttonPosition.x = rightX;
-    track2.buttonPosition.y = buttonY;
-    track2.sliderPosition.x = rightX;
-    track2.sliderPosition.y = volumeSliderY;
-    track2.timeSliderPosition.x = rightX;
-    track2.timeSliderPosition.y = timeSliderY;
-    
-    // Update crossfader position (centered at bottom)
-    // Note: This check is necessary because updatePositions() is called before crossfader is created
-    if (crossfader) {
-        crossfader.position(centerX - 100, crossfaderY);
-    }
-    
-    // Update file input positions (top row: track1 | background | track2)
-    // Note: These checks are necessary because updatePositions() is called before file inputs are created
-    if (track1.fileInput) {
-        track1.fileInput.position(leftX - 60, topY);
-    }
-    if (track2.fileInput) {
-        track2.fileInput.position(rightX - 60, topY);
-    }
-}
 
 function formatTime(seconds) {
     // Convert seconds to MM:SS format
@@ -248,6 +212,16 @@ function formatTime(seconds) {
 
 function draw() {
     drawBackground();
+    
+    // Draw grid: 6x6 cells, each cell is 1/6 width x 1/6 height
+    drawGrid();
+    
+    // Draw title - center of row 0 (matching part2 UI)
+    fill(0);
+    textAlign(CENTER);
+    textSize(min(width, height) * 0.04);
+    text("DJ Mixing Deck", width / 2, gridY(1) / 2);
+    
     drawLabels();
     drawTimeDisplay(track1);
     drawTimeDisplay(track2);
@@ -270,22 +244,23 @@ function drawBackground() {
 function drawLabels() {
     fill(0);
     textAlign(CENTER);
-    textSize(12);
     
-    text("choose track 1", width * 0.15, height * 0.12);
-    text("change background", width/2, height * 0.12);
-    text("choose track 2", width * 0.85, height * 0.12);
+    // Upload labels - matching part2 UI style
+    textSize(min(width, height) * 0.025);
+    text("Upload Background:", gridX(1), gridY(1) / 2 - 10);
+    text("Upload Track 1:", gridX(1), gridY(1) - 10);
+    text("Upload Track 2:", gridX(4), gridY(1) - 10);
     
-    text("track 1", track1.buttonPosition.x, track1.buttonPosition.y + 30);
-    text("track 2", track2.buttonPosition.x, track2.buttonPosition.y + 30);
+    // Volume labels - matching part2 UI style
+    textSize(min(width, height) * 0.025);
+    text("Volume", track1.sliderPosition.x, track1.sliderPosition.y - 20);
+    text("Volume", track2.sliderPosition.x, track2.sliderPosition.y - 20);
     
-    text("volume", track1.sliderPosition.x, track1.sliderPosition.y - 15);
-    text("volume", track2.sliderPosition.x, track2.sliderPosition.y - 15);
-    
+    // Duration labels and crossfader label - same size as volume text
+    textSize(min(width, height) * 0.025);
     text("duration", track1.timeSliderPosition.x, track1.timeSliderPosition.y - 15);
     text("duration", track2.timeSliderPosition.x, track2.timeSliderPosition.y - 15);
-    
-    text("crossfader", width/2, height * 0.72);
+    text("crossfader", width / 2, gridY(5) - 20);
 }
 
 function drawTimeDisplay(track) {
@@ -356,18 +331,18 @@ function updateTimeSlider(track) {
 }
 
 function drawBPMVisualization() {
-    track1.pulseSize = getPulseSize(track1, amp1);
-    track2.pulseSize = getPulseSize(track2, amp2);
+    track1.pulseSize = getPulseSize(track1);
+    track2.pulseSize = getPulseSize(track2);
     
-    let centerX = width / 2;
-    let beatVisualY = height * 0.3;
-    
-    drawBeatCircle(centerX - 60, beatVisualY, track1.pulseSize, [255, 0, 0], "beat visual 1");
-    drawBeatCircle(centerX + 60, beatVisualY, track2.pulseSize, [0, 0, 255], "beat visual 2");
+    // Beat visuals centered on play/pause button positions
+    drawBeatCircle(track1.buttonPosition.x, track1.buttonPosition.y, track1.pulseSize, [255, 0, 0], "beat visual 1");
+    drawBeatCircle(track2.buttonPosition.x, track2.buttonPosition.y, track2.pulseSize, [0, 0, 255], "beat visual 2");
 }
 
-function getPulseSize(track, amp) {
-    let level = (track.sound && amp) ? amp.getLevel() : 0;
+function getPulseSize(track) {
+    // Safety check: prevents errors if sound isn't loaded yet (not needed for basic workshop)
+    // let level = (track.sound && track.amp) ? track.amp.getLevel() : 0;
+    let level = track.amp ? track.amp.getLevel() : 0;
     return Math.max(80, 80 + (level * 400));
 }
 
@@ -376,11 +351,23 @@ function drawBeatCircle(x, y, size, color, label) {
     stroke(color[0], color[1], color[2], 150);
     strokeWeight(3);
     circle(x, y, size);
+}
+
+function drawGrid() {
+    stroke(200); // Light gray color for grid lines
+    strokeWeight(1);
     
-    fill(0);
-    textAlign(CENTER);
-    textSize(12);
-    text(label, x, y + size/2 + 15);
+    // Draw vertical lines (6 columns) using gridX
+    for (let i = 1; i < 6; i++) {
+        let x = gridX(i);
+        line(x, 0, x, height);
+    }
+    
+    // Draw horizontal lines (6 rows) using gridY
+    for (let i = 1; i < 6; i++) {
+        let y = gridY(i);
+        line(0, y, width, y);
+    }
 }
 
 // Removed getAmplitudeFromPeaks() - now using p5.Amplitude.getLevel() instead
@@ -424,11 +411,7 @@ function playTrack(track) {
 }
 
 function connectAmplitudeAnalyzer(track) {
-    if (track === track1) {
-        amp1.setInput(track.sound);
-    } else {
-        amp2.setInput(track.sound);
-    }
+    track.amp.setInput(track.sound);
 }
 
 function mousePressed() {

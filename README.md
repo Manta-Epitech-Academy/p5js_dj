@@ -85,7 +85,7 @@ DJ/
 
 3. **Share the template link**:
    - Share the p5.js editor link with participants
-   - Participants can fork/copy this template to start
+   - Participants can duplicate this template by using File > Duplicate in the p5.js Web Editor
    - This ensures everyone has the assets uploaded and ready to use
 
 **Why this approach?**

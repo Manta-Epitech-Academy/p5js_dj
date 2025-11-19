@@ -1,7 +1,19 @@
 // DJ Mixing Deck - Simple DJ Interface with Customization
 
+// Grid helper functions - convert grid cell coordinates to pixel positions
+function gridX(cellX) {
+    return cellX * width / 6;
+}
+
+function gridY(cellY) {
+    return cellY * height / 6;
+}
+
 // Background image
 let bgImage = null;
+
+// Background file input
+let bgFileInput = null;
 
 // Track if touch was used to prevent double-triggering with mouse events
 let touchUsed = false;
@@ -52,29 +64,42 @@ function preload() {
 }
 
 function setup() {
-    // Use full screen size for mobile responsiveness
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(800, 600);
     
-    // Calculate responsive positions
-    updatePositions();
+    // Calculate positions using grid helper functions
+    // Row 2: buttons
+    // Row 3: sliders
     
-    // Create file input for background image
-    let bgFileInput = createFileInput(handleBackgroundImage);
-    bgFileInput.position(10, 10);
+    // Track 1: column 1
+    track1.buttonPosition.x = gridX(1);
+    track1.buttonPosition.y = gridY(2);
+    track1.sliderPosition.x = gridX(1);
+    track1.sliderPosition.y = gridY(3);
+    
+    // Track 2: column 4
+    track2.buttonPosition.x = gridX(4);
+    track2.buttonPosition.y = gridY(2);
+    track2.sliderPosition.x = gridX(4);
+    track2.sliderPosition.y = gridY(3);
+    
+    // Create file inputs aligned to grid cells (6x6 grid)
+    // Background: row 0, column 1 (center of row 0)
+    bgFileInput = createFileInput(handleBackgroundImage);
+    bgFileInput.position(gridX(1) - 60, gridY(1) / 2);
     bgFileInput.attribute('accept', 'image/*');
     
-    // Create file input for track 1 sound
+    // Track 1: row 1, column 1 (center of row 1)
     track1.fileInput = createFileInput(function(file) {
         handleSoundUpload(file, track1);
     });
-    track1.fileInput.position(10, 50);
+    track1.fileInput.position(gridX(1) - 60, gridY(1));
     track1.fileInput.attribute('accept', 'audio/*');
     
-    // Create file input for track 2 sound
+    // Track 2: row 1, column 4 (center of row 1)
     track2.fileInput = createFileInput(function(file) {
         handleSoundUpload(file, track2);
     });
-    track2.fileInput.position(10, 90);
+    track2.fileInput.position(gridX(4) - 60, gridY(1));
     track2.fileInput.attribute('accept', 'audio/*');
     
     // Create play button for track 1
@@ -142,37 +167,6 @@ function setup() {
     track2.sound.setVolume(track2.volume);
 }
 
-function windowResized() {
-    // Resize canvas when window size changes
-    resizeCanvas(windowWidth, windowHeight);
-    updatePositions();
-    
-    // Update button and slider positions
-    track1.button.position(track1.buttonPosition.x, track1.buttonPosition.y);
-    track2.button.position(track2.buttonPosition.x, track2.buttonPosition.y);
-    track1.slider.position(track1.sliderPosition.x, track1.sliderPosition.y);
-    track2.slider.position(track2.sliderPosition.x, track2.sliderPosition.y);
-}
-
-function updatePositions() {
-    // Calculate responsive positions based on screen size
-    let centerX = width / 2;
-    let buttonY = height * 0.3;
-    let sliderY = height * 0.6;
-    
-    // Track 1 on left side
-    track1.buttonPosition.x = centerX - width * 0.2;
-    track1.buttonPosition.y = buttonY;
-    track1.sliderPosition.x = centerX - width * 0.2;
-    track1.sliderPosition.y = sliderY;
-    
-    // Track 2 on right side
-    track2.buttonPosition.x = centerX + width * 0.2;
-    track2.buttonPosition.y = buttonY;
-    track2.sliderPosition.x = centerX + width * 0.2;
-    track2.sliderPosition.y = sliderY;
-}
-
 function draw() {
     // Draw background image if loaded, otherwise white background
     if (bgImage) {
@@ -181,21 +175,24 @@ function draw() {
         background(255);
     }
     
-    // Draw title
+    // Draw grid: 6x6 cells, each cell is 1/6 width x 1/6 height
+    drawGrid();
+    
+    // Draw title - center of row 0
     fill(0);
     textAlign(CENTER);
     textSize(min(width, height) * 0.04);
-    text("DJ Mixing Deck", width/2, height * 0.1);
+    text("DJ Mixing Deck", width / 2, gridY(1) / 2);
     
-    // Draw upload labels
+    // Draw upload labels - aligned to grid
     fill(0);
-    textAlign(LEFT);
+    textAlign(CENTER);
     textSize(min(width, height) * 0.025);
-    text("Upload Background:", 10, 35);
-    text("Upload Track 1:", 10, 75);
-    text("Upload Track 2:", 10, 115);
+    text("Upload Background:", gridX(1), gridY(1) / 2 - 10);
+    text("Upload Track 1:", gridX(1), gridY(1) - 10);
+    text("Upload Track 2:", gridX(4), gridY(1) - 10);
     
-    // Draw volume labels
+    // Draw volume labels - above sliders in row 3
     fill(0);
     textAlign(CENTER);
     textSize(min(width, height) * 0.025);
@@ -209,15 +206,17 @@ function draw() {
     // Apply volume to playing sounds
     // Safety checks: prevent errors if sounds aren't loaded yet (not needed for basic workshop)
     // if (track1.sound && track1.sound.isPlaying()) {
+    //     track1.sound.setVolume(track1.volume);
+    // }
+    // if (track2.sound && track2.sound.isPlaying()) {
+    //     track2.sound.setVolume(track2.volume);
+    // }
     if (track1.sound.isPlaying()) {
         track1.sound.setVolume(track1.volume);
     }
-    // }
-    // if (track2.sound && track2.sound.isPlaying()) {
     if (track2.sound.isPlaying()) {
         track2.sound.setVolume(track2.volume);
     }
-    // }
 }
 
 function toggleTrack(track) {
@@ -260,5 +259,22 @@ function handleSoundUpload(file, track) {
         // Load new sound
         track.sound = loadSound(file.data);
         track.sound.setVolume(track.volume);
+    }
+}
+
+function drawGrid() {
+    stroke(200); // Light gray color for grid lines
+    strokeWeight(1);
+    
+    // Draw vertical lines (6 columns) using gridX
+    for (let i = 1; i < 6; i++) {
+        let x = gridX(i);
+        line(x, 0, x, height);
+    }
+    
+    // Draw horizontal lines (6 rows) using gridY
+    for (let i = 1; i < 6; i++) {
+        let y = gridY(i);
+        line(0, y, width, y);
     }
 }
