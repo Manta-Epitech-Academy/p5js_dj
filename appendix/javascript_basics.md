@@ -173,7 +173,7 @@ function multiply(x, y) {
 
 let product = multiply(4, 7);  // product is now 28
 
-// Functions without return return undefined:
+// Functions without return return undefined (but can still affect the global state of your program):
 function doSomething() {
     // No return statement
 }
