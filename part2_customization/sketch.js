@@ -78,7 +78,7 @@ function setup() {
     track2.fileInput.attribute('accept', 'audio/*');
     
     // Create play button for track 1
-    track1.button = createButton(track1.buttonLabel + " ▶");
+    track1.button = createButton("▶⏸");
     track1.button.position(track1.buttonPosition.x, track1.buttonPosition.y);
     track1.button.mousePressed(function() {
         // Only trigger if touch wasn't used recently (prevents double-triggering on mobile)
@@ -104,7 +104,7 @@ function setup() {
     });
     
     // Create play button for track 2
-    track2.button = createButton(track2.buttonLabel + " ▶");
+    track2.button = createButton("▶⏸");
     track2.button.position(track2.buttonPosition.x, track2.buttonPosition.y);
     track2.button.mousePressed(function() {
         // Only trigger if touch wasn't used recently (prevents double-triggering on mobile)
@@ -207,25 +207,29 @@ function draw() {
     track2.volume = track2.slider.value() / 100;
     
     // Apply volume to playing sounds
-    if (track1.sound && track1.sound.isPlaying()) {
+    // Safety checks: prevent errors if sounds aren't loaded yet (not needed for basic workshop)
+    // if (track1.sound && track1.sound.isPlaying()) {
+    if (track1.sound.isPlaying()) {
         track1.sound.setVolume(track1.volume);
     }
-    if (track2.sound && track2.sound.isPlaying()) {
+    // }
+    // if (track2.sound && track2.sound.isPlaying()) {
+    if (track2.sound.isPlaying()) {
         track2.sound.setVolume(track2.volume);
     }
+    // }
 }
 
 function toggleTrack(track) {
-    // Check if sound is loaded
-    if (!track.sound) {
-        return;
-    }
+    // Safety check: prevents errors if sound isn't loaded yet (not needed for basic workshop)
+    // if (!track.sound) {
+    //     return;
+    // }
     
     // If playing, pause it
     if (track.sound.isPlaying()) {
         track.sound.pause();
         track.isPlaying = false;
-        track.button.html(track.buttonLabel + " ▶");
     } 
     // If not playing, play it
     else {
@@ -233,7 +237,6 @@ function toggleTrack(track) {
         track.sound.setLoop(true);
         track.sound.play();
         track.isPlaying = true;
-        track.button.html(track.buttonLabel + " ⏸");
     }
 }
 
@@ -246,11 +249,13 @@ function handleBackgroundImage(file) {
 function handleSoundUpload(file, track) {
     if (file.type === 'audio') {
         // Stop current sound if playing
-        if (track.sound && track.sound.isPlaying()) {
+        // Safety check: prevents errors if sound isn't loaded yet (not needed for basic workshop)
+        // if (track.sound && track.sound.isPlaying()) {
+        if (track.sound.isPlaying()) {
             track.sound.stop();
             track.isPlaying = false;
-            track.button.html(track.buttonLabel + " ▶");
         }
+        // }
         
         // Load new sound
         track.sound = loadSound(file.data);

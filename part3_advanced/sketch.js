@@ -117,13 +117,29 @@ function setupFileInputs() {
 }
 
 function setupTrackButton(track) {
-    track.button = createButton("play/pause");
+    track.button = createButton("▶⏸");
     track.button.position(track.buttonPosition.x, track.buttonPosition.y);
     track.button.mousePressed(function() {
-        toggleTrack(track);
+        // Only trigger if touch wasn't used recently (prevents double-triggering on mobile)
+        if (!touchUsed) {
+            toggleTrack(track);
+        }
     });
+    // Use touchStarted with proper event prevention
     track.button.touchStarted(function(e) {
+        // Prevent mouse event from firing
+        touchUsed = true;
         toggleTrack(track);
+        // Clear flag after a delay to allow next interaction
+        if (touchTimeout) clearTimeout(touchTimeout);
+        touchTimeout = setTimeout(function() {
+            touchUsed = false;
+        }, 400);
+        // Prevent default to stop mouse event
+        if (e && e.preventDefault) {
+            e.preventDefault();
+        }
+        return false;
     });
 }
 
@@ -135,9 +151,17 @@ function setupTrackSliders(track) {
     track.timeSlider.position(track.timeSliderPosition.x, track.timeSliderPosition.y);
     track.timeSlider.style('width', '150px');
     track.timeSlider.input(function() {
+        // Safety check: prevents errors if sound isn't loaded yet (not needed for basic workshop)
+        // if (!track.sound) {
+        //     return;
+        // }
+        
         let soundDuration = track.sound.duration();
-        let targetTime = (track.timeSlider.value() / 100) * soundDuration;
-        track.sound.jump(targetTime);
+        // Safety check: prevents division by zero if duration is 0 (not needed for basic workshop)
+        // if (soundDuration > 0) {
+            let targetTime = (track.timeSlider.value() / 100) * soundDuration;
+            track.sound.jump(targetTime);
+        // }
     });
 }
 
@@ -265,6 +289,11 @@ function drawLabels() {
 }
 
 function drawTimeDisplay(track) {
+    // Safety check: prevents errors if sound isn't loaded yet (not needed for basic workshop)
+    // if (!track.sound) {
+    //     return;
+    // }
+    
     let elapsed = track.sound.currentTime();
     let total = track.sound.duration();
     let timeText = formatTime(elapsed) + " / " + formatTime(total);
@@ -278,6 +307,15 @@ function drawTimeDisplay(track) {
 function updateVolumes() {
     track1.volume = track1.slider.value() / 100;
     track2.volume = track2.slider.value() / 100;
+    
+    // Note: Volume is actually set by the crossfader function, not here
+    // These checks are safety checks (not needed for basic workshop):
+    // if (track1.sound && track1.sound.isPlaying()) {
+    //     // Volume will be set by crossfader
+    // }
+    // if (track2.sound && track2.sound.isPlaying()) {
+    //     // Volume will be set by crossfader
+    // }
 }
 
 function applyCrossfader() {
@@ -287,8 +325,13 @@ function applyCrossfader() {
     let track1CrossfadeVolume = track1.volume * cos(angle);
     let track2CrossfadeVolume = track2.volume * sin(angle);
     
-    track1.sound.setVolume(track1CrossfadeVolume);
-    track2.sound.setVolume(track2CrossfadeVolume);
+    // Safety checks: prevent errors if sounds aren't loaded yet (not needed for basic workshop)
+    // if (track1.sound) {
+        track1.sound.setVolume(track1CrossfadeVolume);
+    // }
+    // if (track2.sound) {
+        track2.sound.setVolume(track2CrossfadeVolume);
+    // }
 }
 
 function updateTimeSliders() {
@@ -297,10 +340,19 @@ function updateTimeSliders() {
 }
 
 function updateTimeSlider(track) {
+    // Safety check: prevents errors if sound isn't loaded yet (not needed for basic workshop)
+    // if (!track.sound) {
+    //     return;
+    // }
+    
     let currentTime = track.sound.currentTime();
     let soundDuration = track.sound.duration();
-    let progress = (currentTime / soundDuration) * 100;
-    track.timeSlider.value(progress);
+    
+    // Safety check: prevents division by zero if duration is 0 (not needed for basic workshop)
+    // if (soundDuration > 0) {
+        let progress = (currentTime / soundDuration) * 100;
+        track.timeSlider.value(progress);
+    // }
 }
 
 function drawBPMVisualization() {
@@ -335,6 +387,11 @@ function drawBeatCircle(x, y, size, color, label) {
 // This is the proper p5.js API for getting amplitude levels
 
 function toggleTrack(track) {
+    // Safety check: prevents errors if sound isn't loaded yet (not needed for basic workshop)
+    // if (!track.sound) {
+    //     return;
+    // }
+    
     if (track.sound.isPlaying()) {
         pauseTrack(track);
     } else {
@@ -343,17 +400,25 @@ function toggleTrack(track) {
 }
 
 function pauseTrack(track) {
+    // Safety check: prevents errors if sound isn't loaded yet (not needed for basic workshop)
+    // if (!track.sound) {
+    //     return;
+    // }
+    
     track.sound.pause();
     track.isPlaying = false;
-    track.button.html("play/pause");
 }
 
 function playTrack(track) {
+    // Safety check: prevents errors if sound isn't loaded yet (not needed for basic workshop)
+    // if (!track.sound) {
+    //     return;
+    // }
+    
     track.sound.setVolume(track.volume);
     track.sound.setLoop(true);
     track.sound.play();
     track.isPlaying = true;
-    track.button.html("play/pause");
     
     connectAmplitudeAnalyzer(track);
 }
@@ -426,7 +491,11 @@ function handleSoundUpload(file, track) {
 }
 
 function stopTrack(track) {
+    // Safety check: prevents errors if sound isn't loaded yet (not needed for basic workshop)
+    // if (!track.sound) {
+    //     return;
+    // }
+    
     track.sound.stop();
     track.isPlaying = false;
-    track.button.html("play/pause");
 }

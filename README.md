@@ -32,8 +32,8 @@ DJ/
     └── workshop/           # Workshop documentation
         ├── workshop.md     # Main workshop guide (GIVE TO PARTICIPANTS)
         ├── detailed.md     # Detailed step-by-step guide (ASSISTANTS ONLY)
-        ├── guide_tldr.md   # Quick reference (ASSISTANTS ONLY - rename to tldr.md)
-        └── workshop_metadata.md  # Metadata (ASSISTANTS ONLY - rename to README.md)
+        ├── tldr.md         # Quick reference (ASSISTANTS ONLY)
+        └── README.md       # Workshop metadata (ASSISTANTS ONLY)
 ```
 
 ## Files Distribution
@@ -45,8 +45,8 @@ DJ/
 ### Files for Assistants Only
 - 🔒 **`sketch.js`** - Complete reference code (participants should not see this)
 - 🔒 **`detailed.md`** - Detailed explanations for assistants
-- 🔒 **`guide_tldr.md`** - Quick reference (should be renamed to `tldr.md`)
-- 🔒 **`workshop_metadata.md`** - Workshop metadata (should be renamed to `README.md`)
+- 🔒 **`tldr.md`** - Quick reference
+- 🔒 **`README.md`** - Workshop metadata
 
 **Important**: Participants should work through the workshop without seeing the reference code or assistant-only documentation. This encourages learning through doing.
 

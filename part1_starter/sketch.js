@@ -46,14 +46,14 @@ function setup() {
     createCanvas(800, 600);
     
     // Create play button for track 1
-    track1.button = createButton(track1.buttonLabel + " ▶");
+    track1.button = createButton("▶⏸");
     track1.button.position(track1.buttonPosition.x, track1.buttonPosition.y);
     track1.button.mousePressed(function() {
         toggleTrack(track1);
     });
     
     // Create play button for track 2
-    track2.button = createButton(track2.buttonLabel + " ▶");
+    track2.button = createButton("▶⏸");
     track2.button.position(track2.buttonPosition.x, track2.buttonPosition.y);
     track2.button.mousePressed(function() {
         toggleTrack(track2);
@@ -105,7 +105,6 @@ function toggleTrack(track) {
     if (track.sound.isPlaying()) {
         track.sound.pause();
         track.isPlaying = false;
-        track.button.html(track.buttonLabel + " ▶");
     } 
     // If not playing, play it
     else {
@@ -113,6 +112,5 @@ function toggleTrack(track) {
         track.sound.setLoop(true);
         track.sound.play();
         track.isPlaying = true;
-        track.button.html(track.buttonLabel + " ⏸");
     }
 }
