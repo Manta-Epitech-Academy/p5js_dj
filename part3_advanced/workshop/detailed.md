@@ -408,23 +408,56 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     
     // Create amplitude analyzers for BPM visualization
-    amp1 = new p5.Amplitude();
-    amp2 = new p5.Amplitude();
+    track1.amp = new p5.Amplitude();
+    track2.amp = new p5.Amplitude();
     
     // ... rest of setup ...
     
-    // Connect amplitude analyzers to sounds
-    amp1.setInput(track1.sound);
-    amp2.setInput(track2.sound);
+    // Connect amplitude analyzers to sounds that are already loaded
+    if (track1.sound) {
+        track1.amp.setInput(track1.sound);
+    }
+    if (track2.sound) {
+        track2.amp.setInput(track2.sound);
+    }
 }
 ```
 
 **Understanding the code**:
 - `new p5.Amplitude()` - creates an amplitude analyzer
-- `amp.setInput(sound)` - connects the analyzer to a sound
+- `track.amp.setInput(track.sound)` - connects the analyzer to a sound
 - The analyzer reads the raw audio signal (before volume processing)
 
-**Documentation**: [`p5.Amplitude`](https://p5js.org/reference/p5.Amplitude) analyzes audio amplitude.
+**For uploaded sounds**: When a user uploads a new sound file in `handleSoundUpload()`, you need to connect the analyzer to the newly loaded sound. However, the sound needs a moment to initialize after loading before the analyzer can be connected.
+
+Use `setTimeout()` to delay connecting the analyzer:
+
+```javascript
+function handleSoundUpload(file, track) {
+    stopTrack(track);
+    
+    track.sound = loadSound(file.data);
+    track.sound.setVolume(track.volume);
+    
+    track.timeSlider.value(0);
+    
+    // Delay connecting analyzer - sound needs time to initialize
+    setTimeout(function() {
+        track.amp.setInput(track.sound);
+    }, 100);
+}
+```
+
+**Understanding `setTimeout()`**:
+- `setTimeout(function, delay)` runs a function after a specified delay (in milliseconds)
+- `100` means wait 100 milliseconds (0.1 seconds) before running the function
+- This delay gives the sound file time to process and initialize after being loaded
+
+**Why the delay?** The sound file needs a moment to process and initialize after being loaded. Connecting the analyzer immediately might fail because the sound isn't ready yet. A small delay (100ms) ensures the sound is ready before connecting the analyzer.
+
+**Documentation**: 
+- [`p5.Amplitude`](https://p5js.org/reference/p5.Amplitude) analyzes audio amplitude
+- [`setTimeout()`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout) delays function execution
 
 ### Step 4 (B): Adding Pulse Size Properties
 

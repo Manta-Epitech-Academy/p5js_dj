@@ -209,7 +209,20 @@ BPM (Beats Per Minute) visualization shows the rhythm of the music through pulsa
 2. How many analyzers do you need? (One for each track)
 3. How do you connect them to the sounds? (So they can analyze the audio)
 
-**Documentation**: [`p5.Amplitude`](https://p5js.org/reference/p5.Amplitude) analyzes audio amplitude.
+**For existing sounds**: Connect the analyzers to the sounds that are already loaded in `setup()`.
+
+**For uploaded sounds**: When a user uploads a new sound file (in your `handleSoundUpload()` function), you need to connect the analyzer to the newly loaded sound. However, the sound needs a moment to initialize after loading before the analyzer can be connected.
+
+**Understanding `setTimeout()`**: 
+- `setTimeout(function, delay)` runs a function after a specified delay (in milliseconds)
+- You'll need to use `setTimeout()` to delay connecting the analyzer to a newly uploaded sound
+- For example: `setTimeout(function() { track.amp.setInput(track.sound); }, 100);` waits 100 milliseconds before connecting
+
+**Why the delay?** The sound file needs a moment to process and initialize after being loaded. Connecting the analyzer immediately might fail because the sound isn't ready yet. A small delay (100ms) ensures the sound is ready before connecting the analyzer.
+
+**Documentation**: 
+- [`p5.Amplitude`](https://p5js.org/reference/p5.Amplitude) analyzes audio amplitude
+- [`setTimeout()`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout) delays function execution
 
 ### Step 4B: Adding Pulse Size Properties
 

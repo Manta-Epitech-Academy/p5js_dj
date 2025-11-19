@@ -71,7 +71,9 @@ A quick guide for adding advanced features to your DJ deck.
 ### Step 4A: Setting Up Amplitude Analyzers
 - In track objects: `amp: null`
 - In `setup()`: `track1.amp = new p5.Amplitude();`, `track2.amp = new p5.Amplitude();`
-- Connect: `track.amp.setInput(track.sound)` in `handleSoundUpload()`
+- Connect to existing sounds: `track.amp.setInput(track.sound)` in `setup()`
+- Connect to uploaded sounds: Use `setTimeout(function() { track.amp.setInput(track.sound); }, 100);` in `handleSoundUpload()`
+- **Why setTimeout?** Sound needs time to initialize after loading before analyzer can connect
 
 ### Step 4B: Adding Pulse Size Properties
 - In track objects: `pulseSize: 80` (base size)
@@ -139,6 +141,7 @@ A quick guide for adding advanced features to your DJ deck.
 - `Math.floor()` - rounds down to nearest integer
 - `%` operator - gets remainder (for seconds in MM:SS)
 - `new p5.Amplitude()` - creates amplitude analyzer
+- `setTimeout(function, delay)` - executes function after delay (in milliseconds)
 - `gridX(cellX)` - returns X position for column
 - `gridY(cellY)` - returns Y position for row
 

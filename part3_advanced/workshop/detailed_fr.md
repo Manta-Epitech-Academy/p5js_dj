@@ -408,23 +408,56 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     
     // Create amplitude analyzers for BPM visualization
-    amp1 = new p5.Amplitude();
-    amp2 = new p5.Amplitude();
+    track1.amp = new p5.Amplitude();
+    track2.amp = new p5.Amplitude();
     
     // ... rest of setup ...
     
-    // Connect amplitude analyzers to sounds
-    amp1.setInput(track1.sound);
-    amp2.setInput(track2.sound);
+    // Connect amplitude analyzers to sounds that are already loaded
+    if (track1.sound) {
+        track1.amp.setInput(track1.sound);
+    }
+    if (track2.sound) {
+        track2.amp.setInput(track2.sound);
+    }
 }
 ```
 
 **Comprendre le code** :
 - `new p5.Amplitude()` - crée un analyseur d'amplitude
-- `amp.setInput(sound)` - connecte l'analyseur à un son
+- `track.amp.setInput(track.sound)` - connecte l'analyseur à un son
 - L'analyseur lit le signal audio brut (avant le traitement du volume)
 
-**Documentation** : [`p5.Amplitude`](https://p5js.org/reference/p5.Amplitude) analyse l'amplitude audio.
+**Pour les sons uploadés** : Quand un utilisateur envoie (upload) un nouveau fichier son dans `handleSoundUpload()`, vous devez connecter l'analyseur au son nouvellement chargé. Cependant, le son a besoin d'un moment pour s'initialiser après le chargement avant que l'analyseur puisse être connecté.
+
+Utilisez `setTimeout()` pour retarder la connexion de l'analyseur :
+
+```javascript
+function handleSoundUpload(file, track) {
+    stopTrack(track);
+    
+    track.sound = loadSound(file.data);
+    track.sound.setVolume(track.volume);
+    
+    track.timeSlider.value(0);
+    
+    // Retarder la connexion de l'analyseur - le son a besoin de temps pour s'initialiser
+    setTimeout(function() {
+        track.amp.setInput(track.sound);
+    }, 100);
+}
+```
+
+**Comprendre `setTimeout()`** :
+- `setTimeout(function, delay)` exécute une fonction après un délai spécifié (en millisecondes)
+- `100` signifie attendre 100 millisecondes (0,1 secondes) avant d'exécuter la fonction
+- Ce délai donne au fichier son le temps de se traiter et de s'initialiser après le chargement
+
+**Pourquoi le délai ?** Le fichier son a besoin d'un moment pour se traiter et s'initialiser après le chargement. Connecter l'analyseur immédiatement pourrait échouer parce que le son n'est pas encore prêt. Un petit délai (100ms) assure que le son est prêt avant de connecter l'analyseur.
+
+**Documentation** :
+- [`p5.Amplitude`](https://p5js.org/reference/p5.Amplitude) analyse l'amplitude audio
+- [`setTimeout()`](https://developer.mozilla.org/fr/docs/Web/API/setTimeout) retarde l'exécution d'une fonction
 
 ### Étape 4 (B) : Ajouter les propriétés de taille de pulsation
 

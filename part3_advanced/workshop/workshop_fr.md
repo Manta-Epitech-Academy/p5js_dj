@@ -209,7 +209,20 @@ La visualisation BPM (Beats Per Minute) montre le rythme de la musique à traver
 2. Combien d'analyseurs avez-vous besoin ? (Un pour chaque piste)
 3. Comment les connectez-vous aux sons ? (Pour qu'ils puissent analyser l'audio)
 
-**Documentation** : [`p5.Amplitude`](https://p5js.org/reference/p5.Amplitude) analyse l'amplitude audio.
+**Pour les sons existants** : Connectez les analyseurs aux sons qui sont déjà chargés dans `setup()`.
+
+**Pour les sons uploadés** : Quand un utilisateur envoie (upload) un nouveau fichier son (dans votre fonction `handleSoundUpload()`), vous devez connecter l'analyseur au son nouvellement chargé. Cependant, le son a besoin d'un moment pour s'initialiser après le chargement avant que l'analyseur puisse être connecté.
+
+**Comprendre `setTimeout()`** :
+- `setTimeout(function, delay)` exécute une fonction après un délai spécifié (en millisecondes)
+- Vous devrez utiliser `setTimeout()` pour retarder la connexion de l'analyseur à un son nouvellement uploadé
+- Par exemple : `setTimeout(function() { track.amp.setInput(track.sound); }, 100);` attend 100 millisecondes avant de connecter
+
+**Pourquoi le délai ?** Le fichier son a besoin d'un moment pour être traité et s'initialiser après le chargement. Connecter l'analyseur immédiatement pourrait échouer parce que le son n'est pas encore prêt. Un petit délai (100ms) assure que le son est prêt avant de connecter l'analyseur.
+
+**Documentation** :
+- [`p5.Amplitude`](https://p5js.org/reference/p5.Amplitude) analyse l'amplitude audio
+- [`setTimeout()`](https://developer.mozilla.org/fr/docs/Web/API/setTimeout) retarde l'exécution d'une fonction
 
 ### Étape 4B : Ajouter les propriétés de taille de pulsation
 
