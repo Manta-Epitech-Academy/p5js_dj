@@ -2,6 +2,8 @@
 
 This is a concise introduction to JavaScript concepts used in this workshop. Get the basics fast!
 
+**Important**: Reading this guide without trying the code yourself is useless! Open a code editor or the browser console and type the examples as you read. Learning to code requires practice, not just reading.
+
 ```javascript
 ///////////////////////////////////
 // 1. Statements and Comments

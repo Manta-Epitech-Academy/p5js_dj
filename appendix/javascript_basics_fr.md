@@ -2,6 +2,8 @@
 
 Ceci est une introduction concise aux concepts JavaScript utilisés dans cet atelier. Apprenez les bases rapidement !
 
+**Important** : Lire ce guide sans essayer le code vous-même est inutile ! Ouvrez un éditeur de code ou la console du navigateur et tapez les exemples pendant que vous lisez. Apprendre à coder nécessite de la pratique, pas seulement de la lecture.
+
 ```javascript
 ///////////////////////////////////
 // 1. Instructions et Commentaires
