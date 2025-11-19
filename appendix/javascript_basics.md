@@ -22,12 +22,12 @@ doSomething(); // This is a statement
 ///////////////////////////////////
 // 2. Numbers and Basic Operations
 
-// JavaScript has one number type (64-bit floating point).
-// This means integers and decimals are both numbers.
+// Numbers can be whole numbers or decimals.
+// Both are just numbers in JavaScript.
 
-3;        // = 3 (integer)
-1.5;      // = 1.5 (decimal, also called "float")
-42;       // = 42 (integer)
+3;        // = 3 (whole number)
+1.5;      // = 1.5 (decimal)
+42;       // = 42 (whole number)
 0.5;      // = 0.5 (decimal)
 
 // Basic arithmetic works as expected:
@@ -36,7 +36,7 @@ doSomething(); // This is a statement
 4 * 2;    // = 8 (multiplication)
 8 / 2;    // = 4 (division)
 
-// Division can produce decimals:
+// Division can give decimals:
 5 / 2;    // = 2.5
 
 // Special number values:
@@ -52,18 +52,18 @@ undefined; // undefined means "not yet assigned"
 "World";           // Double quotes - both work the same way
 '123';             // This is a string, not a number!
 
-// Strings can be concatenated (combined) with +
+// Strings can be combined with +
 "Hello " + "world"; // = "Hello world"
 "Score: " + 100;    // = "Score: 100"
 
 ///////////////////////////////////
 // 4. Booleans (True/False)
 
-// Booleans represent truth values.
+// Booleans are true or false values.
 true;   // = true
 false;  // = false
 
-// These values are used in conditions and comparisons.
+// These values are used in conditions.
 
 ///////////////////////////////////
 // 5. Variables and Assignment
@@ -104,8 +104,8 @@ value /= 4;          // Same as: value = value / 4; (value is now 6)
 ///////////////////////////////////
 // 7. Objects
 
-// Objects store multiple related values together.
-// They're like containers with labeled compartments (properties).
+// Objects store multiple values together.
+// Each value has a label (called a property).
 
 let person = {
     name: "Alice",      // property "name" with value "Alice"
@@ -113,11 +113,11 @@ let person = {
     isActive: true      // property "isActive" with value true
 };
 
-// Access object properties with dot notation:
+// Access object properties with a dot:
 person.name;            // = "Alice"
 person.age;             // = 30
 
-// Access object properties with bracket notation:
+// You can also use brackets:
 person["name"];         // = "Alice" (same as person.name)
 person["age"];          // = 30 (same as person.age)
 
@@ -149,22 +149,22 @@ nested.position.y;      // = 20
 // 8. Functions
 
 // Functions are reusable blocks of code.
-// They perform a task when called (invoked).
+// They run when you call them.
 
 // Define a function:
 function greet() {
     console.log("Hello!");
 }
 
-// Call (invoke) the function:
-greet();                // Executes the function, prints "Hello!"
+// Call the function:
+greet();                // Runs the function, prints "Hello!"
 
-// Functions can take parameters (inputs):
+// Functions can take values (called parameters):
 function add(a, b) {
     return a + b;       // return gives back a value
 }
 
-// Call function with arguments (actual values):
+// Call function with values:
 add(2, 3);              // = 5
 let sum = add(10, 5);   // sum is now 15
 
@@ -181,13 +181,13 @@ function doSomething() {
 }
 let result = doSomething();    // result is undefined
 
-// Anonymous functions (functions without names):
+// Functions without names (anonymous functions):
 let myFunction = function(x, y) {
     return x + y;
 };
 myFunction(3, 4);       // = 7
 
-// Anonymous functions can be passed as arguments:
+// You can pass functions as values:
 function processNumber(value, operation) {
     return operation(value);
 }
@@ -255,16 +255,16 @@ if (name === undefined) {
     console.log("Not set yet");
 }
 
-// Truthy and falsy values:
-// Falsy: false, 0, "", null, undefined, NaN
-// Everything else is truthy
+// Some values count as false, others count as true:
+// False values: false, 0, "", null, undefined, NaN
+// Everything else counts as true
 
 if (0) {
-    // This won't execute (0 is falsy)
+    // This won't run (0 counts as false)
 }
 
 if (1) {
-    // This will execute (1 is truthy)
+    // This will run (1 counts as true)
 }
 
 ///////////////////////////////////

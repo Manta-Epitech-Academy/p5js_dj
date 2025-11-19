@@ -22,12 +22,12 @@ faireQuelqueChose(); // Ceci est une instruction
 ///////////////////////////////////
 // 2. Nombres et Opérations de Base
 
-// JavaScript a un seul type de nombre (virgule flottante 64 bits).
-// Cela signifie que les entiers et les décimales sont tous des nombres.
+// Les nombres peuvent être des nombres entiers ou des décimales.
+// Les deux sont juste des nombres en JavaScript.
 
-3;        // = 3 (entier)
-1.5;      // = 1.5 (décimal, aussi appelé "float")
-42;       // = 42 (entier)
+3;        // = 3 (nombre entier)
+1.5;      // = 1.5 (décimal)
+42;       // = 42 (nombre entier)
 0.5;      // = 0.5 (décimal)
 
 // L'arithmétique de base fonctionne comme prévu :
@@ -36,7 +36,7 @@ faireQuelqueChose(); // Ceci est une instruction
 4 * 2;    // = 8 (multiplication)
 8 / 2;    // = 4 (division)
 
-// La division peut produire des décimales :
+// La division peut donner des décimales :
 5 / 2;    // = 2.5
 
 // Valeurs numériques spéciales :
@@ -52,18 +52,18 @@ undefined; // undefined signifie "pas encore assigné"
 "Monde";          // Guillemets doubles - les deux fonctionnent de la même façon
 '123';            // Ceci est une chaîne, pas un nombre !
 
-// Les chaînes peuvent être concaténées (combinées) avec +
+// Les chaînes peuvent être combinées avec +
 "Bonjour " + "monde"; // = "Bonjour monde"
 "Score : " + 100;     // = "Score : 100"
 
 ///////////////////////////////////
 // 4. Booléens (Vrai/Faux)
 
-// Les booléens représentent des valeurs de vérité.
+// Les booléens sont des valeurs vrai ou faux.
 true;   // = vrai
 false;  // = faux
 
-// Ces valeurs sont utilisées dans les conditions et les comparaisons.
+// Ces valeurs sont utilisées dans les conditions.
 
 ///////////////////////////////////
 // 5. Variables et Affectation
@@ -104,8 +104,8 @@ valeur /= 4;           // Équivalent à : valeur = valeur / 4; (valeur est main
 ///////////////////////////////////
 // 7. Objets
 
-// Les objets stockent plusieurs valeurs liées ensemble.
-// Ce sont comme des conteneurs avec des compartiments étiquetés (propriétés).
+// Les objets stockent plusieurs valeurs ensemble.
+// Chaque valeur a une étiquette (appelée propriété).
 
 let personne = {
     nom: "Alice",         // propriété "nom" avec la valeur "Alice"
@@ -113,11 +113,11 @@ let personne = {
     estActive: true       // propriété "estActive" avec la valeur true
 };
 
-// Accéder aux propriétés d'objet avec la notation point :
+// Accéder aux propriétés d'objet avec un point :
 personne.nom;             // = "Alice"
 personne.age;             // = 30
 
-// Accéder aux propriétés d'objet avec la notation crochets :
+// Vous pouvez aussi utiliser des crochets :
 personne["nom"];          // = "Alice" (même chose que personne.nom)
 personne["age"];          // = 30 (même chose que personne.age)
 
@@ -149,22 +149,22 @@ imbrique.position.y;      // = 20
 // 8. Fonctions
 
 // Les fonctions sont des blocs de code réutilisables.
-// Elles effectuent une tâche quand elles sont appelées (invoquées).
+// Elles s'exécutent quand vous les appelez.
 
 // Définir une fonction :
 function saluer() {
     console.log("Bonjour !");
 }
 
-// Appeler (invoquer) la fonction :
+// Appeler la fonction :
 saluer();                 // Exécute la fonction, affiche "Bonjour !"
 
-// Les fonctions peuvent prendre des paramètres (entrées) :
+// Les fonctions peuvent prendre des valeurs (appelées paramètres) :
 function additionner(a, b) {
     return a + b;         // return renvoie une valeur
 }
 
-// Appeler la fonction avec des arguments (valeurs réelles) :
+// Appeler la fonction avec des valeurs :
 additionner(2, 3);        // = 5
 let somme = additionner(10, 5); // somme est maintenant 15
 
@@ -181,13 +181,13 @@ function faireQuelqueChose() {
 }
 let resultat = faireQuelqueChose();    // resultat est undefined
 
-// Fonctions anonymes (fonctions sans nom) :
+// Fonctions sans nom (fonctions anonymes) :
 let maFonction = function(x, y) {
     return x + y;
 };
 maFonction(3, 4);         // = 7
 
-// Les fonctions anonymes peuvent être passées en arguments :
+// Vous pouvez passer des fonctions comme valeurs :
 function traiterNombre(valeur, operation) {
     return operation(valeur);
 }
@@ -255,16 +255,16 @@ if (nom === undefined) {
     console.log("Pas encore défini");
 }
 
-// Valeurs truthy et falsy :
-// Falsy : false, 0, "", null, undefined, NaN
-// Tout le reste est truthy
+// Certaines valeurs comptent comme faux, d'autres comme vrai :
+// Valeurs fausses : false, 0, "", null, undefined, NaN
+// Tout le reste compte comme vrai
 
 if (0) {
-    // Ceci ne s'exécutera pas (0 est falsy)
+    // Ceci ne s'exécutera pas (0 compte comme faux)
 }
 
 if (1) {
-    // Ceci s'exécutera (1 est truthy)
+    // Ceci s'exécutera (1 compte comme vrai)
 }
 
 ///////////////////////////////////
