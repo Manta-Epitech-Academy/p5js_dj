@@ -83,7 +83,7 @@
 
 ## Duration Estimation
 
-**Total Workshop Duration**: 1.5 - 2 hours
+**Total Workshop Duration**: 2 - 2.5 hours
 
 ### Breakdown by Section:
 
@@ -94,58 +94,69 @@
 - Starting with working DJ deck
 - Testing existing functionality
 
-**Step 1: Understanding File Uploads** (20-25 minutes)
+**Step 1: Setting Up the Grid System** (25-30 minutes)
+- Using `createCanvas(windowWidth, windowHeight)` for responsive canvas
+- Understanding grid helper functions (`gridX()`, `gridY()`)
+- Creating 6x6 grid system for easy positioning
+- Repositioning existing UI elements using grid
+- Optional: Visual grid display
+
+**Step 2: Understanding File Uploads** (15-20 minutes)
 - Understanding file input elements
 - How file uploads work in web browsers
 - File types and restrictions
 - User interaction with file inputs
 
-**Step 2: Adding Background Image Upload** (25-30 minutes)
+**Step 3: Adding Background Image Upload** (25-30 minutes)
 - Creating file input for images
 - Handling image file selection
 - Loading images from files
 - Displaying uploaded images as background
 
-**Step 3: Adding Sound Upload for Track 1** (25-30 minutes)
+**Step 4: Adding Sound Upload for Track 1** (25-30 minutes)
 - Creating file input for audio
 - Handling audio file selection
 - Loading sounds from files
 - Replacing existing sounds with uploaded ones
 
-**Step 4: Adding Sound Upload for Track 2** (20-25 minutes)
+**Step 5: Adding Sound Upload for Track 2** (20-25 minutes)
 - Repeating sound upload for second track
 - Understanding code reuse
 - Testing both track uploads
 
-**Step 5: Improving User Experience** (15-20 minutes)
+**Step 6: Improving User Experience** (15-20 minutes)
 - Adding labels for file inputs
 - Handling edge cases (no file selected, wrong file type)
 - Testing all upload features
 
-**Putting It All Together** (10-15 minutes)
+**Step 7: Putting It All Together** (10-15 minutes)
 - Final integration
 - Testing all features
 - Troubleshooting
 - Customization suggestions
+
+**Step 8: Sharing Your DJ Deck** (10-15 minutes)
+- Sharing on p5.js web editor
+- Sharing with friends
 - Q&A and wrap-up
 
 ### Factors Affecting Duration:
 
-**Faster Groups** (1.5 hours):
+**Faster Groups** (2 hours):
 - Students with good grasp of Starter concepts
-- Quick learners who understand file handling
+- Quick learners who understand grid system and file handling
 - Good problem-solving skills
 - Minimal technical issues
 
-**Average Groups** (1.5-2 hours):
+**Average Groups** (2-2.5 hours):
 - Students comfortable with Starter basics
 - Normal learning pace
 - Some experimentation and questions
 - Occasional troubleshooting
 
-**Slower Groups** (2-2.5 hours):
+**Slower Groups** (2.5-3 hours):
 - Students needing review of Starter concepts
-- More time for file handling concept explanation
+- More time for grid system and file handling concept explanation
 - Frequent questions and clarification
 - More time for experimentation
 - Technical difficulties
@@ -154,30 +165,35 @@
 ### Tips for Timing:
 
 - **Plan for flexibility**: Allow extra time for questions and exploration
-- **Break points**: Consider a break after Step 3
+- **Break points**: Consider a break after Step 3 (Background Image Upload) or after Step 4 (Sound Upload Track 1)
 - **Differentiation**: Faster students can add more customization while others catch up
 - **Support**: Have helpers available for students who need extra assistance
 - **Optional extensions**: Have additional challenges ready for early finishers
+- **Grid system importance**: Step 1 (Grid System) is foundational - ensure students understand it before proceeding
 
 ### Recommended Workshop Structure:
 
 1. **Introduction** (10 min)
-2. **Step 1** (25 min)
-3. **Step 2** (30 min)
-4. **Short Break** (10 min)
-5. **Step 3** (30 min)
-6. **Step 4** (25 min)
-7. **Step 5** (20 min)
-8. **Integration & Wrap-up** (15 min)
-9. **Q&A and Customization** (10 min)
+2. **Step 1: Grid System** (30 min)
+3. **Step 2: Understanding File Uploads** (20 min)
+4. **Step 3: Background Image Upload** (30 min)
+5. **Short Break** (10 min)
+6. **Step 4: Sound Upload Track 1** (30 min)
+7. **Step 5: Sound Upload Track 2** (25 min)
+8. **Step 6: User Experience** (20 min)
+9. **Step 7: Integration** (15 min)
+10. **Step 8: Sharing** (15 min)
 
-**Total**: ~2 hours with breaks and flexibility
+**Total**: ~2.5 hours with breaks and flexibility
 
 ---
 
 ## Success Criteria
 
 By the end of this workshop, students should be able to:
+- ✅ Use `createCanvas(windowWidth, windowHeight)` for responsive canvas
+- ✅ Create and use grid helper functions (`gridX()`, `gridY()`) for positioning
+- ✅ Understand and use a 6x6 grid system for UI layout
 - ✅ Understand how file uploads work in web applications
 - ✅ Create file input elements in p5.js
 - ✅ Handle image file uploads and display them
@@ -190,5 +206,25 @@ By the end of this workshop, students should be able to:
 - ✅ Troubleshoot basic file upload errors
 - ✅ Have a functional, customizable DJ mixing deck
 
-**Note**: Not all students will complete everything perfectly, and that's okay. The goal is understanding file handling and user customization, not perfection.
+**Note**: Not all students will complete everything perfectly, and that's okay. The goal is understanding file handling, grid-based layout, and user customization, not perfection.
+
+---
+
+## Difficulty Level Estimation
+
+Based on Source Lines of Code (SLOC) analysis:
+
+| Part | Code Lines | Increase | Difficulty Level |
+|------|------------|----------|------------------|
+| **Part 2: Customization** | 191 lines | +75.2% (+82 lines from Part 1) | ⭐⭐ Intermediate |
+
+**Notes**:
+- **Part 1 → Part 2**: The largest percentage increase (+75.2%) reflects the added complexity of file upload handling, grid system implementation, and UI management. This jump introduces new concepts (file I/O, responsive design, grid-based positioning).
+- The grid system and `windowWidth`/`windowHeight` make this part more complex than it appears, but they significantly simplify UI positioning for future development.
+- File upload handling introduces asynchronous operations and file type validation concepts.
+
+**Planning considerations**:
+- Allow extra time for the grid system setup (Step 1), as it's foundational for all subsequent UI work.
+- File upload concepts may be new to many students - plan for additional explanation time.
+- Consider a break after Step 3 to let students digest the concepts before moving to sound uploads.
 

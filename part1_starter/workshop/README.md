@@ -200,3 +200,24 @@ By the end of this workshop, students should be able to:
 
 **Note**: Not all students will complete everything perfectly, and that's okay. The goal is understanding object-oriented thinking and more complex interactions, not perfection.
 
+---
+
+## Difficulty Level Estimation
+
+Based on Source Lines of Code (SLOC) analysis:
+
+| Part | Code Lines | Increase | Difficulty Level |
+|------|------------|----------|------------------|
+| **Part 1: Starter** | 109 lines | Base | ⭐ Beginner |
+
+**Notes**:
+- This is the foundation workshop with the smallest codebase (109 lines).
+- Introduces core concepts: objects, sound loading, buttons, sliders, event handling.
+- While relatively simple, it establishes important patterns that are built upon in later parts.
+- The code uses a grid system for positioning, but grid helper functions are introduced in Part 2.
+
+**Planning considerations**:
+- This part is designed for absolute beginners - explain all concepts from scratch.
+- Objects may be a new concept - allow extra time for understanding object structure.
+- Sound loading and event handling are foundational - ensure students understand these before moving to Part 2.
+
