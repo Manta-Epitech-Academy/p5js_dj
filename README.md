@@ -85,7 +85,8 @@ p5js_dj/
 
 2. **Create a p5.js template**:
    - Open [p5.js web editor](https://editor.p5js.org/)
-   - Include the p5.sound library (version 1.11.11)
+   - Use p5.js version 1.11.11 (this workshop was not tested with other versions)
+   - Include the p5.sound library 
    - Upload the default sound files from `part1_starter/assets/` to the p5.js editor (or use your own favorite songs)
    - Add only the bootstrap code (see below)
    - Save and share the link with participants
