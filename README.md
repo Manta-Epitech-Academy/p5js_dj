@@ -7,33 +7,42 @@ This guide is for **workshop assistants** organizing and running the DJ Mixing D
 The workshop is organized into 3 progressive parts, each building on the previous one:
 
 ```
-DJ/
+p5js_dj/
 ├── part1_starter/          # Part 1: Basic DJ Mixing Deck
 │   ├── sketch.js           # Reference code (ASSISTANTS ONLY)
 │   ├── assets/             # Sound files (GIVE TO PARTICIPANTS)
 │   └── workshop/           # Workshop documentation
 │       ├── workshop.md     # Main workshop guide (GIVE TO PARTICIPANTS)
+│       ├── workshop_fr.md  # Main workshop guide in French (GIVE TO PARTICIPANTS)
 │       ├── detailed.md     # Detailed step-by-step guide (ASSISTANTS ONLY)
+│       ├── detailed_fr.md  # Detailed guide in French (ASSISTANTS ONLY)
 │       ├── tldr.md         # Quick reference (ASSISTANTS ONLY)
-│       └── README.md       # Workshop metadata (ASSISTANTS ONLY)
+│       ├── README.md       # Workshop metadata (ASSISTANTS ONLY)
+│       └── img/            # Workshop images and diagrams
 │
 ├── part2_customization/    # Part 2: Adding Customization
 │   ├── sketch.js           # Reference code (ASSISTANTS ONLY)
 │   ├── assets/             # Sound files (GIVE TO PARTICIPANTS)
 │   └── workshop/           # Workshop documentation
 │       ├── workshop.md     # Main workshop guide (GIVE TO PARTICIPANTS)
+│       ├── workshop_fr.md  # Main workshop guide in French (GIVE TO PARTICIPANTS)
 │       ├── detailed.md     # Detailed step-by-step guide (ASSISTANTS ONLY)
+│       ├── detailed_fr.md  # Detailed guide in French (ASSISTANTS ONLY)
 │       ├── tldr.md         # Quick reference (ASSISTANTS ONLY)
-│       └── README.md       # Workshop metadata (ASSISTANTS ONLY)
+│       ├── README.md       # Workshop metadata (ASSISTANTS ONLY)
+│       └── img/            # Workshop images and diagrams
 │
-└── part3_advanced/         # Part 3: Advanced Features
-    ├── sketch.js           # Reference code (ASSISTANTS ONLY)
-    ├── assets/             # Sound files (GIVE TO PARTICIPANTS)
-    └── workshop/           # Workshop documentation
-        ├── workshop.md     # Main workshop guide (GIVE TO PARTICIPANTS)
-        ├── detailed.md     # Detailed step-by-step guide (ASSISTANTS ONLY)
-        ├── tldr.md         # Quick reference (ASSISTANTS ONLY)
-        └── README.md       # Workshop metadata (ASSISTANTS ONLY)
+├── part3_advanced/         # Part 3: Advanced Features
+│   ├── sketch.js           # Reference code (ASSISTANTS ONLY)
+│   ├── assets/             # Sound files (GIVE TO PARTICIPANTS)
+│   └── workshop/           # Workshop documentation
+│       ├── workshop.md     # Main workshop guide (GIVE TO PARTICIPANTS)
+│       ├── workshop_fr.md  # Main workshop guide in French (GIVE TO PARTICIPANTS)
+│       ├── detailed.md     # Detailed step-by-step guide (ASSISTANTS ONLY)
+│       ├── detailed_fr.md  # Detailed guide in French (ASSISTANTS ONLY)
+│       ├── tldr.md         # Quick reference (ASSISTANTS ONLY)
+│       ├── README.md       # Workshop metadata (ASSISTANTS ONLY)
+│       └── img/            # Workshop images and diagrams
 │
 └── appendix/               # Additional Resources
     ├── javascript_basics.md        # JavaScript basics tutorial (GIVE TO PARTICIPANTS)
@@ -44,6 +53,7 @@ DJ/
 
 ### Files for Participants
 - ✅ **`workshop.md`** - Main workshop guide with step-by-step instructions
+- ✅ **`workshop_fr.md`** - Main workshop guide in French
 - ✅ **`assets/`** - Sound files needed for the project
 - ✅ **`appendix/javascript_basics.md`** - JavaScript basics tutorial (optional reference for beginners)
 - ✅ **`appendix/javascript_basics_fr.md`** - JavaScript basics tutorial in French (optional reference for beginners)
@@ -51,6 +61,7 @@ DJ/
 ### Files for Assistants Only
 - 🔒 **`sketch.js`** - Complete reference code (participants should not see this)
 - 🔒 **`detailed.md`** - Detailed explanations for assistants
+- 🔒 **`detailed_fr.md`** - Detailed guide in French for assistants
 - 🔒 **`tldr.md`** - Quick reference
 - 🔒 **`README.md`** - Workshop metadata
 
