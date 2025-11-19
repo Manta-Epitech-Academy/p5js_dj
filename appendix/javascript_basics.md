@@ -1,6 +1,4 @@
-# Learn JavaScript in Minutes
-
-## Where X=JavaScript Basics
+# Learn JavaScript in 5 Minutes (or more)
 
 This is a concise introduction to JavaScript concepts used in this workshop. Get the basics fast!
 
