@@ -4,6 +4,7 @@
 
 Ceci est une introduction concise aux concepts JavaScript utilisés dans cet atelier. Apprenez les bases rapidement !
 
+```javascript
 ///////////////////////////////////
 // 1. Instructions et Commentaires
 
@@ -312,6 +313,7 @@ if (nouveauScore !== null) {
 // - Comment tout combiner !
 
 ///////////////////////////////////
+```
 
 ## Pour Aller Plus Loin
 

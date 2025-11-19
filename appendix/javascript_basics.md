@@ -4,6 +4,7 @@
 
 This is a concise introduction to JavaScript concepts used in this workshop. Get the basics fast!
 
+```javascript
 ///////////////////////////////////
 // 1. Statements and Comments
 
@@ -312,6 +313,7 @@ if (newScore !== null) {
 // - How to combine everything!
 
 ///////////////////////////////////
+```
 
 ## Further Reading
 
