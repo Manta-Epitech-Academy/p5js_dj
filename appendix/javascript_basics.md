@@ -319,7 +319,7 @@ This tutorial covers only the basics used in this workshop. To learn more JavaSc
 
 - [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide) - Comprehensive JavaScript documentation
 - [JavaScript.info](https://javascript.info/) - Modern JavaScript tutorial
-- [Learn X in Y Minutes: JavaScript](https://learnxinyminutes.com/javascript/) - Full JavaScript reference
+- [Learn X in Y Minutes: JavaScript](https://learnxinyminutes.com/javascript/) - Inspiration for this document
 
 ---
 

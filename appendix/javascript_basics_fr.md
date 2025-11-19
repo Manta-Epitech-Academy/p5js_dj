@@ -173,7 +173,7 @@ function multiplier(x, y) {
 
 let produit = multiplier(4, 7);  // produit est maintenant 28
 
-// Les fonctions sans return renvoient undefined :
+// Les fonctions sans return renvoient undefined (mais peuvent quand même affecter l'état global de votre programme) :
 function faireQuelqueChose() {
     // Pas d'instruction return
 }
@@ -319,7 +319,7 @@ Ce tutoriel couvre uniquement les bases utilisées dans cet atelier. Pour en app
 
 - [Guide JavaScript MDN](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide) - Documentation JavaScript complète
 - [JavaScript.info](https://javascript.info/) - Tutoriel JavaScript moderne
-- [Learn X in Y Minutes : JavaScript](https://learnxinyminutes.com/javascript/) - Référence JavaScript complète
+- [Learn X in Y Minutes : JavaScript](https://learnxinyminutes.com/javascript/) - Inspiration pour ce document
 
 ---
 
