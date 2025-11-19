@@ -165,6 +165,26 @@ p5js_dj/
 - Refactored code with helper functions
 - **Learning focus**: Advanced audio control, trigonometry, code organization
 
+## Difficulty Level Estimation
+
+Based on Source Lines of Code (SLOC) analysis, here's a rough estimation of difficulty progression:
+
+| Part | Code Lines | Increase | Difficulty Level |
+|------|------------|----------|------------------|
+| **Part 1: Starter** | 109 lines | Base | ⭐ Beginner |
+| **Part 2: Customization** | 191 lines | +75.2% (+82 lines) | ⭐⭐ Intermediate |
+| **Part 3: Advanced** | 297 lines | +55.5% (+106 lines) | ⭐⭐⭐ Advanced |
+
+**Notes**:
+- **Part 1 → Part 2**: The largest percentage increase (+75.2%) reflects the added complexity of file upload handling, grid system implementation, and UI management. This jump introduces new concepts (file I/O, responsive design).
+- **Part 2 → Part 3**: A substantial increase (+55.5%) as participants add advanced features like time control, crossfader logic with trigonometry, and amplitude analysis for visualization.
+- **Overall progression**: From Part 1 to Part 3, the codebase nearly triples (+172.5%), reflecting the cumulative learning and feature additions.
+
+**Planning considerations**:
+- Allow extra time for Part 2, as it has the steepest learning curve in terms of new concepts introduced.
+- Part 3 builds incrementally but introduces more complex concepts (trigonometry, audio analysis).
+- Consider pacing workshops with breaks between parts, especially between Part 2 and Part 3, to allow participants to digest the complexity.
+
 ## Assistant Resources
 
 Each part includes assistant-only resources:
