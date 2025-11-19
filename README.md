@@ -115,6 +115,21 @@ p5js_dj/
    - Participants can duplicate this template by using File > Duplicate in the p5.js Web Editor
    - This ensures everyone has the assets uploaded and ready to use
 
+
+**Assistants:** Click the "Share" button to get a template link.
+![Share Step 1](img/share1.png)
+![Share Step 2](img/share2.png)
+
+**Participants:** Use "File > Duplicate" in the p5.js Web Editor to create your own copy of the template.
+![Duplicate File](img/duplicate.png)
+
+
+
+
+
+
+
+
 **Why this approach?**
 - Participants don't need to manually upload assets at the start
 - Everyone starts with the same setup
