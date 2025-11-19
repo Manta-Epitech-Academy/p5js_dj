@@ -1,6 +1,4 @@
-# Apprendre JavaScript en Minutes
-
-## Où X=Les Bases de JavaScript
+# Apprendre JavaScript en 5 Minutes (ou plus)
 
 Ceci est une introduction concise aux concepts JavaScript utilisés dans cet atelier. Apprenez les bases rapidement !
 
