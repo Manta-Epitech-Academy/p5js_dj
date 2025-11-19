@@ -34,6 +34,10 @@ DJ/
         ├── detailed.md     # Detailed step-by-step guide (ASSISTANTS ONLY)
         ├── tldr.md         # Quick reference (ASSISTANTS ONLY)
         └── README.md       # Workshop metadata (ASSISTANTS ONLY)
+│
+└── appendix/               # Additional Resources
+    ├── javascript_basics.md        # JavaScript basics tutorial (GIVE TO PARTICIPANTS)
+    └── javascript_basics_fr.md     # JavaScript basics tutorial in French (GIVE TO PARTICIPANTS)
 ```
 
 ## Files Distribution
@@ -41,6 +45,8 @@ DJ/
 ### Files for Participants
 - ✅ **`workshop.md`** - Main workshop guide with step-by-step instructions
 - ✅ **`assets/`** - Sound files needed for the project
+- ✅ **`appendix/javascript_basics.md`** - JavaScript basics tutorial (optional reference for beginners)
+- ✅ **`appendix/javascript_basics_fr.md`** - JavaScript basics tutorial in French (optional reference for beginners)
 
 ### Files for Assistants Only
 - 🔒 **`sketch.js`** - Complete reference code (participants should not see this)
@@ -173,6 +179,25 @@ Each part includes assistant-only resources:
   - Assessment criteria
   - Workshop structure details
 
+### Appendix: JavaScript Basics Tutorial
+
+The `appendix/` directory contains a JavaScript basics tutorial that can be given to participants:
+
+- **`javascript_basics.md`** - JavaScript basics tutorial in English
+- **`javascript_basics_fr.md`** - JavaScript basics tutorial in French
+
+**When to share**: These tutorials are useful for participants who are completely new to JavaScript. You can:
+- Share them before the workshop as optional pre-reading
+- Provide them during the workshop if participants need a quick reference
+- Use them as supplementary material for participants who want to understand JavaScript fundamentals better
+
+**What it covers**: Only JavaScript concepts actually used in the workshop:
+- Variables, objects, functions, conditions
+- Numbers, strings, booleans
+- Basic syntax and operations
+
+**Important**: The tutorial emphasizes that reading without practicing is useless. Participants should try the examples as they read.
+
 ## Best Practices
 
 1. **Don't share reference code**: Participants learn more by building from scratch
@@ -181,6 +206,7 @@ Each part includes assistant-only resources:
 4. **Be patient**: Some concepts (like objects) may be new to participants
 5. **Use detailed.md**: It has extra explanations for common questions
 6. **Test the template**: Make sure your p5.js template works before sharing
+7. **Share the appendix**: If participants are new to JavaScript, offer the appendix tutorial as a reference
 
 ## Troubleshooting
 
