@@ -8,7 +8,7 @@ Congratulations on completing the Customization workshop! Now you're going to ad
 
 ## Prerequisites
 
-**Before starting this workshop, make sure you have completed Part 2: Customization**, which includes:
+**Before starting this workshop, make sure you have completed Part 1: Starter**, which includes:
 - ✅ File uploads for background images and sounds
 - ✅ Mobile-friendly responsive design
 - ✅ Touch support

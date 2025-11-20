@@ -2,7 +2,7 @@
 
 Ce guide vous accompagne dans l'ajout de fonctionnalités avancées à votre table de mixage DJ : sliders de temps, crossfader et visualisation BPM.
 
-**Prérequis** : Cet atelier suppose que vous avez terminé la Partie 2 : Personnalisation, qui inclut les téléchargements de fichiers, le support mobile et les fonctions helper de base.
+**Prérequis** : Cet atelier suppose que vous avez terminé la Partie 1 : Starter, qui inclut les téléchargements de fichiers, le support mobile et les fonctions helper de base.
 
 ---
 

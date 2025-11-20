@@ -216,7 +216,7 @@ function draw() {
     // Draw grid: 6x6 cells, each cell is 1/6 width x 1/6 height
     drawGrid();
     
-    // Draw title - center of row 0 (matching part2 UI)
+    // Draw title - center of row 0 (matching part1 UI)
     fill(0);
     textAlign(CENTER);
     textSize(min(width, height) * 0.04);
@@ -245,13 +245,13 @@ function drawLabels() {
     fill(0);
     textAlign(CENTER);
     
-    // Upload labels - matching part2 UI style
+    // Upload labels - matching part1 UI style
     textSize(min(width, height) * 0.025);
     text("Upload Background:", gridX(1), gridY(1) / 2 - 10);
     text("Upload Track 1:", gridX(1), gridY(1) - 10);
     text("Upload Track 2:", gridX(4), gridY(1) - 10);
     
-    // Volume labels - matching part2 UI style
+    // Volume labels - matching part1 UI style
     textSize(min(width, height) * 0.025);
     text("Volume", track1.sliderPosition.x, track1.sliderPosition.y - 20);
     text("Volume", track2.sliderPosition.x, track2.sliderPosition.y - 20);

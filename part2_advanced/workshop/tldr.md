@@ -2,7 +2,7 @@
 
 A quick guide for adding advanced features to your DJ deck.
 
-**Prerequisites**: Complete Part 2: Customization first!
+**Prerequisites**: Complete Part 1: Starter first!
 
 ---
 
@@ -126,7 +126,7 @@ A quick guide for adding advanced features to your DJ deck.
 - ✅ BPM visualization pulses with beat
 - ✅ All UI elements positioned on grid
 - ✅ Code organized into small functions
-- ✅ All features from Part 2 still work
+- ✅ All features from Part 1 still work
 
 ---
 

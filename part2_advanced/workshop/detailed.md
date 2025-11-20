@@ -2,7 +2,7 @@
 
 This guide walks you through adding advanced features to your DJ mixing deck: time sliders, crossfader, and BPM visualization.
 
-**Prerequisites**: This workshop assumes you have completed Part 2: Customization, which includes file uploads, mobile support, and basic helper functions.
+**Prerequisites**: This workshop assumes you have completed Part 1: Starter, which includes file uploads, mobile support, and basic helper functions.
 
 ---
 

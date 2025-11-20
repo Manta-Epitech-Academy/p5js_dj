@@ -208,16 +208,16 @@ Based on Source Lines of Code (SLOC) analysis:
 
 | Part | Code Lines | Increase | Difficulty Level |
 |------|------------|----------|------------------|
-| **Part 1: Starter** | 109 lines | Base | ⭐ Beginner |
+| **Part 1: Starter** | 284 lines | Base | ⭐⭐ Intermediate |
 
 **Notes**:
-- This is the foundation workshop with the smallest codebase (109 lines).
+- This is the foundation workshop with the merged codebase (284 lines) that includes all customization features.
 - Introduces core concepts: objects, sound loading, buttons, sliders, event handling.
 - While relatively simple, it establishes important patterns that are built upon in later parts.
-- The code uses a grid system for positioning, but grid helper functions are introduced in Part 2.
+- The code uses a grid system for positioning with helper functions for easy UI layout.
 
 **Planning considerations**:
 - This part is designed for absolute beginners - explain all concepts from scratch.
 - Objects may be a new concept - allow extra time for understanding object structure.
-- Sound loading and event handling are foundational - ensure students understand these before moving to Part 2.
+- Sound loading and event handling are foundational - ensure students understand these before moving to Part 2 (Advanced).
 

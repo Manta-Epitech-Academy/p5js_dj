@@ -20,19 +20,7 @@ p5js_dj/
 │       ├── README.md       # Workshop metadata (ASSISTANTS ONLY)
 │       └── img/            # Workshop images and diagrams
 │
-├── part2_customization/    # Part 2: Adding Customization
-│   ├── sketch.js           # Reference code (ASSISTANTS ONLY)
-│   ├── assets/             # Sound files (GIVE TO PARTICIPANTS)
-│   └── workshop/           # Workshop documentation
-│       ├── workshop.md     # Main workshop guide (GIVE TO PARTICIPANTS)
-│       ├── workshop_fr.md  # Main workshop guide in French (GIVE TO PARTICIPANTS)
-│       ├── detailed.md     # Detailed step-by-step guide (ASSISTANTS ONLY)
-│       ├── detailed_fr.md  # Detailed guide in French (ASSISTANTS ONLY)
-│       ├── tldr.md         # Quick reference (ASSISTANTS ONLY)
-│       ├── README.md       # Workshop metadata (ASSISTANTS ONLY)
-│       └── img/            # Workshop images and diagrams
-│
-├── part3_advanced/         # Part 3: Advanced Features
+├── part2_advanced/         # Part 2: Advanced Features
 │   ├── sketch.js           # Reference code (ASSISTANTS ONLY)
 │   ├── assets/             # Sound files (GIVE TO PARTICIPANTS)
 │   └── workshop/           # Workshop documentation
@@ -139,55 +127,53 @@ p5js_dj/
 
 ### During the Workshop
 
-1. **Part 1: Starter**
+1. **Part 1: Starter** (3 hours)
    - Participants follow `workshop.md`
-   - They build the basic DJ mixing deck from scratch
+   - They build the complete DJ mixing deck with customization features
+   - Learning objectives:
+     - Create buttons to play multiple sounds and load favorite music
+     - Add new features: loop, volume slider
+     - Build the interface: custom background, tactile (touch support)
+     - Publish as a Mobile application
    - Assistants use `detailed.md` for explanations and troubleshooting
 
-2. **Part 2: Customization**
-   - Participants continue building on their Part 1 code
-   - They add file upload features and mobile support
-   - Assistants use `detailed.md` and `tldr.md` for quick reference
-
-3. **Testing Phase** (Between Part 2 and Part 3)
+2. **Testing Phase** (After Part 1)
    - **Important break**: Have participants test their DJ app!
    - Open their DJ app in the p5.js editor
    - Connect to a speaker or headphones
    - Load their own music files
    - **Start mixing!** Let them experiment and have fun
-   - This reinforces what they've learned and motivates them for Part 3
+   - This reinforces what they've learned and motivates them for Part 2
 
-4. **Part 3: Advanced**
+3. **Part 2: Advanced**
    - Participants add advanced features (time sliders, crossfader, BPM visualization)
    - They learn code organization and refactoring
    - Assistants use `detailed.md` for in-depth explanations
 
 ## Parts Overview
 
-### Part 1: Starter
-**Basic DJ Mixing Deck**
-- Two play/pause buttons
+### Part 1: Starter (3 hours)
+**Complete DJ Mixing Deck with Customization**
+**Objectives**: Faire sa première table de mixage
+- Create buttons to play multiple sounds and load favorite music
+- Add new features: loop, volume slider
+- Build the interface: custom background, tactile (touch support)
+- Publish as a Mobile application
+- Two play/pause buttons with touch support
 - Two volume sliders
-- Basic mixing functionality
-- Simple, clean interface
-- **Learning focus**: Objects, sound loading, buttons, sliders, event handling
-
-### Part 2: Customization
-**Adding Customization Features**
 - File upload for background images
 - File upload for track sounds
-- Mobile-friendly design
-- Touch support
-- Responsive layout
-- **Learning focus**: File handling, responsive design, mobile development
+- Mobile-friendly responsive design
+- Grid-based positioning system
+- **Learning focus**: Objects, sound loading, buttons, sliders, event handling, file handling, responsive design, mobile development
 
-### Part 3: Advanced
+### Part 2: Advanced
 **Advanced DJ Features**
 - Time sliders (seek/jump in tracks)
 - Time display (MM:SS format)
 - Crossfader for smooth transitions
 - BPM visualization (pulsating circles)
-- All customization features from Part 2
+- All customization features from Part 1
 - Refactored code with helper functions
 - **Learning focus**: Advanced audio control, trigonometry, code organization
 
@@ -197,19 +183,18 @@ Based on Source Lines of Code (SLOC) analysis, here's a rough estimation of diff
 
 | Part | Code Lines | Increase | Difficulty Level |
 |------|------------|----------|------------------|
-| **Part 1: Starter** | 109 lines | Base | ⭐ Beginner |
-| **Part 2: Customization** | 191 lines | +75.2% (+82 lines) | ⭐⭐ Intermediate |
-| **Part 3: Advanced** | 297 lines | +55.5% (+106 lines) | ⭐⭐⭐ Advanced |
+| **Part 1: Starter** | 284 lines | Base | ⭐⭐ Intermediate |
+| **Part 2: Advanced** | 485 lines | +70.8% (+201 lines) | ⭐⭐⭐ Advanced |
 
 **Notes**:
-- **Part 1 → Part 2**: The largest percentage increase (+75.2%) reflects the added complexity of file upload handling, grid system implementation, and UI management. This jump introduces new concepts (file I/O, responsive design).
-- **Part 2 → Part 3**: A substantial increase (+55.5%) as participants add advanced features like time control, crossfader logic with trigonometry, and amplitude analysis for visualization.
-- **Overall progression**: From Part 1 to Part 3, the codebase nearly triples (+172.5%), reflecting the cumulative learning and feature additions.
+- **Part 1**: Now includes all customization features (grid system, file uploads, touch support, responsive design). This is a comprehensive 3-hour workshop that covers objects, sound loading, buttons, sliders, event handling, file handling, responsive design, and mobile development.
+- **Part 1 → Part 2**: A substantial increase (+70.8%) as participants add advanced features like time control, crossfader logic with trigonometry, and amplitude analysis for visualization.
+- **Overall progression**: The merged Part 1 provides a complete, publishable DJ mixing deck application suitable for mobile deployment.
 
 **Planning considerations**:
-- Allow extra time for Part 2, as it has the steepest learning curve in terms of new concepts introduced.
-- Part 3 builds incrementally but introduces more complex concepts (trigonometry, audio analysis).
-- Consider pacing workshops with breaks between parts, especially between Part 2 and Part 3, to allow participants to digest the complexity.
+- Part 1 is now a 3-hour comprehensive workshop covering all basic and customization features. Allow adequate time for file upload concepts and mobile development.
+- Part 2 builds on Part 1 and introduces more complex concepts (trigonometry, audio analysis, code organization).
+- Consider pacing workshops with a break after Part 1 to allow participants to test and enjoy their complete DJ deck before moving to advanced features.
 
 ## Assistant Resources
 

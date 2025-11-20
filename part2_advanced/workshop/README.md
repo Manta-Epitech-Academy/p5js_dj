@@ -210,10 +210,10 @@ Based on Source Lines of Code (SLOC) analysis:
 
 | Part | Code Lines | Increase | Difficulty Level |
 |------|------------|----------|------------------|
-| **Part 3: Advanced** | 297 lines | +55.5% (+106 lines from Part 2) | ⭐⭐⭐ Advanced |
+| **Part 2: Advanced** | 485 lines | +70.8% (+201 lines from Part 1) | ⭐⭐⭐ Advanced |
 
 **Notes**:
-- **Part 2 → Part 3**: A substantial increase (+55.5%) as participants add advanced features like time control, crossfader logic with trigonometry, and amplitude analysis for visualization.
+- **Part 1 → Part 2**: A substantial increase (+70.8%) as participants add advanced features like time control, crossfader logic with trigonometry, and amplitude analysis for visualization.
 - This part introduces more complex mathematical concepts (trigonometry, time calculations) and audio analysis.
 - Code organization becomes more important as the codebase grows significantly.
 

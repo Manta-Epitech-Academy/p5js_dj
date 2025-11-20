@@ -2,13 +2,13 @@
 
 ## Bienvenue !
 
-Félicitations pour avoir terminé l'atelier de Personnalisation ! Maintenant, vous allez ajouter des fonctionnalités DJ avancées qui rendent votre table vraiment professionnelle : des sliders de temps pour naviguer dans les pistes, un crossfader pour des transitions fluides, et une visualisation BPM pour voir le rythme !
+Félicitations pour avoir terminé l'atelier Starter ! Maintenant, vous allez ajouter des fonctionnalités DJ avancées qui rendent votre table vraiment professionnelle : des sliders de temps pour naviguer dans les pistes, un crossfader pour des transitions fluides, et une visualisation BPM pour voir le rythme !
 
 ---
 
 ## Prérequis
 
-**Avant de commencer cet atelier, assurez-vous d'avoir terminé la Partie 2 : Personnalisation**, qui inclut :
+**Avant de commencer cet atelier, assurez-vous d'avoir terminé la Partie 1 : Starter**, qui inclut :
 - ✅ Téléchargements de fichiers pour les images de fond et les sons
 - ✅ Design responsive adapté au mobile
 - ✅ Support tactile
