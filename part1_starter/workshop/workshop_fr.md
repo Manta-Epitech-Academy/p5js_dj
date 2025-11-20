@@ -368,18 +368,307 @@ Le volume doit se mettre à jour continuellement pendant que l'utilisateur dépl
 
 ---
 
+## Étape 7 : Configurer le système de grille et le design responsive
+
+### Comprendre le système de grille
+
+Pour faciliter le positionnement et supporter les appareils mobiles, nous allons diviser le canvas en une grille 6x6. Cela signifie que nous diviserons l'écran en 6 colonnes et 6 lignes, ce qui facilite le positionnement précis des éléments d'interface et garantit qu'ils fonctionnent sur différentes tailles d'écran.
+
+**Le concept** : Au lieu de calculer manuellement les positions en pixels comme `width / 6` ou `2 * height / 6`, vous pouvez créer des fonctions utilitaires qui convertissent les coordonnées de la grille (comme colonne 1, ligne 2) directement en coordonnées pixels.
+
+**Pourquoi ?** Cela rend le positionnement beaucoup plus facile ! Au lieu d'écrire `width / 6` à chaque fois, vous pouvez simplement écrire `gridX(1)` pour la colonne 1, ou `gridY(2)` pour la ligne 2. De plus, cela rend votre application compatible avec les appareils mobiles !
+
+### Étape 7A : Utiliser la taille complète de la fenêtre pour le canvas
+
+**Ce que vous devez faire** : Mettez à jour votre appel `createCanvas()` dans `setup()` pour utiliser la taille complète de la fenêtre du navigateur au lieu d'une taille fixe.
+
+Changez :
+```javascript
+createCanvas(800, 600);
+```
+
+En :
+```javascript
+createCanvas(windowWidth, windowHeight);
+```
+
+**Pourquoi utiliser `windowWidth` et `windowHeight` ?**
+
+Utiliser `windowWidth` et `windowHeight` fait que votre table de mixage remplit automatiquement toute la fenêtre du navigateur, s'adaptant à n'importe quelle taille d'écran. Cela signifie :
+- Votre table de mixage fonctionnera bien sur différentes tailles d'écran (ordinateur, tablette, mobile)
+- Elle utilise automatiquement tout l'espace disponible
+- Les utilisateurs n'ont pas besoin de redimensionner leur navigateur ou de voir de l'espace vide autour du canvas
+- Cela offre une meilleure expérience utilisateur, plus professionnelle
+- **Vous pouvez la publier comme application mobile !**
+
+**Documentation** :
+- [`windowWidth`](https://p5js.org/reference/p5/windowWidth/) - stocke la largeur de la fenêtre d'affichage du navigateur
+- [`windowHeight`](https://p5js.org/reference/p5/windowHeight/) - stocke la hauteur de la fenêtre d'affichage du navigateur
+
+**Important** : Puisque votre canvas s'adaptera maintenant à la taille de la fenêtre, tous vos éléments UI s'adapteront automatiquement avec le système de grille que vous allez créer !
+
+### Étape 7B : Créer des fonctions utilitaires pour la grille
+
+**Ce que vous devez faire** : Créez deux fonctions utilitaires qui convertissent les coordonnées de la grille en positions pixels :
+
+1. `gridX(cellX)` - Prend un numéro de colonne (0-5) et retourne la position X en pixels
+2. `gridY(cellY)` - Prend un numéro de ligne (0-5) et retourne la position Y en pixels
+
+**La logique** :
+- Pour une grille de 6 colonnes, la colonne 0 commence à la position X 0, la colonne 1 est à `width / 6`, la colonne 2 est à `2 * width / 6`, etc.
+- Pour une grille de 6 lignes, la ligne 0 commence à la position Y 0, la ligne 1 est à `height / 6`, la ligne 2 est à `2 * height / 6`, etc.
+
+**Exemple** :
+- `gridX(0)` retourne `0` (bord gauche)
+- `gridX(1)` retourne `width / 6` (colonne 1)
+- `gridX(3)` retourne `3 * width / 6` (colonne 3)
+- `gridY(0)` retourne `0` (bord supérieur)
+- `gridY(1)` retourne `height / 6` (ligne 1)
+- `gridY(2)` retourne `2 * height / 6` (ligne 2)
+
+**Indice** : Utilisez la multiplication ! `gridX(cellX)` devrait retourner `cellX * width / 6`.
+
+### Étape 7C : Mettre à jour la visualisation de la grille
+
+**Ce que vous devez faire** : Mettez à jour votre fonction `drawGrid()` pour utiliser les nouvelles fonctions utilitaires `gridX()` et `gridY()`.
+
+**La logique** :
+- Utilisez vos fonctions `gridX()` et `gridY()` dans le code de dessin de la grille
+- Faites une boucle de 1 à 5 et dessinez des lignes à `gridX(i)` et `gridY(i)`
+
+**Astuce** : Cela rend votre code de grille plus propre et plus facile à comprendre !
+
+### Étape 7D : Repositionner les éléments UI existants en utilisant la grille
+
+**Ce que vous devez faire** : Mettez à jour vos éléments UI existants pour utiliser le système de grille.
+
+**Repositionnez-les en utilisant vos fonctions utilitaires de grille** :
+- Bouton piste 1 : Colonne 1, Ligne 2 (utilisez `gridX(1)`, `gridY(2)`)
+- Slider piste 1 : Colonne 1, Ligne 3 (utilisez `gridX(1)`, `gridY(3)`)
+- Bouton piste 2 : Colonne 4, Ligne 2 (utilisez `gridX(4)`, `gridY(2)`)
+- Slider piste 2 : Colonne 4, Ligne 3 (utilisez `gridX(4)`, `gridY(3)`)
+- Titre : Centre (utilisez `width / 2`, `gridY(1) / 2`)
+- Labels de volume : Au-dessus des sliders (utilisez `gridX(1)`, `gridY(3) - 20` et `gridX(4)`, `gridY(3) - 20`)
+
+**Mettez à jour votre code de positionnement** pour utiliser `gridX()` et `gridY()` au lieu de calculer manuellement `width / 6` ou `height / 6`.
+
+**Important** : Utilisez le système de grille pour tout le positionnement UI à partir de maintenant ! Cela rendra beaucoup plus facile d'ajouter de nouveaux éléments plus tard.
+
+**Testez !** Assurez-vous que tous vos boutons et sliders existants fonctionnent toujours et sont correctement positionnés sur la grille. Essayez de redimensionner la fenêtre du navigateur - tout devrait s'adapter !
+
+---
+
+## Étape 8 : Ajouter l'upload d'images de fond
+
+### Comprendre les uploads de fichiers
+
+Les uploads de fichiers permettent aux utilisateurs de sélectionner des fichiers depuis leur ordinateur et de les utiliser dans votre programme. Pensez-y comme choisir une photo à uploader sur les réseaux sociaux - vous cliquez sur un bouton, sélectionnez un fichier, et il devient partie de l'application.
+
+### Comment fonctionnent les uploads de fichiers dans p5.js
+
+Dans p5.js, vous utilisez `createFileInput()` pour créer un bouton d'upload de fichier. Quand un utilisateur sélectionne un fichier, p5.js vous donne des informations sur ce fichier, et vous pouvez l'utiliser dans votre programme.
+
+**Le processus** :
+1. Créez un bouton de saisie de fichier
+2. L'utilisateur clique et sélectionne un fichier
+3. Votre programme reçoit les informations du fichier
+4. Vous chargez et utilisez le fichier (image ou son)
+
+**Documentation** : [`createFileInput()`](https://p5js.org/reference/p5/createFileInput) crée un bouton d'upload de fichier.
+
+### Étape 8A : Créer une variable pour l'image de fond
+
+**Le concept** : Vous avez besoin d'un endroit pour stocker l'image uploadée.
+
+**Ce que vous devez faire** : En haut de votre code (avant les objets track), créez une variable pour stocker l'image de fond. Réfléchissez à la valeur initiale - nous n'avons pas encore d'image, donc quelle devrait être la valeur initiale ?
+
+**Pourquoi `null` ?** Cela signifie "pas d'image encore" - nous la définirons quand un utilisateur upload une image. C'est un modèle courant en programmation - utiliser `null` pour représenter "rien encore" ou "pas encore défini".
+
+### Étape 8B : Créer le bouton de saisie de fichier
+
+**La logique** : Dans `setup()`, créez un bouton de saisie de fichier pour les images.
+
+**Ce que vous devez faire** : Dans `setup()`, après avoir créé le canvas, créez un bouton de saisie de fichier. Réfléchissez à :
+1. Quelle fonction devrait s'exécuter quand un fichier est sélectionné ? (C'est la fonction de gestion)
+2. Où ce bouton devrait-il être positionné à l'écran ? (Utilisez vos fonctions `gridX()` et `gridY()` !)
+3. Comment pouvez-vous restreindre la sélection de fichiers aux images uniquement ?
+
+**Astuce de positionnement** : Utilisez vos fonctions `gridX()` et `gridY()` ! Par exemple, pour positionner à la colonne 1, ligne 0, utilisez `gridX(1)` et `gridY(1) / 2`.
+
+**Comprendre le code** :
+- `createFileInput()` crée le bouton
+- Le nom de fonction `handleBackgroundImage` est ce qui s'exécute quand un fichier est sélectionné
+- `position()` le place à l'écran
+- `attribute('accept', 'image/*')` restreint la sélection de fichiers aux images uniquement
+
+**Documentation** : 
+- [`createFileInput()`](https://p5js.org/reference/p5/createFileInput)
+- [`.position()`](https://p5js.org/reference/p5.Element/position)
+- [`.attribute()`](https://p5js.org/reference/p5.Element/attribute)
+
+### Étape 8C : Créer la fonction de gestion
+
+**La logique** : Quand un utilisateur sélectionne un fichier image, vous avez besoin d'une fonction pour le gérer.
+
+**Ce que vous devez faire** : Créez une fonction qui gère quand un utilisateur sélectionne un fichier image. Réfléchissez à :
+1. Quelles informations cette fonction recevra-t-elle sur le fichier sélectionné ?
+2. Comment pouvez-vous vérifier si le fichier est réellement une image (pas un autre type) ?
+3. Si c'est une image, comment la chargez-vous et la stockez-vous dans votre variable ?
+
+**Comprendre le code** :
+- `file.type` vous indique quel type de fichier c'est
+- `file.data` contient les données du fichier que p5.js peut utiliser
+- `loadImage()` charge une image depuis les données du fichier
+
+**Documentation** : [`loadImage()`](https://p5js.org/reference/p5/loadImage) charge les fichiers image.
+
+**Testez !** Essayez d'uploader une image - vous devriez voir le bouton de saisie de fichier !
+
+### Étape 8D : Afficher l'image de fond
+
+**La logique** : Dans `draw()`, vérifiez si une image est chargée, et si oui, affichez-la comme fond.
+
+**Ce que vous devez faire** : Dans votre fonction `draw()`, au tout début, vous devez décider quoi dessiner comme fond. Réfléchissez à :
+1. Comment pouvez-vous vérifier si une image a été uploadée ?
+2. Si une image existe, comment la dessinez-vous pour remplir tout le canvas ?
+3. Si aucune image n'existe encore, quel devrait être le fond ?
+
+**Comprendre le code** :
+- `if (bgImage)` vérifie si une image a été uploadée
+- `image()` dessine l'image pour remplir tout le canvas
+- `width` et `height` la font remplir la taille du canvas
+
+**Documentation** : [`image()`](https://p5js.org/reference/p5/image) dessine les images.
+
+**Testez !** Uploadez une image - elle devrait maintenant apparaître comme fond !
+
+---
+
+## Étape 9 : Ajouter l'upload de sons pour les pistes
+
+### Comprendre les uploads de sons
+
+Maintenant, vous voulez que les utilisateurs uploadent leurs propres sons pour chaque piste. C'est similaire aux uploads d'images, mais pour les fichiers audio.
+
+**La logique** :
+1. Ajoutez une propriété file input à l'objet track
+2. Créez un bouton de saisie de fichier dans `setup()`
+3. Quand un fichier est sélectionné, gérez-le
+4. Chargez le son et remplacez celui existant
+
+### Étape 9A : Ajouter la propriété File Input aux objets Track
+
+**Le concept** : Chaque piste doit stocker son bouton de saisie de fichier.
+
+**Ce que vous devez faire** : Dans les objets `track1` et `track2`, ajoutez une propriété pour stocker le bouton de saisie de fichier. Réfléchissez à la valeur initiale - nous n'avons pas encore créé le bouton, donc quelle devrait être la valeur initiale ?
+
+**Pourquoi ?** Cela stocke le bouton de saisie de fichier, comme nous stockons le slider et le bouton. Garder tous les éléments UI d'une piste ensemble dans l'objet track rend le code plus organisé.
+
+### Étape 9B : Créer les boutons de saisie de fichier
+
+**La logique** : Dans `setup()`, créez des boutons de saisie de fichier pour les sons des deux pistes.
+
+**Ce que vous devez faire** : Dans `setup()`, après avoir créé le bouton de saisie de fichier pour l'image de fond, créez des boutons de saisie de fichier pour la piste 1 et la piste 2. Réfléchissez à :
+1. Quelle fonction devrait s'exécuter quand un fichier est sélectionné ? (Vous devrez passer à la fois le fichier et pour quelle piste c'est)
+2. Où ces boutons devraient-ils être positionnés ? (Utilisez votre système de grille !)
+3. Comment pouvez-vous restreindre la sélection de fichiers aux fichiers audio uniquement ?
+
+**Comprendre le code** :
+- `createFileInput()` avec une fonction qui appelle `handleSoundUpload()`
+- Nous passons à la fois le fichier et l'objet track au gestionnaire
+- `position()` les place en utilisant `gridX()` et `gridY()`
+- `accept` restreint aux fichiers audio uniquement
+
+### Étape 9C : Créer le gestionnaire d'upload de son
+
+**La logique** : Quand un utilisateur sélectionne un fichier audio, vous devez le charger et remplacer le son existant.
+
+**Ce que vous devez faire** : Créez une fonction qui gère quand un utilisateur sélectionne un fichier audio. Réfléchissez à :
+1. De quelles informations cette fonction a-t-elle besoin ? (Le fichier, et pour quelle piste c'est)
+2. Comment pouvez-vous vérifier si le fichier est réellement un fichier audio ?
+3. S'il y a déjà un son en lecture, que devrait-il se passer ?
+4. Comment chargez-vous le nouveau son et le rendez-vous prêt à jouer ?
+
+**Comprendre le code** :
+- `file.type === 'audio'` vérifie si c'est un fichier audio
+- `track.sound.stop()` arrête le son actuel s'il est en lecture
+- `loadSound(file.data)` charge le nouveau son depuis le fichier
+- Nous définissons le volume pour qu'il soit prêt à jouer
+
+**Important** : Si le son est en lecture quand un nouveau est uploadé, vous devriez :
+- L'arrêter : `track.sound.stop()`
+- Définir `track.isPlaying = false`
+
+**Documentation** : [`loadSound()`](https://p5js.org/reference/p5.sound/p5.SoundFile) charge les fichiers son.
+
+**Testez !** Uploadez des fichiers audio pour les deux pistes - ils devraient remplacer les sons par défaut !
+
+---
+
+## Étape 10 : Ajouter le support tactile pour mobile
+
+### Comprendre les événements tactiles
+
+Pour les appareils mobiles, vous devez gérer les événements tactiles différemment des clics de souris. Cela garantit que vos boutons fonctionnent correctement sur les téléphones et tablettes.
+
+**La logique** : Les événements tactiles peuvent déclencher à la fois les événements tactiles et les événements souris sur les appareils mobiles, causant un double-clic sur les boutons. Nous devons empêcher ce double-déclenchement.
+
+### Étape 10A : Ajouter les variables de support tactile
+
+**Ce que vous devez faire** : En haut de votre code, ajoutez des variables pour suivre l'utilisation du tactile :
+- `touchUsed` - un booléen pour suivre si le tactile a été récemment utilisé
+- `touchTimeout` - une variable pour stocker le timeout
+
+### Étape 10B : Mettre à jour les gestionnaires tactiles des boutons
+
+**Ce que vous devez faire** : Pour chaque bouton, ajoutez un gestionnaire `touchStarted()` qui :
+1. Définit `touchUsed = true` pour empêcher les événements souris de se déclencher
+2. Appelle la fonction de bascule
+3. Efface le drapeau après un délai
+4. Empêche l'événement souris par défaut
+
+**Comprendre le code** :
+- `.touchStarted()` gère les événements tactiles sur le bouton
+- Nous empêchons le double-déclenchement en vérifiant `touchUsed` dans `mousePressed()`
+- `setTimeout()` efface le drapeau après 400ms
+- `preventDefault()` arrête l'événement souris de se déclencher
+
+**Testez !** Essayez votre table de mixage sur un appareil mobile - les boutons devraient fonctionner en douceur sans double-déclenchement !
+
+---
+
+## Étape 11 : Ajouter des labels et améliorer l'expérience utilisateur
+
+### Ajouter des labels
+
+**La logique** : Les utilisateurs doivent savoir ce que fait chaque bouton de saisie de fichier.
+
+**Ce que vous devez faire** : Dans votre fonction `draw()`, ajoutez des labels de texte au-dessus de chaque bouton de saisie de fichier. Réfléchissez à :
+1. Quel texte chaque label devrait-il dire ?
+2. Où chaque label devrait-il être positionné ? (Juste au-dessus de son bouton correspondant)
+3. Comment le texte devrait-il être aligné ?
+
+Utilisez une taille de texte responsive : `textSize(min(width, height) * 0.025)` pour que les labels s'adaptent à la taille de l'écran.
+
+**Testez !** Les labels devraient rendre clair ce que fait chaque bouton !
+
+---
+
 ## Tout mettre ensemble
 
 ### Le flux complet
 
 Votre table de mixage devrait maintenant fonctionner comme ceci :
 
-1. **Setup** : Charger les sons, créer les boutons et sliders, définir le volume initial
+1. **Setup** : Charger les sons, créer les boutons et sliders, définir le volume initial, créer les file inputs
 2. **Boucle Draw** (s'exécute en continu) :
-   - Dessiner tous les éléments visuels (labels, etc.)
+   - Dessiner le fond (image ou blanc)
+   - Dessiner la grille
+   - Dessiner les labels
    - Lire les valeurs des sliders et les convertir en volume
    - Appliquer le volume aux sons en lecture
-3. **Détection des clics** : Quand un bouton est cliqué, basculez l'état de lecture de cette piste
+3. **Détection des clics/tactiles** : Quand un bouton est cliqué ou touché, basculez l'état de lecture de cette piste
+4. **Uploads de fichiers** : Les utilisateurs peuvent uploader des images de fond et des sons pour les pistes
 
 **Concept visuel** : ![Diagramme de flux montrant le flux complet du programme](img/program_logic.svg)
 
@@ -393,22 +682,34 @@ Testez chaque fonctionnalité :
 - ✅ Déplacez le slider track1 → le volume de track1 change
 - ✅ Déplacez le slider track2 → le volume de track2 change
 - ✅ Les sons bouclent continuellement
+- ✅ Uploadez une image de fond → elle s'affiche comme fond
+- ✅ Uploadez un son pour la piste 1 → il remplace le son par défaut
+- ✅ Uploadez un son pour la piste 2 → il remplace le son par défaut
+- ✅ Touchez les boutons sur mobile → ils fonctionnent sans double-déclenchement
+- ✅ Redimensionnez la fenêtre du navigateur → tout s'adapte correctement
 
 ### Dépannage
 
 **Pas de son ?**
 - Vérifiez que la bibliothèque p5.sound est incluse
-- Vérifiez que les fichiers son sont dans le dossier `assets`
+- Vérifiez que les fichiers son sont dans le dossier `assets` ou ont été uploadés
 - Vérifiez la console du navigateur pour les erreurs
 
 **Les boutons ne fonctionnent pas ?**
 - Vérifiez que la logique de détection des clics est correcte
 - Vérifiez que les positions des boutons correspondent à votre détection des clics
+- Sur mobile, vérifiez que les événements tactiles sont correctement gérés
 
 **Le volume ne change pas ?**
 - Vérifiez que vous lisez les valeurs des sliders dans `draw()`
 - Vérifiez que vous appliquez le volume aux sons en lecture
 - Vérifiez que la conversion de volume (diviser par 100) est correcte
+
+**L'image ne s'affiche pas après l'upload**
+- Vérifiez que vous utilisez `image()` dans `draw()` et que vous vérifiez si `bgImage` existe
+
+**Le son ne joue pas après l'upload**
+- Assurez-vous que vous appelez `loadSound(file.data)` et que vous définissez le volume
 
 ---
 
@@ -416,25 +717,32 @@ Testez chaque fonctionnalité :
 
 Maintenant que votre table de mixage fonctionne, essayez de la personnaliser :
 
+- **Uploadez vos chansons préférées**
+- **Uploadez des images de fond personnalisées**
 - **Changez les positions et tailles des boutons**
 - **Changez les positions des sliders**
 - **Ajoutez un titre ou des labels**
 - **Changez les couleurs**
 - **Ajoutez plus de pistes**
 - **Ajoutez un retour visuel quand les pistes jouent**
+- **Partagez votre table de mixage comme application mobile !**
 
 **Rappelez-vous** : L'expérimentation est la façon dont on apprend ! Essayez des choses, voyez ce qui se passe, et apprenez-en.
 
 ---
 
-## Félicitations !
+## Félicitations ! 🎉
 
-Vous avez construit une table de mixage DJ fonctionnelle ! Vous avez appris :
+Vous avez construit une table de mixage DJ entièrement fonctionnelle et personnalisable qui fonctionne sur ordinateur et mobile ! Vous avez appris :
 - Comment organiser le code en utilisant des objets
 - Comment charger et jouer plusieurs sons
-- Comment créer des boutons interactifs
+- Comment créer des boutons interactifs avec support tactile
 - Comment créer et utiliser des sliders
 - Comment contrôler le volume en temps réel
 - Comment mélanger les sons ensemble
+- Comment utiliser un système de grille pour une mise en page responsive
+- Comment gérer les uploads de fichiers (images et sons)
+- Comment créer des interfaces compatibles mobile
+- Comment publier votre application comme application mobile !
 
 Ces concepts vous aideront à construire des applications interactives encore plus complexes !
