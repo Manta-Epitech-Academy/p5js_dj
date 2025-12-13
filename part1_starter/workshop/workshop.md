@@ -96,8 +96,6 @@ An object is a way to group related information together. Instead of having sepa
 
 **Why these properties?** Each property stores one piece of information about the track. By putting them all in one object, we can easily access everything related to track 1.
 
-**Visual Concept**: [SCHEMA PLACEHOLDER: Diagram showing the structure of track1 object with nested button object]
-
 **Documentation**: Learn about [JavaScript objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects).
 
 ### Step 1B: Creating Your Second Track Object
