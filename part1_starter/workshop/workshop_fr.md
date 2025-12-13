@@ -194,7 +194,7 @@ Les sons doivent être chargés avant de pouvoir les jouer. Dans p5.js, nous uti
 
 **Le processus** : Pensez-y comme ceci - vous dites à p5.js "va chercher ce fichier son et stocke-le dans l'objet track pour que nous puissions l'utiliser plus tard."
 
-**Documentation** : [`loadSound()`](https://p5js.org/reference/p5.SoundFile/) charge les fichiers son. Note : Vous devez inclure la bibliothèque p5.sound !
+**Documentation** : [`loadSound()`](https://p5js.org/reference/p5/loadSound/) charge les fichiers son. Note : Vous devez inclure la bibliothèque p5.sound !
 
 **Testez !** Les sons devraient se charger sans erreur. Vérifiez la console si quelque chose ne va pas.
 
@@ -241,8 +241,8 @@ Les sliders sont des contrôles qui permettent aux utilisateurs d'ajuster une va
 2. Positionnez-le en utilisant les coordonnées de position du slider de la piste
 
 **Pourquoi ces valeurs ?**
-- 0 à 100 représente 0% à 100% de volume (facile à comprendre pour les utilisateurs)
-- Commencer à 50 signifie que le slider commence à 50% de volume (demi-volume)
+- 0 à 100 représente 0% à 100% de volume
+- Commencer à 50 signifie que le slider commence à 50% de volume
 - Nous convertirons cela en 0.0-1.0 plus tard quand nous l'appliquerons au son
 
 **Pourquoi utiliser sliderPosition ?** Cela garde la position organisée dans l'objet track, ce qui facilite les modifications ultérieures. C'est comme avoir l'adresse écrite - vous pouvez la trouver facilement !
