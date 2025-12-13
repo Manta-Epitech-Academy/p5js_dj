@@ -62,6 +62,8 @@ p5js_dj/
 - **p5.sound Library**: Version 1.11.11 (must be included)
 - **Assets**: Sound files from the `assets/` folder
 
+⚠️ Assets are limited to 5MB on the p5js Web Editor ⚠️
+
 ### Pre-Workshop Setup (Part 1)
 
 **Before the workshop starts**, assistants should:
