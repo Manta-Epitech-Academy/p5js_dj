@@ -58,8 +58,8 @@ p5js_dj/
 ## Setup Instructions
 
 ### Prerequisites
-- **p5.js Web Editor**: All work should be done in the p5.js web editor
-- **p5.sound Library**: Version 1.11.11 (must be included)
+- **p5.js Web Editor**: All work should be done in the p5.js web editor ⚠️ Use p5js version 1.11.1 (on some browser other version can cause unexpected bugs: https://github.com/processing/p5.js/issues/8318) ⚠️
+- **p5.sound Library**: Must be enabled
 - **Assets**: Sound files from the `assets/` folder
 
 ⚠️ Assets are limited to 5MB on the p5js Web Editor ⚠️
