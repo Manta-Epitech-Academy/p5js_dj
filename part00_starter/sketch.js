@@ -39,7 +39,8 @@ function onClickPause2()
   }
 }
 
-function setup() {
+function setup()
+{
   createCanvas(windowWidth, windowHeight);
   play1 = createButton("play1");
   play2 = createButton("play2");
@@ -57,9 +58,9 @@ function setup() {
   play2.mousePressed(onClickPlay2);
   pause1.mousePressed(onClickPause1);
   pause2.mousePressed(onClickPause2);
-  
 }
 
-function draw() {
+function draw()
+{
   background(bg);
 }
