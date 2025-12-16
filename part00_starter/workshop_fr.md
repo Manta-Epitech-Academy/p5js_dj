@@ -32,9 +32,21 @@ function draw()
 
 Nous créons ici un "canvas" (zone d'affichage) pour notre application et nous donnons une couleur de fond à cette zone.
 
-**Exercice**: Même si ce code ne fait pas grand chose pour l'instant vous pouvez dès maintenant le tester dans l'éditeur web de p5.js en cliquant sur le bouton "play" en haut à gauche de l'écran
+**Exercice**: Même si ce code ne fait pas grand chose pour l'instant vous pouvez dès maintenant le tester dans l'éditeur web de p5.js en cliquant sur le bouton "play" en haut à gauche de l'écran.
 
 ![Lancement de p5.js](img/0.png)
+
+
+### Utilisation sur mobile:
+
+**Exercice**: Récupérez le lien de votre application p5.js et entrez le sur le navigateur de votre smartphone.
+
+Vous pouvez ensuite ajouter cette application à l'écran d'accueil de votre téléphone via le menu de votre navigateur: "Ajouter à l'écran d'accueil".
+
+![Share1](img/share1.png)
+![Share2](img/share2.png)
+
+
 
 ### Concept 1: les variables
 
@@ -304,11 +316,3 @@ if (condition) {
 
 Une fois que vous pensez avoir terminé cette étape, demandez à un assistant de valider votre travail. (Testez votre application avant d'appeller un assistant)
 
-## Utilisation sur mobile:
-
-Récupérez le lien de votre application p5.js et entrez le sur le navigateur de votre smartphone.
-
-Vous pouvez ensuite ajouter cette application à l'écran d'accueil de votre téléphone via le menu de votre navigateur: "Ajouter à l'écran d'accueil".
-
-![Share1](img/share1.png)
-![Share2](img/share2.png)
