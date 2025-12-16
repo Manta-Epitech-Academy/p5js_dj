@@ -174,7 +174,9 @@ Il y a un nombre incalculable de styles différents que vous pouvez appliquez à
 
 ## Un deuxième bouton
 
-### **💪Exercice💪**: Essayez de créer un deuxième bouton avec le *label* "pause 1" sur votre canvas en **autonomie**.
+### **💪Exercice💪**:
+
+Essayez de créer un deuxième bouton avec le *label* "pause 1" sur votre canvas en **autonomie**.
 Ce bouton devra être positionné juste en dessous du premier bouton que vous avez crée.
 Ce bouton devra avoir la même taille que le premier bouton.
 
@@ -259,7 +261,9 @@ Les sons et images doivent être chargés avant de pouvoir les utiliser. Dans p5
 
 Déclarez une variable `sound1` au début de votre code, donnez la valeur `null` pour l'instant.
 
-### **💪Exercice💪**: Déclarez la fonction `preload()`
+### **💪Exercice💪**:
+
+Déclarez la fonction `preload()`
 - Dans laquelle vous appelerez la fonction `loadSound("assets/<votre_fichier>.mp3")`
 - Cette fonction `loadSound` vous renvoie un son chargé que vous devrez stocker dans la variable `sound1`
 - De la même façon utilisez `loadImage()` afin de charger un fichier image et stockez-là dans votre variable `bg` (qui jusqu'à maintenant contenait uniquement une couleur fixe)
