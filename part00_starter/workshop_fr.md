@@ -147,7 +147,7 @@ Il y a un nombre incalculable de styles différents que vous pouvez appliquez à
 - Couleur du texte : `color: red`
 - Couleur de fond : `background-color: green`
 
-**Documentation**: Vous pouvez trouver une liste de style à appliquer sur vos boutons (ici)[https://www.w3schools.com/css/css3_buttons.asp]
+**Documentation**: Vous pouvez trouver une liste de style à appliquer sur vos boutons sur [w3schools](https://www.w3schools.com/css/css3_buttons.asp)
 
 **💪Exercice💪**:
 - Modifiez la taille de votre bouton pour en faire un carré de 100 pixels de large par 100 pixels de long
