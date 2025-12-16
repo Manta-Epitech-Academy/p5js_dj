@@ -28,56 +28,33 @@ let sound2 = null;
 let bg = "grey";
 
 function preload() {
-    sound1 = loadSound("assets/sound1.mp3");
-    sound1.setLoop(true);
-    sound2 = loadSound("assets/sound2.mp3");
-    sound2.setLoop(true);
-    bg = loadImage("assets/bg.png");
+     //Chargement des fichiers audio et de l'image de fond
 }
 
 function onClickPlay1() {
-    if (!sound1.isPlaying()) {
-        sound1.play();
-    }
+    //Gestion du clic sur le bouton play 1
 }
 
 function onClickPause1() {
-    if (sound1.isPlaying()) {
-        sound1.pause();
-    }
+    //Gestion du clic sur le bouton pause 1
 }
 
 function onClickPlay2() {
-    if (!sound2.isPlaying()) {
-        sound2.play();
-    }
+    //Gestion du clic sur le bouton play 2
 }
 
 function onClickPause2() {
-    if (sound2.isPlaying()) {
-        sound2.pause();
-    }
+    //Gestion du clic sur le bouton pause 2
 }
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-    play1 = createButton("play1");
-    play2 = createButton("play2");
-    pause1 = createButton("pause1");
-    pause2 = createButton("pause2");
-    // ... positionnement et styles ...
-    play1.mousePressed(onClickPlay1);
-    pause1.mousePressed(onClickPause1);
-    play2.mousePressed(onClickPlay2);
-    pause2.mousePressed(onClickPause2);
+    //Initialisation du canvas et des boutons
 }
 
 function draw() {
     background(bg);
 }
 ```
-
-**N.B.** : Si vous n'avez pas encore ce code, retournez d'abord à l'atelier part00_starter pour apprendre les bases.
 
 ---
 
@@ -109,15 +86,14 @@ Dans p5.js, vous pouvez créer un slider avec la fonction `createSlider()`.
 **Documentation** : [`createSlider()`](https://p5js.org/reference/p5/createSlider) crée un élément slider.
 
 **Exercice** : Dans votre fonction `setup()`, après avoir créé vos boutons, créez deux sliders :
-- Un slider `slider1` avec une plage de 0 à 100, commençant à 50
-- Un slider `slider2` avec une plage de 0 à 100, commençant à 50
+- Un slider `slider1` avec une plage de 0 à 1, commençant à 0.5
+- Un slider `slider2` avec une plage de 0 à 1, commençant à 0.5
 
-**N.B.** : Les sliders utilisent des valeurs de 0 à 100 (pourcentage), mais les sons utilisent des valeurs de 0.0 à 1.0. Nous devrons convertir plus tard.
 
 **Exemple** :
 ```javascript
-slider1 = createSlider(0, 100, 50);
-slider2 = createSlider(0, 100, 50);
+slider1 = createSlider(0, 1, 0.5);
+slider2 = createSlider(0, 1, 0.5);
 ```
 
 ### Étape 1C : Positionner les sliders
@@ -130,15 +106,10 @@ slider2 = createSlider(0, 100, 50);
 
 ### Étape 1D : Lire les valeurs des sliders et les convertir
 
-Les sliders retournent des valeurs de 0 à 100, mais les sons ont besoin de valeurs de 0.0 à 1.0. Il faut donc convertir.
-
-**Le concept** : Pour convertir de 0-100 à 0.0-1.0, il suffit de diviser par 100. Par exemple :
-- 50 ÷ 100 = 0.5 (50% devient 0.5)
-- 75 ÷ 100 = 0.75 (75% devient 0.75)
-- 0 ÷ 100 = 0.0 (0% devient 0.0)
+Les sliders retournent des valeurs de 0 à 1.
 
 **Exercice** : Dans votre fonction `draw()`, lisez les valeurs des sliders et convertissez-les en volumes :
-- Lisez la valeur de `slider1` avec `.value()` et divisez par 100, stockez le résultat dans `volume1`
+- Lisez la valeur de `slider1` avec `.value()` et stockez-là dans `volume1`
 - Faites de même pour `slider2` et `volume2`
 
 **Exemple** :
@@ -146,9 +117,9 @@ Les sliders retournent des valeurs de 0 à 100, mais les sons ont besoin de vale
 function draw() {
     background(bg);
     
-    // Lire et convertir les valeurs des sliders
-    volume1 = slider1.value() / 100;
-    volume2 = slider2.value() / 100;
+    // Lire les valeurs des sliders
+    volume1 = slider1.value();
+    // volume2 = ...
 }
 ```
 
@@ -156,19 +127,10 @@ function draw() {
 
 Maintenant que nous avons les volumes, il faut les appliquer aux sons qui sont en train de jouer.
 
-**Exercice** : Dans votre fonction `draw()`, après avoir calculé les volumes, vérifiez si chaque son est en train de jouer, et si oui, appliquez le volume avec `.setVolume()`.
+**Exercice** : Dans votre fonction `draw()`, après avoir recupéré la valeur des sliders les volumes, vérifiez si chaque son est en train de jouer, et si oui, appliquez le volume avec `.setVolume()`.
 
 **Documentation** : [`.setVolume()`](https://p5js.org/reference/p5.SoundFile/setVolume/) définit le volume d'un son.
 
-**Exemple** :
-```javascript
-if (sound1.isPlaying()) {
-    sound1.setVolume(volume1);
-}
-if (sound2.isPlaying()) {
-    sound2.setVolume(volume2);
-}
-```
 
 **Testez !** Lancez un son et déplacez le slider - le volume devrait changer en temps réel !
 
@@ -182,43 +144,34 @@ Au lieu d'avoir deux boutons séparés (play et pause), nous allons créer un se
 
 **Analogie** : C'est comme un interrupteur de lumière - un seul bouton qui allume ou éteint.
 
-### Étape 2A : Créer une fonction de bascule
+### Étape 2A : Modifier les fonctions pour créer une bascule
 
-**Exercice** : Créez une fonction `toggleTrack1()` qui :
+**Exercice** : Modifiez votre fonction `onClickPlay1()` pour qu'elle fasse les deux actions (play et pause) :
 1. Vérifie si `sound1` est en train de jouer avec `.isPlaying()`
 2. Si oui : met en pause avec `.pause()`
 3. Si non : joue le son avec `.play()`, mais avant de jouer :
    - Définissez le volume avec `.setVolume(volume1)`
    - Activez la boucle avec `.setLoop(true)`
 
-**Exemple** :
-```javascript
-function toggleTrack1() {
-    if (sound1.isPlaying()) {
-        sound1.pause();
-    } else {
-        sound1.setVolume(volume1);
-        sound1.setLoop(true);
-        sound1.play();
-    }
-}
-```
+**Concept**: if/else
 
-**Exercice** : Créez la même fonction pour la piste 2 : `toggleTrack2()`
+Dans la partie 1, vous avez vu qu'il est possible d'executer du code si une certaine condition est remplie (avec le mot clé `if`). Vous pouvez également executer du code si cette même condition n'est pas remplie avec `else` (sinon)
+
+**Exercice** : Modifiez la même fonction pour la piste 2 : `onClickPlay2()`
 
 ### Étape 2B : Remplacer les boutons
 
 **Exercice** : Dans votre fonction `setup()`, remplacez les quatre boutons (play1, pause1, play2, pause2) par deux boutons :
-- Un bouton `button1` avec le label "▶⏸" (ou "Play/Pause")
-- Un bouton `button2` avec le label "▶⏸" (ou "Play/Pause")
+- Un bouton `play1` avec le label "▶⏸" (ou "Play/Pause")
+- Un bouton `play2` avec le label "▶⏸" (ou "Play/Pause")
 
-**Exercice** : Connectez ces boutons aux fonctions de bascule :
-- `button1.mousePressed(toggleTrack1)`
-- `button2.mousePressed(toggleTrack2)`
+**Exercice** : Connectez ces boutons aux fonctions modifiées :
+- `play1.mousePressed(onClickPlay1)`
+- `play2.mousePressed(onClickPlay2)`
 
-**N.B.** : Vous pouvez supprimer les anciennes fonctions `onClickPlay1`, `onClickPause1`, `onClickPlay2`, `onClickPause2` car elles ne sont plus nécessaires.
+**N.B.** : Vous pouvez supprimer les anciennes fonctions `onClickPause1` et `onClickPause2` car elles ne sont plus nécessaires. Les fonctions `onClickPlay1` et `onClickPlay2` font maintenant les deux actions (play et pause).
 
-**Testez !** Cliquez sur un bouton - le son devrait jouer. Cliquez à nouveau - il devrait se mettre en pause !
+**Testez !** Cliquez sur play1 - sound1 devrait jouer. Cliquez à nouveau - il devrait se mettre en pause !
 
 ---
 
@@ -241,16 +194,6 @@ Pour faciliter le positionnement et rendre votre application vraiment responsive
 - Pour une grille de 6 colonnes, la colonne 0 est à X = 0, la colonne 1 est à X = `width / 6`, la colonne 2 est à X = `2 * width / 6`, etc.
 - Même chose pour les lignes avec `height`
 
-**Exemple** :
-```javascript
-function gridX(cellX) {
-    return cellX * width / 6;
-}
-
-function gridY(cellY) {
-    return cellY * height / 6;
-}
-```
 
 **N.B.** : Ces fonctions utilisent `width` et `height` qui sont disponibles dans `draw()`, mais pour les utiliser dans `setup()`, vous devrez utiliser `windowWidth` et `windowHeight` directement dans les calculs, ou créer des versions qui acceptent ces valeurs.
 
@@ -259,16 +202,16 @@ function gridY(cellY) {
 ### Étape 3B : Repositionner les éléments avec la grille
 
 **Exercice** : Repositionnez tous vos éléments UI en utilisant le système de grille :
-- Bouton 1 : Colonne 1, Ligne 2 (utilisez `gridX(1)` et `gridY(2)`, mais dans `setup()` utilisez `windowWidth` et `windowHeight`)
+- Bouton play1 : Colonne 1, Ligne 2 (utilisez `gridX(1)` et `gridY(2)`, mais dans `setup()` utilisez `windowWidth` et `windowHeight`)
 - Slider 1 : Colonne 1, Ligne 3
-- Bouton 2 : Colonne 4, Ligne 2
+- Bouton play2 : Colonne 4, Ligne 2
 - Slider 2 : Colonne 4, Ligne 3
 
 **Exemple pour setup()** :
 ```javascript
-button1.position(windowWidth / 6 * 1, windowHeight / 6 * 2);
+play1.position(windowWidth / 6 * 1, windowHeight / 6 * 2);
 slider1.position(windowWidth / 6 * 1, windowHeight / 6 * 3);
-button2.position(windowWidth / 6 * 4, windowHeight / 6 * 2);
+play2.position(windowWidth / 6 * 4, windowHeight / 6 * 2);
 slider2.position(windowWidth / 6 * 4, windowHeight / 6 * 3);
 ```
 
@@ -288,6 +231,8 @@ Jusqu'à présent, vous chargez les images depuis le dossier `assets`. Maintenan
 
 **N.B.** : Cette variable stockera l'image uploadée par l'utilisateur. Si elle est `null`, on utilisera l'image `bg` chargée dans `preload()`.
 
+Si l'utilisateur n'a pas uploadé d'image gardez l'image par default qui se trouve déjà dans `assets` ou une couleur fixe pour le fond.
+
 ### Étape 4B : Créer le bouton d'upload
 
 Dans p5.js, vous pouvez créer un bouton d'upload avec `createFileInput()`.
@@ -298,13 +243,7 @@ Dans p5.js, vous pouvez créer un bouton d'upload avec `createFileInput()`.
 - Créez-le avec `createFileInput(handleBackgroundImage)`
 - Positionnez-le en haut du canvas (par exemple, colonne 1, ligne 0)
 - Restreignez-le aux images avec `.attribute('accept', 'image/*')`
-
-**Exemple** :
-```javascript
-let bgFileInput = createFileInput(handleBackgroundImage);
-bgFileInput.position(windowWidth / 6 * 1, windowHeight / 6 * 0);
-bgFileInput.attribute('accept', 'image/*');
-```
+Ici aussi on associe une fonction de gestion `handleBackgroundImage` à l'évènement: "l'utilisateur upload une image".
 
 ### Étape 4C : Créer la fonction de gestion
 
@@ -314,14 +253,6 @@ bgFileInput.attribute('accept', 'image/*');
 
 **Documentation** : [`loadImage()`](https://p5js.org/reference/p5/loadImage) charge les fichiers image.
 
-**Exemple** :
-```javascript
-function handleBackgroundImage(file) {
-    if (file.type === 'image') {
-        bgImage = loadImage(file.data);
-    }
-}
-```
 
 ### Étape 4D : Afficher l'image uploadée
 
@@ -354,28 +285,9 @@ function draw() {
 
 Maintenant, nous allons permettre aux utilisateurs d'uploader de nouveaux sons pour remplacer ceux chargés au départ.
 
-### Étape 5A : Créer les boutons d'upload de sons
+### Étape 5A : Créer les fonctions de gestion
 
-**Exercice** : Dans votre fonction `setup()`, créez deux file inputs pour les sons :
-- Un pour la piste 1 : `createFileInput(function(file) { handleSound1(file); })`
-- Un pour la piste 2 : `createFileInput(function(file) { handleSound2(file); })`
-- Positionnez-les (par exemple, colonne 1 ligne 1 pour piste 1, colonne 4 ligne 1 pour piste 2)
-- Restreignez-les aux fichiers audio avec `.attribute('accept', 'audio/*')`
-
-**Exemple** :
-```javascript
-let sound1FileInput = createFileInput(function(file) { handleSound1(file); });
-sound1FileInput.position(windowWidth / 6 * 1, windowHeight / 6 * 1);
-sound1FileInput.attribute('accept', 'audio/*');
-
-let sound2FileInput = createFileInput(function(file) { handleSound2(file); });
-sound2FileInput.position(windowWidth / 6 * 4, windowHeight / 6 * 1);
-sound2FileInput.attribute('accept', 'audio/*');
-```
-
-### Étape 5B : Créer les fonctions de gestion
-
-**Exercice** : Créez deux fonctions `handleSound1(file)` et `handleSound2(file)` qui :
+**Exercice** : Créez deux fonctions `onUploadSound1(file)` et `onUploadSound2(file)` qui :
 1. Vérifient si le fichier est audio avec `file.type === 'audio'`
 2. Si oui :
    - Arrêtent le son actuel s'il est en train de jouer avec `.stop()`
@@ -385,21 +297,17 @@ sound2FileInput.attribute('accept', 'audio/*');
 
 **Documentation** : [`loadSound()`](https://p5js.org/reference/p5/loadSound/) charge les fichiers son.
 
-**Exemple** :
-```javascript
-function handleSound1(file) {
-    if (file.type === 'audio') {
-        if (sound1 && sound1.isPlaying()) {
-            sound1.stop();
-        }
-        sound1 = loadSound(file.data);
-        sound1.setVolume(volume1);
-        sound1.setLoop(true);
-    }
-}
-```
+**N.B.** : Ici aussi on associe une fonction de gestion à l'évènement: "l'utilisateur upload un fichier audio". C'est similaire à ce que vous avez fait avec les boutons et `.mousePressed()`.
 
-**Exercice** : Créez la même fonction pour `handleSound2`.
+### Étape 5B : Créer les boutons d'upload de sons
+
+**Exercice** : Dans votre fonction `setup()`, créez deux file inputs pour les sons :
+- Un pour la piste 1 : `createFileInput(onUploadSound1)`
+- Un pour la piste 2 : `createFileInput(onUploadSound2)`
+- Positionnez-les (par exemple, colonne 1 ligne 1 pour piste 1, colonne 4 ligne 1 pour piste 2)
+- Restreignez-les aux fichiers audio avec `.attribute('accept', 'audio/*')`
+
+**N.B.** : Comme pour les boutons, vous passez le nom de la fonction (sans les parenthèses) à `createFileInput()`. p5.js appellera automatiquement cette fonction quand l'utilisateur sélectionne un fichier.
 
 **Testez !** Uploadez un nouveau son pour une piste - il devrait remplacer l'ancien !
 
@@ -441,23 +349,14 @@ function draw() {
 - "Upload Track 1:" au-dessus du file input de son 1
 - "Upload Track 2:" au-dessus du file input de son 2
 
-**Exemple** :
-```javascript
-textSize(min(width, height) * 0.025);
-text("Upload Background:", windowWidth / 6 * 1, windowHeight / 6 * 0 - 10);
-text("Upload Track 1:", windowWidth / 6 * 1, windowHeight / 6 * 1 - 10);
-text("Upload Track 2:", windowWidth / 6 * 4, windowHeight / 6 * 1 - 10);
-```
+**Documentation**:
 
 ### Étape 6C : Ajouter des labels pour les sliders
 
 **Exercice** : Ajoutez le texte "Volume" au-dessus de chaque slider.
 
-**Exemple** :
-```javascript
-text("Volume", windowWidth / 6 * 1, windowHeight / 6 * 3 - 20);
-text("Volume", windowWidth / 6 * 4, windowHeight / 6 * 3 - 20);
-```
+**Documentation** :
+
 
 **Testez !** Votre interface devrait maintenant être beaucoup plus claire avec tous les labels !
 
@@ -465,40 +364,25 @@ text("Volume", windowWidth / 6 * 4, windowHeight / 6 * 3 - 20);
 
 ## Tout mettre ensemble
 
-### Le flux complet
-
-Votre table de mixage devrait maintenant fonctionner comme ceci :
-
-1. **Setup** : Créer le canvas, les boutons, les sliders, les file inputs
-2. **Preload** : Charger les sons et l'image de départ
-3. **Draw** (s'exécute en continu) :
-   - Afficher le fond (image uploadée ou image de départ)
-   - Afficher le titre et les labels
-   - Lire les valeurs des sliders et les convertir en volumes
-   - Appliquer les volumes aux sons en lecture
-4. **Clics sur boutons** : Basculer play/pause pour chaque piste
-5. **Uploads** : Les utilisateurs peuvent uploader de nouvelles images et sons
-
 ### Tester votre table de mixage
 
 Testez chaque fonctionnalité :
-- ✅ Cliquez sur button1 → sound1 joue
-- ✅ Cliquez à nouveau sur button1 → sound1 se met en pause
-- ✅ Cliquez sur button2 → sound2 joue
+- ✅ Cliquez sur play1 → sound1 joue
+- ✅ Cliquez à nouveau sur play1 → sound1 se met en pause
+- ✅ Cliquez sur play2 → sound2 joue
 - ✅ Les deux pistes peuvent jouer en même temps (mixage !)
 - ✅ Déplacez slider1 → le volume de sound1 change en temps réel
 - ✅ Déplacez slider2 → le volume de sound2 change en temps réel
 - ✅ Uploadez une image de fond → elle s'affiche comme fond
 - ✅ Uploadez un son pour la piste 1 → il remplace le son par défaut
 - ✅ Uploadez un son pour la piste 2 → il remplace le son par défaut
-- ✅ Redimensionnez la fenêtre → tout s'adapte correctement
+
 
 ### Dépannage
 
 **Le volume ne change pas ?**
 - Vérifiez que vous lisez les valeurs des sliders dans `draw()`
 - Vérifiez que vous appliquez le volume avec `.setVolume()` aux sons en lecture
-- Vérifiez que vous divisez bien par 100 pour convertir
 
 **L'image ne s'affiche pas après l'upload ?**
 - Vérifiez que vous utilisez `image()` dans `draw()` et que vous vérifiez si `bgImage` existe
