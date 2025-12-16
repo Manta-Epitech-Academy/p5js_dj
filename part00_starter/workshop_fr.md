@@ -334,7 +334,9 @@ if (condition) {
 
 ---
 
-### **💪Exercice💪**: Faites en sorte d'executer `sound1.play()` uniquement si la condition `sound1.isPlaying() == false` est remplie.
+### **💪Exercice💪**:
+
+Faites en sorte d'executer `sound1.play()` uniquement si la condition `sound1.isPlaying() == false` est remplie.
 
 **Astuce**: Expliquez-vous le code en français dans votre tête: « Lors d'un clic sur le bouton "play 1", si le "son 1" n'est pas en train de jouer alors joue le "son 1"».
 
