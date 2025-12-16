@@ -50,7 +50,9 @@ Vous pouvez ensuite ajouter cette application à l'écran d'accueil de votre té
 ![Share1](img/share1.png)
 ![Share2](img/share2.png)
 
+**N.B.**: Ce type d'application hybride pouvant s'utiliser dans un navigateur et être "installée" via un raccourci s'appellent des PWA (Progressive Web App).
 
+Des applications connues: Instagram, Spotify et Uber existent également en PWA.
 
 ### Concept 1: les variables
 
