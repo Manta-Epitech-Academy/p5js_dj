@@ -32,14 +32,18 @@ function draw()
 
 Nous créons ici un "canvas" (zone d'affichage) pour notre application et nous donnons une couleur de fond à cette zone.
 
-### **💪Exercice💪**: Même si ce code ne fait pas grand chose pour l'instant vous pouvez dès maintenant le tester dans l'éditeur web de p5.js en cliquant sur le bouton "play" en haut à gauche de l'écran.
+### **💪Exercice💪**:
+
+Même si ce code ne fait pas grand chose pour l'instant vous pouvez dès maintenant le tester dans l'éditeur web de p5.js en cliquant sur le bouton "play" en haut à gauche de l'écran.
 
 ![Lancement de p5.js](img/0.png)
 
 
 ### Utilisation sur mobile:
 
-### **💪Exercice💪**: Récupérez le lien de votre application p5.js et entrez le sur le navigateur de votre smartphone.
+### **💪Exercice💪**:
+
+Récupérez le lien de votre application p5.js et entrez le sur le navigateur de votre smartphone.
 
 Vous pouvez ensuite ajouter cette application à l'écran d'accueil de votre téléphone via le menu de votre navigateur: "Ajouter à l'écran d'accueil".
 
@@ -68,13 +72,17 @@ function draw()
 
 Rien ne change pour l'instant dans notre programme, si ce n'est qu'il est beaucoup plus simple de changer la couleur de fond de notre application.
 
-### **💪Exercice💪**: Vous pouvez maintenant changer la valeur de `bg` au début du code en `yellow`, `green`, `black`, `grey`, etc pour changer la couleur de fond.
+### **💪Exercice💪**:
+
+Vous pouvez maintenant changer la valeur de `bg` au début du code en `yellow`, `green`, `black`, `grey`, etc pour changer la couleur de fond.
 
 Testez par vous même avec d'autres couleur de fond pour trouver celle qui vous convient le mieux. Par la suite nous pourrons également charger une image de fond au lieu d'une couleur fixe.
 
 ![Personnalisation](img/1.png)
 
 Vous pouvez également changer la taille du canvas (dans l'image-ci dessus le canvas fait 400 pixels de large pour 200 pixels de haut).
+
+---
 
 ## La taille du canvas
 
@@ -85,7 +93,9 @@ Et si p5.js avait déjà accès à la taille de notre écran ?
 
 Grace à `windowWidth` et `windowHeight` nous pouvons avoir accès à la taille de l'écran (en pixels) sur lequel notre application est en train de tourner.
 
-### **💪Exercice💪**: Modifiez votre code afin que votre canvas fasse toute la largeur et toute la hauteur de votre écran.
+### **💪Exercice💪**:
+
+Modifiez votre code afin que votre canvas fasse toute la largeur et toute la hauteur de votre écran.
 
 ---
 
@@ -114,11 +124,14 @@ Afin que le bouton soit visible vous devez également lui donner une position su
 
 
 **Exemple**: Positionnement du bouton en (200, 150)
+
 ![Bouton1](img/3.png)
 
 **N.B.**: l'origine de votre canvas (0, 0) se trouve tout en haut à gauche de celui-ci.
 
-### **💪Exercice💪**: Créez un bouton "play 1" sur le canvas et donnez-lui une position. Essayez également de centrer le bouton sur votre canvas.
+### **💪Exercice💪**:
+
+Créez un bouton "play 1" sur le canvas et donnez-lui une position. Essayez également de centrer le bouton sur votre canvas.
 
 **N.B.**: Lors de la création du bouton, faites bien attention à stocker le bouton dans une variable. Sinon, vous ne pourrez pas lui donner de position (ou en faire quoi que ce soit).
 
@@ -128,6 +141,8 @@ Afin que le bouton soit visible vous devez également lui donner une position su
 
 N'oubliez pas de tester votre application.
 Votre bouton doit normalement être là, mais pour l'instant il ne fait rien du tout.
+
+---
 
 ## Personnalisation des boutons avec les styles CSS
 
@@ -150,10 +165,12 @@ Il y a un nombre incalculable de styles différents que vous pouvez appliquez à
 **Documentation**: Vous pouvez trouver une liste de style à appliquer sur vos boutons sur [w3schools](https://www.w3schools.com/css/css3_buttons.asp)
 
 ### **💪Exercice💪**:
+
 - Modifiez la taille de votre bouton pour en faire un carré de 100 pixels de large par 100 pixels de long
 - Changez la couleur par défaut du texte de votre bouton à votre convenance
 - Changez la couleur de fond de votre bouton à votre convenance
 
+---
 
 ## Un deuxième bouton
 
@@ -167,6 +184,8 @@ Ce bouton devra avoir la même taille que le premier bouton.
 - Comment j'applique un style à ce bouton ?
 
 Une fois que vous pensez avoir terminé cette étape, demandez à un assistant de valider votre travail. (Testez votre application avant d'appeller un assistant)
+
+---
 
 ## Associer une action à un bouton
 
@@ -210,13 +229,17 @@ L'exercice suivant est un peu plus complexe que les autres, essayez de ne pas vo
 - **appeller une fonction**
 - **associer une fonction à la méthode `.mousePressed()`**
 
-### **💪Exercice💪**: **déclarez** une fonction qui s'appelera "onClickPlay1"
+### **💪Exercice💪**:
+
+**déclarez** une fonction qui s'appelera "onClickPlay1"
 - Cette fonction devra afficher le message suivant sur la *console* (en dessous de votre éditeur p5.js): "L'utilisateur à cliqué sur le bouton play 1".
 - **Associez** cette fonction au clic sur le bouton "play 1" avec `play1.moussePressed(onClickPlay1)`
 
 **N. B.**: Pour afficher un message sur la console vous pouvez utiliser la fonction `console.log` en **l'appellant** de la manière suivante `console.log("<votre message>")`.
 
 ![onClick](img/clic.gif)
+
+---
 
 ## Charger un fichier audio
 
@@ -232,7 +255,9 @@ Les sons et images doivent être chargés avant de pouvoir les utiliser. Dans p5
 
 **Où trouver des fichiers audio ?**: Demandez à votre moteur de recherche favori (ou votre assistant favori) comment télécharger des fichier mp3 depuis votre plateforme streamming favorite.
 
-### **💪Exercice💪**: Déclarez une variable `sound1` au début de votre code, donnez la valeur `null` pour l'instant.
+### **💪Exercice💪**:
+
+Déclarez une variable `sound1` au début de votre code, donnez la valeur `null` pour l'instant.
 
 ### **💪Exercice💪**: Déclarez la fonction `preload()`
 - Dans laquelle vous appelerez la fonction `loadSound("assets/<votre_fichier>.mp3")`
@@ -245,6 +270,8 @@ Les sons et images doivent être chargés avant de pouvoir les utiliser. Dans p5
 - [`loadSound()`](https://p5js.org/reference/p5/loadSound/)
 - [`.setLoop()`](https://p5js.org/reference/p5.SoundFile/setLoop/)
 - [`loadImage()`](https://p5js.org/reference/p5/loadImage/) 
+
+---
 
 ## Jouer et mettre en pause le son
 
@@ -259,13 +286,17 @@ function onClickPlay1()
 }
 ```
 
-### **💪Exercice💪**: Essayez d'écrire en **autonomie** tout le code necessaire pour mettre en pause le son lorsque vous cliquez sur le bouton "pause 1".
+### **💪Exercice💪**:
+
+Essayez d'écrire en **autonomie** tout le code necessaire pour mettre en pause le son lorsque vous cliquez sur le bouton "pause 1".
 
 **Documentation**: [`.pause()`](https://p5js.org/reference/p5.SoundFile/pause/) 
 
 **Astuce**: Aidez-vous des étapes précédentes pour réaliser cet exercice.
 
 Une fois que vous pensez avoir terminé cette étape, demandez à un assistant de valider votre travail. (Testez votre application avant d'appeller un assistant)
+
+---
 
 ## Prévenir la cacophonie
 
@@ -307,13 +338,17 @@ if (condition) {
 
 **Astuce**: Expliquez-vous le code en français dans votre tête: « Lors d'un clic sur le bouton "play 1", si le "son 1" n'est pas en train de jouer alors joue le "son 1"».
 
+---
 
 ## Mixage:
 
-### **💪Exercice💪**: Inspirez vous du code que vous avez déjà écrit pour:
+### **💪Exercice💪**:
+
+Inspirez vous du code que vous avez déjà écrit pour:
 - Rajouter deux nouveaux boutons: "play 2" et "pause 2"
 - Charger un deuxième fichier son
 - Associer aux boutons "play 2" et "pause 2" respectivement la lecture et la mise en pause du deuxième son, n'oubliez pas d'ajouter une condition pour éviter que le son joue plusieurs fois en simultané
 
 Une fois que vous pensez avoir terminé cette étape, demandez à un assistant de valider votre travail. (Testez votre application avant d'appeller un assistant)
 
+Si tout est OK, félicitation ! Vous venez de développer votre table de mixage simplifiée 🎉.
