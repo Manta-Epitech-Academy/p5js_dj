@@ -67,6 +67,7 @@ function draw()
 ```
 
 Rien ne change pour l'instant dans notre programme, si ce n'est qu'il est beaucoup plus simple de changer la couleur de fond de notre application.
+
 **Exercice**: Vous pouvez maintenant changer la valeur de `bg` au début du code en `yellow`, `green`, `black`, `grey`, etc pour changer la couleur de fond.
 
 Testez par vous même avec d'autres couleur de fond pour trouver celle qui vous convient le mieux. Par la suite nous pourrons également charger une image de fond au lieu d'une couleur fixe.
