@@ -199,7 +199,7 @@ Pour faciliter le positionnement et rendre votre application vraiment responsive
 
 **Astuce** : Vous pouvez modifier les fonctions pour accepter la largeur et la hauteur en paramètres, ou utiliser `windowWidth` et `windowHeight` directement dans `setup()`.
 
-### Étape 3B : Repositionner les éléments avec la grille
+### (FIXME) Étape 3B : Repositionner les éléments avec la grille
 
 **Exercice** : Repositionnez tous vos éléments UI en utilisant le système de grille :
 - Bouton play1 : Colonne 1, Ligne 2 (utilisez `gridX(1)` et `gridY(2)`, mais dans `setup()` utilisez `windowWidth` et `windowHeight`)
