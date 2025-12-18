@@ -4,7 +4,7 @@ This guide is for **workshop assistants** organizing and running the DJ Mixing D
 
 ## Workshop Structure
 
-The workshop is organized into 3 progressive parts, each building on the previous one:
+The workshop is organized into 2 parts, a starting project then more advanced features building on it:
 
 ```
 p5js_dj/
